@@ -1,0 +1,117 @@
+import { Button, Card, CardBody, Flex, FormControl, FormLabel, Heading, Input, Stack, Text, Textarea } from '@chakra-ui/react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import SectionTitle from 'src/components/section-title/section-title';
+
+const ContactPageComponent = () => {
+	const { t } = useTranslation();
+
+	// Form state
+	const [formData, setFormData] = useState({ fullName: '', phone: '', message: '' });
+
+	// Handle form input changes
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormData((prev) => ({ ...prev, [name]: value }));
+	};
+
+	// Handle form submission
+	const handleSubmit = async () => {
+		const { fullName, phone, message } = formData;
+
+		if (!fullName || !phone || !message) {
+			alert(t('contact_form_error', { ns: 'global' }));
+			return;
+		}
+
+		const text = `
+		<b>Yangi Murojaat:</b> \n
+		<b>Ism:</b> ${fullName}\n
+		<b>Phope:</b> ${phone}\n
+		<b>Xabar:</b> ${message}
+		`;
+
+		const token = "7997799470:AAEg5oRtvteGcb_r6zAwzaiY3C51p1Q2KTA";
+		const chat_id = "5531717864";
+
+		const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					chat_id: chat_id,
+					text: text,
+					parse_mode: "HTML",
+				}),
+			});
+
+			const data = await response.json();
+
+			if (data.ok) {
+				alert(t('habaringiz yuborildi tez orada aloqaga chiqamz', { ns: 'global' }));
+				setFormData({ fullName: '', phone: '', message: '' });
+			} else {
+				alert(t('contact_error', { ns: 'global' }));
+			}
+		} catch (error) {
+			console.error(error);
+			alert(t('contact_error', { ns: 'global' }));
+		}
+	};
+
+	return (
+		<Flex h={'90vh'} w={'90vw'} justify={'flex-start'} direction={{ base: 'column', lg: 'row' }} align={'center'} gap={'4'}>
+			<Card w={{ base: '100%', lg: '60%' }}>
+				<CardBody>
+					<Heading fontSize={'2xl'}>{t('contact_heading', { ns: 'global' })}</Heading>
+					<Text fontSize={'lg'} mt={4}>
+						{t('contact_text', { ns: 'global' })}
+					</Text>
+					<Stack spacing={4} mt={5}>
+						<FormControl>
+							<FormLabel>{t('contact_name', { ns: 'global' })}</FormLabel>
+							<Input
+								name="fullName"
+								type="text"
+								placeholder="ismingizni kiriting"
+								h={14}
+								value={formData.fullName}
+								onChange={handleChange}
+							/>
+						</FormControl>
+						<FormControl>
+							<FormLabel>{t('contact_email', { ns: 'global' })}</FormLabel>
+							<Input
+								name="phone"
+								type="text"
+								placeholder="+998 90 1234567"
+								h={14}
+								value={formData.phone}
+								onChange={handleChange}
+							/>
+						</FormControl>
+						<FormControl>
+							<FormLabel>{t('contact_message', { ns: 'global' })}</FormLabel>
+							<Textarea
+								name="message"
+								placeholder="body"
+								height="150px"
+								value={formData.message}
+								onChange={handleChange}
+							/>
+						</FormControl>
+						<Button w={'full'} h={14} colorScheme={'facebook'} onClick={handleSubmit}>
+							{t('contact_btn', { ns: 'global' })}
+						</Button>
+					</Stack>
+				</CardBody>
+			</Card>
+		</Flex>
+	);
+};
+
+export default ContactPageComponent;
