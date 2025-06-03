@@ -32,13 +32,6 @@ export const courseCarousel = {
 	},
 };
 
-export const testimonialsCarousel = {
-	superLargeDesktop: {
-		breakpoint: { max: 4000, min: 0 },
-		items: 1,
-	},
-};
-
 export const sponsorshipCarousel = {
 	superLargeDesktop: {
 		breakpoint: { max: 4000, min: 1024 },
