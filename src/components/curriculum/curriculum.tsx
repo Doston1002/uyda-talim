@@ -15,7 +15,6 @@ import {
 } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { AiFillPlayCircle } from 'react-icons/ai';
-import { GoPrimitiveDot } from 'react-icons/go';
 import { getLessonTime } from 'src/helpers/time.helper';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 
@@ -37,8 +36,8 @@ const Curriculum = () => {
 			) : (
 				<>
 					<Flex align={'center'} gap={2} mt={3}>
-						{sections.length} {t('modules', { ns: 'courses' })}{' '}
-						<Icon as={GoPrimitiveDot} />{' '}
+						{sections.length} {t('modules', { ns: 'courses' })}{' '} 
+					|&nbsp;
 						{sections
 							.map(c => c.lessons.length)
 							.reduce((a, b) => +a + +b, 0)}{' '}
