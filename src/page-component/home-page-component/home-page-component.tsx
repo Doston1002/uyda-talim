@@ -1,5 +1,5 @@
 import { Stack } from '@chakra-ui/react';
-import { Categories, Hero, HowItWorks, Instructors, Newsletter, PopularCourses, Sposorship, Testimonials } from 'src/components';
+import { Categories, Hero, HowItWorks, Newsletter, PopularCourses, Sposorship } from 'src/components';
 
 const HomePageComponent = () => {
 	return (
@@ -8,8 +8,6 @@ const HomePageComponent = () => {
 			<Categories />
 			<PopularCourses />
 			<HowItWorks />
-			<Instructors />
-			<Testimonials />
 			<Newsletter />
 			<Sposorship />
 		</Stack>
