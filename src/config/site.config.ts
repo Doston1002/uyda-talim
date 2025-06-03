@@ -3,9 +3,9 @@ export const siteConfig = {
 	  title: "Uyda Ta'lim | Bepul Dasturlash Darslari va Portfolio Platformasi",
 	  description:
 		"Uyda Ta'lim - o'zbek tilida bepul dasturlash darslari, amaliy loyihalar",
-	  author: "Doston Po\'latov",
+	  author: "Doston Po'latov",
 	  keyword:
-		"uyda ta'lim, uyda-talim.uz, bepul dasturlash,  doston po\'latov, dostondev",
+		"uyda ta'lim, uyda-talim.uz, bepul dasturlash,  doston po'latov, dostondev",
 	  ogImage: "https://media.graphassets.com/BW4BRUnCQJWCazTdKnVQ",
 	},
 	baseURL: "https://uyda-talim.uz/",
