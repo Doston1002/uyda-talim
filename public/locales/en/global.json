@@ -1,9 +1,8 @@
 {
 	"about_title": "About us",
 	"about_descrption": "The platform is open to everyone who wants to learn, with no age restrictions, providing an excellent opportunity for effective home-based education.",
-	"about_heading": "Welcome to Sammi your skills with best Online courses",
-	"about_text_1": "Home-based individual education is organized for children with physical, intellectual, sensory, or mental disabilities who require long-term treatment and, based on medical indications, are temporarily or permanently unable to attend general education schools or state specialized educational institutions (schools or boarding schools).",
-	"about_text_2": "To ensure the right to education for students, children over the age of two, who are enrolled in the relevant class, are also engaged in home-based individual education within this class.",
+	"about_heading": "New way of distance learning at home",
+	"about_text_1": "The Maktab.uz platform offers video lessons that cover topics included in the curriculum in an interesting way. The platform also offers the opportunity to learn modern knowledge and skills such as programming, graphic design, robotics, effective communication, leadership, and more.",
 	"about_btn": "Start Learning For Free",
 	"contact_title": "Contact Us",
 	"contact_description": "The platform is open to everyone who wants to learn, with no age restrictions, providing an excellent opportunity for effective home-based education.",
@@ -39,8 +38,8 @@
 
   "faq_question_7": "How to register on uyda-ta’lim.uz?",
   "faq_answer_7": "When you visit the site, click the “Login” button in the top right corner. Then go to the “Sign Up” page and enter your email and password. After registration, a confirmation link will be sent to your Gmail account (sometimes the email may end up in the Spam folder).\nYou can also sign up using your Google account.",
-	"auth_page_title_1": "Senior web designers",
-	"auth_page_title_2": "Full-Stack Developers",
+	"auth_page_title_1": "Uyda ta'lim",
+	"auth_page_title_2": "ro'yxatdan o'tish",
 	"auth_page_you": "you",
 	"login_title": "Login",
 	"login_description": "We’re happy to see you again on our platform, for getting more experience please sign in on your account!",

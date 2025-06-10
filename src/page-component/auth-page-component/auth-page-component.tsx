@@ -64,7 +64,7 @@ const AuthPageComponent = () => {
 					<Stack spacing={{ base: 10, md: 20 }}>
 						<Heading lineHeight={1.1} fontSize={{ base: '3xl', sm: '4xl', md: '5xl', lg: '6xl' }}>
 							{t('auth_page_title_1', { ns: 'global' })}{' '}
-							<Text as={'span'} bgGradient='linear(to-r, gray.400,facebook.400)' bgClip='text'>
+							<Text as={'span'} bgGradient='linear(to-r, gray.200,facebook.200)' bgClip='text'>
 								&
 							</Text>{' '}
 							{t('auth_page_title_2', { ns: 'global' })}

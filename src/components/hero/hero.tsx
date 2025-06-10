@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, Grid, Heading, Icon, Stack, Text } from '@chakra-ui/react';
+import { Button, Card, CardBody, Grid, Heading, Image, Stack, Text } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import { FaJava } from 'react-icons/fa';
 import { VscDebugStart } from 'react-icons/vsc';
@@ -19,16 +19,14 @@ const Hero = () => {
 					<Stack spacing={3}>
 						<Heading>{t('hero_title', { ns: 'home' })}</Heading>
 						<Text>{t('hero_description', { ns: 'home' })}</Text>
-						<Grid gridTemplateColumns={{ base: '100%', md: '50% 50%' }} gap={5}>
-							<Button h={14} colorScheme={'facebook'} rightIcon={<VscDebugStart />}>
+						<Grid gridTemplateColumns={{ base: '100%', md: '50% 50%' }} gap={3}>
+							<Button h={14} colorScheme={'facebook'} variant={'outline'} rightIcon={<VscDebugStart />}>
 								{t('hero_start_learning_btn', { ns: 'home' })}
-							</Button>
-							<Button h={14} colorScheme={'facebook'} variant={'outline'}>
-								{t('hero_become_instructor_btn', { ns: 'home' })}
 							</Button>
 						</Grid>
 					</Stack>
-					<Icon as={FaJava} w={400} h={240} justifySelf={'center'} opacity={'.8'} />
+					<Image src={'/images/uy.png'} alt={'home'} />
+				
 				</Grid>
 			</CardBody>
 		</Card>

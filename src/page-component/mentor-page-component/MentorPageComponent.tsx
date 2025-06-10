@@ -21,12 +21,14 @@ export default function MentorPageComponent() {
     { role: 'assistant', content: 'Assalomu alaykum, Savollaringiz bormi?\nJavob berishdan xursand bo\'lamiz!' }
   ]);
   const [loading, setLoading] = useState(false);
-  const messagesEndRef = useRef(null);
 
   // Scroll to bottom whenever messages change
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+const scrollToBottom = () => {
+  messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+};
+
 
   useEffect(() => {
     scrollToBottom();

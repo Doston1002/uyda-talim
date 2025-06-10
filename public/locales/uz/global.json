@@ -1,9 +1,8 @@
 {
 	"about_title": "Biz haqimizda",
 	"about_descrption": "Platforma yosh chegarasiz barcha oʻrganishni istaganlar uchun ochiq boʻlib, uyda samarali ta'lim olish uchun ajoyib imkoniyat yaratadi.",
-	"about_heading": "Platform for Uyda Ta'lim",
-	"about_text_1": "Uyda yakka tartibda ta’lim olish quyidagi bolalar uchun tashkil etiladi: jismoniy, aqliy, sensor yoki ruhiy nuqsonlarga ega bo‘lgan, uzoq muddat davolanishga muhtoj bo‘lgan hamda tibbiy ko‘rsatmalar asosida maktabga doimiy yoki vaqtincha bora olmaydigan bolalar. Bu ta’lim umumiy o‘rta ta’lim maktablari yoki maxsus davlat ixtisoslashtirilgan ta’lim muassasalariga qatnash imkoniyati bo‘lmagan bolalarni qamrab oladi.",
-	"about_text_2": "O‘quvchilarning ta’lim olish huquqini ta’minlash maqsadida maktabning tegishli sinfida o‘qiyotgan va ikki yoshga to‘lgan o‘quvchilar ham ushbu sinfda uyda yakka tartibda ta’lim olishga jalb etiladi.",
+	"about_heading": "Masofaviy ta’limning yangi usuli",
+	"about_text_1": "Maktab.uz platformasi Sizning e’tiboringizga o‘quv dasturiga kiritilgan mavzularni yangicha qiziqarli usulda yoritgan videodarslar taqdim etadi. Shuningdek, platformada dasturlash, grafik dizayn, robototexnika, samarali muloqot, yetakchilik singari zamonaviy bilim va ko‘nikmalarni o‘rganish imkoniyati mavjud.",
 	"about_btn": "Bepul o'rganishni boshlang",
 	"contact_title": "Biz bilan bog'lanish",
 	"contact_description": "Platforma yosh chegarasiz barcha oʻrganishni istaganlar uchun ochiq boʻlib, uyda samarali ta'lim olish uchun ajoyib imkoniyat yaratadi",
@@ -35,8 +34,8 @@
 	"faq_answer_7": "Saytga kirganingizda, sahifaning yuqori o‘ng burchagidagi \"Login\" tugmasini bosing. So‘ng \"Ro‘yxatdan o‘tish\" sahifasida email va parol kiriting. Ro‘yxatdan o‘tgach, tasdiqlovchi havola sizning Gmail manzilingizga yuboriladi (ba’zida bu xabar Spam bo‘limiga tushishi mumkin).\nShuningdek, siz Google hisobingiz orqali ham ro‘yxatdan o‘tishingiz mumkin.",
 	
 
-	"auth_page_title_1": "Senior web Dizaynerlar",
-	"auth_page_title_2": "Full-Stack Dasturchilar",
+	"auth_page_title_1": "uyda ta'lim",
+	"auth_page_title_2": "Ro'yxatdan o'tish",
 	"auth_page_you": "siz",
 	"login_title": "Kirish",
 	"login_description": "Sizni platformamizda yana ko'rishdan xursandmiz, ko'proq tajriba orttirish uchun hisobingizga kiring!",

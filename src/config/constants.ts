@@ -115,11 +115,7 @@ export const categories = [
 		id: 1,
 		icon: DesignIcons,
 	},
-	{
-		name: 'sales_marketing_category',
-		id: 2,
-		icon: AnnouncementIcons,
-	},
+	
 	{
 		name: 'development_it_category',
 		id: 3,
@@ -266,10 +262,6 @@ export const faq = [
 
 export const avatars = [
 	{
-		name: 'Ryan Florence',
-		url: 'https://bit.ly/ryan-florence',
-	},
-	{
 		name: 'Segun Adebayo',
 		url: 'https://bit.ly/sage-adebayo',
 	},
@@ -384,7 +376,7 @@ export const courseusers = [
 	},
 ];
 
-export const courseLng = ['en', 'uz', 'ru'];
+export const courseLng = [ 'uz', 'ru','en'];
 
 export const adminSidebar = [
 	{
