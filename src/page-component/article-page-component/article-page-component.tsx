@@ -27,7 +27,7 @@ export default function ArticlePageComponent() {
     setLoading(true);
 
     try {
-      const res = await axios.post('http://localhost:8000/api/openai/chatCompletion', {
+      const res = await axios.post('http://213.230.99.101:2246/api/openai/chatCompletion', {
         messages: newMessages,
       });
 
