@@ -9,10 +9,10 @@ const FaqPage = () => {
 	return (
 		<Seo
 			metaTitle={
-				`Sammi | ${t('faq_page_title', { ns: 'seo' })}` || 'Sammi | FAQ'
+				`Uyda ta'lim | ${t('faq_page_title', { ns: 'seo' })}` || 'Uyda ta\'lim  | FAQ'
 			}
 			metaDescription={
-				`Sammi | ${t('faq_page_description', { ns: 'seo' })}` ||
+				`Uyda ta'lim | ${t('faq_page_description', { ns: 'seo' })}` ||
 				'More users in sammi platform frequently asked question'
 			}
 		>

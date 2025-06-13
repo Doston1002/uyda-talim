@@ -3,7 +3,6 @@ export { default as AdminBooksPageComponent } from './admin-page-component/books
 export { default as AdminCoursesPageComponent } from './admin-page-component/courses-page-component';
 export { default as InstructorPageComponent } from './admin-page-component/instructor-page-component';
 export { default as UserPageComponent } from './admin-page-component/user-page-component';
-export { default as ArticleDetailedComponent } from './article-page-component/article-detailed-component';
 export { default as ArticlePageComponent } from './article-page-component/article-page-component';
 export { default as AuthPageComponent } from './auth-page-component/auth-page-component';
 export { default as BecomeInstructorPageComponent } from './become-instructor-page-component/become-instructor-page-component';
@@ -24,5 +23,4 @@ export { default as EditCoursePageComponent } from './instructor-page-component/
 export { default as EditDetailedCoursePageComponent } from './instructor-page-component/edit-detailed-course-page-component';
 export { default as InstructorStudentsPageComponent } from './instructor-page-component/students-page-component';
 export { default as CartPageComponent } from './shop-page-component/cart-page-component';
-// export { default as CheckoutPageComponent } from './shop-page-component/checkout-page-component';
 export { default as SuccessPageComponent } from './shop-page-component/success-page-component';

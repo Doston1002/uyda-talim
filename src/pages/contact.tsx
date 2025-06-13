@@ -9,11 +9,11 @@ const ContactPage = () => {
 	return (
 		<Seo
 			metaTitle={
-				`Sammi | ${t('contact_page_title', { ns: 'seo' })}` ||
-				'Sammi | Contact us'
+				`Uyda ta'lim  | ${t('contact_page_title', { ns: 'seo' })}` ||
+				'Uyda ta\'lim  | Contact us'
 			}
 			metaDescription={
-				`Sammi | ${t('contact_page_description', { ns: 'seo' })}` ||
+				`Uyda ta'lim | ${t('contact_page_description', { ns: 'seo' })}` ||
 				'Contact with Sammi and you can ask any questions'
 			}
 		>

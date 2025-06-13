@@ -21,11 +21,15 @@ export const userSlice = createSlice({
 	initialState,
 	reducers: {
 		pendingRegister: (state, action: PayloadAction<InterfaceEmailAndPassword>) => {
-			state.user = {
-				email: action.payload.email,
-				password: action.payload.password,
-			};
-		},
+  state.user = {
+    id: '', // yoki null agar ruxsat berilgan bo‘lsa
+    email: action.payload.email,
+    password: action.payload.password,
+    birthday: '', // yoki default qiymat
+    bio: '',
+    courses: [],
+  };
+},
 		clearError: state => {
 			state.error = null;
 		},

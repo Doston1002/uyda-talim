@@ -7,9 +7,9 @@ const AuthPage = () => {
 
 	return (
 		<Seo
-			metaTitle={`Sammi | ${t('auth_page_title', { ns: 'seo' })}` || 'Sammi | Auth'}
+			metaTitle={`Uyda ta'lim  | ${t('auth_page_title', { ns: 'seo' })}` || 'Uyda ta\'lim  | Auth'}
 			metaDescription={
-				`Sammi | ${t('auth_page_description', { ns: 'seo' })}` ||
+				`Uyda ta'lim  | ${t('auth_page_description', { ns: 'seo' })}` ||
 				'Login or create your account for using sammi platform'
 			}
 		>

@@ -9,10 +9,10 @@ const AboutPage = () => {
 	return (
 		<Seo
 			metaTitle={
-				`Sammi | ${t('about_page_title', { ns: 'seo' })}` || 'Sammi | About us'
+				` ${t('about_page_title', { ns: 'seo' })}` || ' About us'
 			}
 			metaDescription={
-				`Sammi | ${t('about_page_description', { ns: 'seo' })}` ||
+				` ${t('about_page_description', { ns: 'seo' })}` ||
 				'Main information about sammi platform'
 			}
 		>

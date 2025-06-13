@@ -12,7 +12,7 @@ const Home = () => {
 
 	return (
 		<Seo
-			metaTitle={`Sammi | ${t('main_page_title', { ns: 'seo' })}`}
+			metaTitle={`Uyda ta'lim | ${t('main_page_title', { ns: 'seo' })}`}
 			metaDescription={`${t('main_page_description', { ns: 'seo' })}`}
 		>
 			<HomePageComponent />

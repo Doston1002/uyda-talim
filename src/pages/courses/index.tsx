@@ -12,11 +12,11 @@ const Courses = () => {
 	return (
 		<Seo
 			metaTitle={
-				`Sammi | ${t('course_page_title', { ns: 'seo' })}` ||
-				'Sammi | All Courses'
+				`Uyda ta'lim  | ${t('course_page_title', { ns: 'seo' })}` ||
+				'Uyda ta\'lim | All Courses'
 			}
 			metaDescription={
-				`Sammi | ${t('course_page_description', { ns: 'seo' })}` ||
+				`Uyda ta'lim | ${t('course_page_description', { ns: 'seo' })}` ||
 				'All courses in sammi platform just learn and relax'
 			}
 		>
