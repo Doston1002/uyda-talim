@@ -94,7 +94,7 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 						</InputRightElement>
 					</TextFiled>
 					<HStack my={4} justify={'space-between'}>
-						<Checkbox colorScheme={'facebook'}>{t('auth_remember_me', { ns: 'global' })}</Checkbox>
+						<Checkbox colorScheme={'gray'}>{t('auth_remember_me', { ns: 'global' })}</Checkbox>
 						<Box
 							as={'a'}
 							onClick={() => onNavigateStateComponent('account-recovery')}
@@ -108,7 +108,7 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 					<Button
 						w={'full'}
 						bgGradient='linear(to-r, facebook.400,gray.400)'
-						color={'white'}
+						
 						_hover={{ bgGradient: 'linear(to-r, facebook.500,gray.500)', boxShadow: 'xl' }}
 						h={14}
 						type={'submit'}

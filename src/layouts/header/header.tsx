@@ -31,7 +31,6 @@ import { language } from 'src/config/constants';
 import { useActions } from 'src/hooks/useActions';
 import { useAuth } from 'src/hooks/useAuth';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
-import { DarkLogo, LightLogo } from 'src/icons';
 import { HeaderProps } from './header.props';
 import Image from 'next/image';
 
@@ -82,14 +81,14 @@ const Header = ({ onToggle }: HeaderProps) => {
 						{colorMode === 'light' ?  (
         <Image
           src="/images/logoDark.png"
-          alt={'logo' || 'Logo'}
+          alt={ 'Logo'}
           width={120}
           height={80}
         />
       ) : (
         <Image
           src="/images/logoWhite.png"
-          alt={'logo' || 'Logo'}
+          alt={'Logo'}
           width={120}
           height={80}
         />

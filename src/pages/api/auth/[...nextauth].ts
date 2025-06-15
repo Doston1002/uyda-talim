@@ -2,7 +2,6 @@ import axios from 'axios';
 import { serialize } from 'cookie';
 import { NextApiRequest, NextApiResponse } from 'next';
 import nextAuth from 'next-auth';
-import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import { API_URL, getAuthUrl } from 'src/config/api.config';
 import { AuthService } from 'src/services/auth.service';
@@ -12,12 +11,8 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 	return nextAuth(req, res, {
 		providers: [
 			GoogleProvider({
-				clientId: process.env.NEXT_PUBLIC_GOOGLE_CLINET_ID as string,
+				clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
 				clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET as string,
-			}),
-			GithubProvider({
-				clientId: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID as string,
-				clientSecret: process.env.NEXT_PUBLIC_GITHUB_CLIENT_SECRET as string,
 			}),
 		],
 		secret: process.env.NEXT_PUBLIC_SECRET_AUTH,

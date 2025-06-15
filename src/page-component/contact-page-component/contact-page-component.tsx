@@ -104,7 +104,7 @@ const ContactPageComponent = () => {
 								onChange={handleChange}
 							/>
 						</FormControl>
-						<Button w={'full'} h={14} colorScheme={'facebook'} onClick={handleSubmit}>
+						<Button w={'full'} h={14} colorScheme={'gray'} onClick={handleSubmit}>
 							{t('contact_btn', { ns: 'global' })}
 						</Button>
 					</Stack>

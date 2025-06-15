@@ -84,7 +84,7 @@ const Sidebar: FC<SidebarProps> = ({ toggle }): JSX.Element => {
 							return (
 								<Link href={`${nav.route}`} key={idx}>
 									<Button
-										colorScheme={'facebook'}
+										colorScheme={'gray'}
 										variant={active ? 'solid' : 'ghost'}
 										w={'full'}
 										justifyContent={'flex-start'}

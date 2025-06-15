@@ -39,7 +39,7 @@ const AttendancePageComponent = () => {
 
   // Sample districts data
   const districtsData = {
-    1: ["Amudaryo tumani", "Beruniy tumani", "Bozatov tumani", "Chimboy tumani", "Ellikqal’a tumani", "Kegeyli tumani", "Mo‘ynoq tumani", "Nukus tumani", "Qonliko‘l tumani", "Qo‘ng‘irot tumani", "Qorao‘zak tumani", "Shumanay tumani", "Taxtako‘pir tumani", "Taqiyatosh tumani", "To‘rtko‘l tumani", "Xo‘jayli tumani"],
+    1: ["Nukus shahar","Amudaryo tumani", "Beruniy tumani", "Bozatov tumani", "Chimboy tumani", "Ellikqal’a tumani", "Kegeyli tumani", "Mo‘ynoq tumani", "Nukus tumani", "Qonliko‘l tumani", "Qo‘ng‘irot tumani", "Qorao‘zak tumani", "Shumanay tumani", "Taxtako‘pir tumani", "Taqiyatosh tumani", "To‘rtko‘l tumani", "Xo‘jayli tumani"],
     2: ["Andijon tumani", "Asaka tumani", "Baliqchi tumani", "Bo‘z tumani", "Buloqboshi tumani", "Jalolquduq tumani", "Izboskan tumani", "Qo‘rg‘ontepa tumani", "Marhamat tumani", "Oltinko‘l tumani", "Paxtaobod tumani", "Shahrixon tumani", "Ulug‘nor tumani", "Xo‘jaobod tumani"],
     3:["Buxoro tumani", "G‘ijduvon tumani", "Jondor tumani", "Kogon tumani", "Olot tumani", "Peshku tumani", "Qorako‘l tumani", "Qorovulbozor tumani", "Romitan tumani", "Shofirkon tumani", "Vobkent tumani"],
     4:["Arnasoy tumani", "Baxmal tumani", "Do‘stlik tumani", "Forish tumani", "G‘allaorol tumani", "Mirzacho‘l tumani", "Paxtakor tumani", "Sharof Rashidov tumani", "Yangiobod tumani", "Zafarobod tumani", "Zarbdor tumani", "Zomin tumani"],
@@ -47,8 +47,39 @@ const AttendancePageComponent = () => {
 
   // Sample schools data
   const schoolsData = {
-    "Ellikqal'a tumani": ["1-maktab", "2-maktab", "3-maktab", "4-maktab"],
-    "Nukus tumani": ["1-maktab", "5-maktab", "10-maktab"],
+    "Nukus shahar":[
+  "1-maktab", "2-maktab", "3-maktab", "4-maktab", "5-maktab", "6-maktab", "7-maktab",
+  "8-maktab", "9-maktab", "10-maktab", "11-maktab", "12-maktab", "13-maktab", "14-maktab",
+  "15-maktab", "16-maktab", "17-maktab", "18-maktab", "19-maktab", "20-maktab", "21-maktab",
+  "22-maktab", "23-maktab", "24-maktab", "25-maktab", "26-maktab", "27-maktab", "28-maktab",
+  "29-maktab", "30-maktab", "31-maktab", "32-maktab", "33-maktab", "34-maktab", "35-maktab",
+  "36-maktab", "37-maktab", "38-maktab", "39-maktab", "40-maktab", "41-maktab", "42-maktab",
+  "43-maktab", "44-maktab", "45-maktab", "46-maktab", "47-maktab", "48-maktab", "49-maktab",
+  "50-maktab", "51-maktab", "52-maktab", "53-maktab", "54-maktab"
+],
+  "Amudaryo tumani": [
+  "1-maktab", "2-maktab", "3-maktab", "4-maktab", "5-maktab", "6-maktab", "7-maktab", "8-maktab", "9-maktab",
+  "10-maktab", "11-maktab", "12-maktab", "13-maktab", "14-maktab", "15-maktab", "16-IDUM", "17-maktab", "18-maktab",
+  "19-maktab", "20-maktab", "21-maktab", "22-maktab", "23-maktab", "24-maktab", "25-maktab", "26-maktab", "27-maktab",
+  "28-maktab", "29-maktab", "30-maktab", "31-maktab", "32-maktab", "33-maktab", "34-maktab", "35-maktab", "36-maktab",
+  "37-maktab", "38-maktab", "39-maktab", "40-maktab", "41-maktab", "42-maktab", "43-maktab", "44-maktab", "45-maktab",
+  "46-maktab", "47-maktab", "48-maktab", "49-maktab", "50-maktab", "51-maktab", "52-maktab", "53-maktab", "54-maktab",
+  "55-maktab", "56-maktab", "57-maktab", "58-maktab", "59-maktab", "60-maktab", "61-maktab", "62-maktab", "63-maktab",
+  "64-maktab", "65-maktab", "66-maktab", "67-maktab", "68-maktab", "69-maktab", "70-maktab", "71-maktab", "72-maktab",
+  "73-maktab", "74-maktab", "75-maktab", "76-maktab", "77-maktab", "78-maktab", "79-maktab", "80-maktab", 
+  "82-maktab", "83-maktab", "84-maktab", "85-maktab", "86-maktab", "8-IDUM"
+],
+  "Beruniy tumani": [
+  "1-maktab", "2-maktab", "3-maktab", "4-maktab", "5-maktab", "6-maktab", "7-maktab", "8-maktab", "9-maktab",
+  "10-maktab", "11-maktab", "12-maktab", "13-maktab", "14-maktab", "15-maktab", "16-maktab", "17-maktab", "18-maktab",
+  "19-maktab", "20-maktab", "21-maktab", "22-maktab", "23-maktab", "24-maktab", "25-maktab", "26-maktab", "27-maktab",
+  "28-maktab", "29-maktab", "30-maktab", "31-maktab", "32-maktab", "33-maktab", "34-maktab",
+  "36-maktab", "37-maktab", "38-maktab", "39-maktab", "40-maktab", "41-maktab", "42-maktab", "43-maktab",
+  "44-maktab", "45-maktab", "46-maktab", "47-maktab", "48-maktab", "49-maktab", "50-maktab", "51-maktab",
+  "52-maktab", "53-maktab", "54-maktab", "55-maktab", "56-maktab", "57-maktab", "58-maktab", "59-maktab",
+  "60-maktab", "61-maktab", "62-maktab", "63-maktab", "64-maktab", "65-maktab", "66-maktab", "67-maktab",
+  "68-maktab", "69-maktab", "70-maktab", "71-maktab", "72-maktab"
+],
     // Add schools for other districts similarly
   };
 
@@ -69,17 +100,132 @@ const AttendancePageComponent = () => {
 
   // Subjects data by class
   const subjectsByClass = {
-    "1-sinf": ["Ona tili", "Matematika", "Tabiiy fan", "Tasviriy san'at"],
-    "2-sinf": ["Ona tili", "Matematika", "Tabiiy fan", "Tasviriy san'at"],
-    "3-sinf": ["Ona tili", "Matematika", "Tabiiy fan", "Tasviriy san'at", "Ingliz tili"],
-    "4-sinf": ["Ona tili", "Matematika", "Tabiiy fan", "Tasviriy san'at", "Ingliz tili"],
-    "5-sinf": ["Ona tili va adabiyot", "Matematika", "Tabiiy fan", "Tarix", "Ingliz tili"],
-    "6-sinf": ["Ona tili va adabiyot", "Matematika", "Biologiya", "Geografiya", "Tarix", "Ingliz tili"],
-    "7-sinf": ["Ona tili va adabiyot", "Matematika", "Fizika", "Biologiya", "Geografiya", "Tarix", "Ingliz tili"],
-    "8-sinf": ["Ona tili va adabiyot", "Matematika", "Fizika", "Kimyo", "Biologiya", "Geografiya", "Tarix", "Ingliz tili"],
-    "9-sinf": ["Ona tili va adabiyot", "Matematika", "Fizika", "Kimyo", "Biologiya", "Geografiya", "Tarix", "Ingliz tili", "Informatika"],
-    "10-sinf": ["Ona tili va adabiyot", "Matematika", "Fizika", "Kimyo", "Biologiya", "Geografiya", "Tarix", "Ingliz tili", "Informatika"],
-    "11-sinf": ["Ona tili va adabiyot", "Matematika", "Fizika", "Kimyo", "Biologiya", "Geografiya", "Tarix", "Ingliz tili", "Informatika"]
+  "1-sinf": [
+  "Ona tili va adabiyot",
+  "Chet tili",
+  "Matematika",
+  "Informatika va axborot texnologiyalari",
+  "Tabiiy fan (Science)",
+  "Tasviriy san’at va chizmachilik",
+  "Texnologiya"
+],
+    "2-sinf": [
+  "Ona tili va adabiyot",
+  "O‘zbek tili/rus tili",
+  "Chet tili",
+  "Matematika",
+  "Informatika va axborot texnologiyalari",
+  "Tabiiy fan (Science)",
+  "Tasviriy san’at va chizmachilik",
+  "Texnologiya"
+],
+    "3-sinf": [
+  "Ona tili va adabiyot",
+  "O‘zbek tili/rus tili",
+  "Chet tili",
+  "Matematika",
+  "Tabiiy fan (Science)",
+  "Tasviriy san’at va chizmachilik",
+  "Texnologiya"
+],
+    "4-sinf": [
+  "Ona tili va adabiyot",
+  "O‘zbek tili/rus tili",
+  "Chet tili",
+  "Matematika",
+  "Tabiiy fan (Science)",
+  "Tasviriy san’at va chizmachilik",
+  "Texnologiya"
+],
+    "5-sinf": [
+  "Ona tili va adabiyot",
+  "O‘zbek tili/rus tili",
+  "Chet tili",
+  "Matematika",
+  "Tabiiy fan (Science)",
+  "Tasviriy san’at va chizmachilik",
+  "Texnologiya"
+],
+    "6-sinf": [
+  "Ona tili va adabiyot",
+  "O‘zbek tili/rus tili",
+  "Chet tili",
+  "Tarix",
+  "Matematika",
+  "Tabiiy fan (Science)",
+  "Tasviriy san’at va chizmachilik",
+  "Texnologiya"
+],
+    "7-sinf":  [
+  "Ona tili va adabiyot",
+  "O‘zbek tili/rus tili",
+  "Chet tili",
+  "Tarix",
+  "Matematika",
+  "Fizika",
+  "Kimyo",
+  "Biologiya",
+  "Geografiya va iqtisodiyot",
+  "Tasviriy san’at va chizmachilik"
+],
+    "8-sinf": [
+  "Ona tili va adabiyot",
+  "O‘zbek tili/rus tili",
+  "Chet tili",
+  "Tarix",
+  "Davlat va huquq asoslari",
+  "Matematika",
+  "Fizika",
+  "Kimyo",
+  "Biologiya",
+  "Geografiya va iqtisodiyot",
+  "Tasviriy san’at va chizmachilik",
+  "Texnologiya"
+],
+    "9-sinf": [
+  "Ona tili va adabiyot",
+  "O‘zbek tili/rus tili",
+  "Chet tili",
+  "Tarix",
+  "Davlat va huquq asoslari",
+  "Matematika",
+  "Fizika",
+  "Kimyo",
+  "Biologiya",
+  "Geografiya va iqtisodiyot",
+  "Tasviriy san’at va chizmachilik",
+  "Texnologiya"
+],
+    "10-sinf":  [
+  "Ona tili va adabiyot",
+  "O‘zbek tili/rus tili",
+  "Chet tili",
+  "Tarix",
+  "Davlat va huquq asoslari",
+  "Tarbiya",
+  "Matematika",
+  "Informatika va axborot texnologiyalari",
+  "Fizika",
+  "Kimyo",
+  "Biologiya",
+  "Geografiya va iqtisodiyot",
+  "Texnologiya"
+],
+    "11-sinf":[
+  "Ona tili va adabiyot",
+  "O‘zbek tili/rus tili",
+  "Chet tili",
+  "Tarix",
+  "Davlat va huquq asoslari",
+  "Tarbiya",
+  "Matematika",
+  "Informatika va axborot texnologiyalari",
+  "Fizika",
+  "Kimyo",
+  "Biologiya",
+  "Geografiya va iqtisodiyot",
+  "Texnologiya"
+],
   };
 
   // Form state
@@ -151,7 +297,7 @@ const AttendancePageComponent = () => {
     } = formData;
 
     if (!fullName || !teacherName || !region || !district || !school || !schoolClass || !subject) {
-      alert(t('contact_form_error', { ns: 'global' }));
+      alert(t('Ma\'lumotlarni to\'liq to\'ldiring', { ns: 'global' }));
       return;
     }
 
@@ -356,7 +502,7 @@ const AttendancePageComponent = () => {
               </Checkbox>
             </FormControl>
 
-            <Button w={'full'} h={14} colorScheme={'facebook'} onClick={handleSubmit}>
+            <Button w={'full'} h={14} colorScheme={'gray'} onClick={handleSubmit}>
               {t('contact_btn', { ns: 'global' })}
             </Button>
           </Stack>

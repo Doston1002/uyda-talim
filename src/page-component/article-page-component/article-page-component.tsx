@@ -11,6 +11,8 @@ import {
 } from '@chakra-ui/react';
 import axios from 'axios';
 
+import { API_URL } from 'src/config/api.config';
+
 export default function ArticlePageComponent() {
   const [messages, setMessages] = useState([
     { role: 'user', content: 'Salom!' },
@@ -27,7 +29,7 @@ export default function ArticlePageComponent() {
     setLoading(true);
 
     try {
-      const res = await axios.post('http://213.230.99.101:2246/api/openai/chatCompletion', {
+      const res = await axios.post(`${API_URL}/openai/chatCompletion`, {
         messages: newMessages,
       });
 

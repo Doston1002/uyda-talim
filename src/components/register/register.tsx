@@ -100,7 +100,7 @@ const Register = ({ onNavigateStateComponent }: RegisterProps) => {
 						</TextFiled>
 					</Flex>
 					<HStack my={4} justify={'space-between'}>
-						<Checkbox colorScheme={'facebook'}>{t('auth_remember_me', { ns: 'global' })}</Checkbox>
+						<Checkbox colorScheme={'gray'}>{t('auth_remember_me', { ns: 'global' })}</Checkbox>
 						<Box
 							as={'a'}
 							onClick={() => onNavigateStateComponent('account-recovery')}
