@@ -39,7 +39,7 @@ const InstructorPageComponent = () => {
 			</Card>
 
 			<Box mt={10} mx={'auto'}>
-				<Tabs isFitted variant='solid-rounded' colorScheme={'facebook'}>
+				<Tabs isFitted variant='solid-rounded' colorScheme={'gray'}>
 					<TabList mb='1em'>
 						<Tab>{t('approved_instructors', { ns: 'admin' })}</Tab>
 						<Tab>{t('applied_instructors', { ns: 'admin' })}</Tab>

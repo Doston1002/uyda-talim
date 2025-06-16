@@ -81,7 +81,7 @@ const BooksPageComponent = () => {
 			</Card>
 			<Flex mt={5} justify={'flex-end'}>
 				<IconButton
-					colorScheme='facebook'
+					colorScheme='gray'
 					aria-label='Search database'
 					icon={<CgAdd />}
 					onClick={createOpenModal}

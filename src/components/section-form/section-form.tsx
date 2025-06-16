@@ -66,7 +66,6 @@ const SectionForm = ({ onClose, values }: SectionFormProps) => {
 					h={14}
 					mt={4}
 					w={'full'}
-					colorScheme={'facebook'}
 					type={'submit'}
 					isLoading={isLoading}
 					loadingText={`${t('loading', { ns: 'global' })}`}

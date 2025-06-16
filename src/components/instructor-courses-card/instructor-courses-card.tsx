@@ -39,7 +39,7 @@ const InstructorCoursesCard: FC<InstructoCoursesCardProps> = ({ item }): JSX.Ele
 				</HStack>
 				<Divider />
 				<HStack>
-					<Button rightIcon={<VscOpenPreview />} w={'full'} h={16} colorScheme={'facebook'}>
+					<Button rightIcon={<VscOpenPreview />} w={'full'} h={16} colorScheme={'gray'}>
 						{t('preview', { ns: 'instructor' })}
 					</Button>
 				</HStack>

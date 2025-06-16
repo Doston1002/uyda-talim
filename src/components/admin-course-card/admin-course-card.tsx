@@ -65,7 +65,7 @@ const AdminCourseCard: FC<AdminCourseCardProps> = ({ course }): JSX.Element => {
 					</Box>
 				</Text>
 				<ButtonGroup>
-					<Button w={'full'} rightIcon={<VscOpenPreview />} colorScheme={'facebook'}>
+					<Button w={'full'} rightIcon={<VscOpenPreview />} colorScheme={'gray'}>
 						{t('preview', { ns: 'instructor' })}
 					</Button>
 					<Button

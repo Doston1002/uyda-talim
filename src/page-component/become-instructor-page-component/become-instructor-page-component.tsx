@@ -74,7 +74,7 @@ const BecomeInstructorPageComponent = () => {
 								title={t('instructor_page_title', { ns: 'instructor' })}
 								subtitle={t('instructor_page_description', { ns: 'instructor' })}
 							/>
-							<Button onClick={onOpen} h={14} colorScheme={'facebook'}>
+							<Button onClick={onOpen} h={14} colorScheme={'gray'}>
 								{t('instructor_page_get_started', { ns: 'instructor' })}
 							</Button>
 						</Stack>
@@ -149,7 +149,7 @@ const BecomeInstructorPageComponent = () => {
 							title={t('become_instructor_today', { ns: 'instructor' })}
 							subtitle={t('become_instructor_today_descritpion', { ns: 'instructor' })}
 						/>
-						<Button onClick={onOpen} w={'full'} h={14} colorScheme={'facebook'}>
+						<Button onClick={onOpen} w={'full'} h={14} colorScheme={'gray'}>
 							{t('instructor_page_get_started', { ns: 'instructor' })}
 						</Button>
 					</Stack>
@@ -219,7 +219,7 @@ const BecomeInstructorPageComponent = () => {
 							<ModalFooter>
 								<Button
 									type='submit'
-									colorScheme={'facebook'}
+									colorScheme={'gray'}
 									h={14}
 									rightIcon={<GoVerified />}
 									isLoading={isLoading}

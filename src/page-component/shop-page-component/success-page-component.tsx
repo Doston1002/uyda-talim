@@ -10,7 +10,7 @@ const SuccessPageComponent = () => {
 					<Icon as={BsFillPatchCheckFill} w={20} h={20} color={'green.500'} />
 					<Heading>Your order is completed!</Heading>
 					<Text>Thank you. Your order has been received.</Text>
-					<Button w={'container.sm'} colorScheme={'facebook'} h={14}>
+					<Button w={'container.sm'} colorScheme={'gray'} h={14}>
 						Dashboard
 					</Button>
 					<Image width={480} height={480} src='/images/success.png' alt='curriculum' />

@@ -101,7 +101,7 @@ const LessonForm = ({ sectionId, values, onToggle }: LessonFormProps) => {
 								h={14}
 								mt={4}
 								w={'full'}
-								colorScheme={'facebook'}
+								colorScheme={'gray'}
 								type={'submit'}
 								isLoading={isLoading}
 								loadingText={`${t('loading', { ns: 'global' })}`}

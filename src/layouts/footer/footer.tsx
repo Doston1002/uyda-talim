@@ -17,14 +17,20 @@ const Footer = () => {
 			borderTopColor={useColorModeValue('gray.200', 'gray.700')}
 			h={'10vh'}
 		>
-			<Flex justify={'space-between'} align={'center'} h={'full'}>
+			<Flex justify={'space-between'} align={'center'} h={'full'} px={4}>
 				<Text>
 					© {format(new Date(), 'yyyy')} Uyda Ta'lim {t('footer', { ns: 'layout' })}
 				</Text>
-				<Flex gap={3} mr={10}>
-					<IconButton icon={<FaTelegram />} colorScheme={'facebook'} variant={'outline'} aria-label={'telegram'} />
-					<IconButton icon={<FaInstagram />} colorScheme={'facebook'} variant={'outline'} aria-label={'instagram'} />
-					<IconButton icon={<FaYoutube />} colorScheme={'facebook'} variant={'outline'} aria-label={'youtube'} />
+				<Flex gap={3} mr={2}>
+					<a href="https://t.me/uzedu" target="_blank" rel="noopener noreferrer">
+						<IconButton icon={<FaTelegram />} colorScheme={'gray'} variant={'outline'} aria-label={'telegram'} />
+					</a>
+					<a href="https://www.instagram.com/mmtv_uz/" target="_blank" rel="noopener noreferrer">
+						<IconButton icon={<FaInstagram />} colorScheme={'gray'} variant={'outline'} aria-label={'instagram'} />
+					</a>
+					<a href="https://www.youtube.com/@Uydatalim" target="_blank" rel="noopener noreferrer">
+						<IconButton icon={<FaYoutube />} colorScheme={'gray'} variant={'outline'} aria-label={'youtube'} />
+					</a>
 				</Flex>
 			</Flex>
 		</Box>

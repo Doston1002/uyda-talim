@@ -235,7 +235,7 @@ const Header = () => {
 									<ModalFooter>
 										<Button
 											h={14}
-											colorScheme={'facebook'}
+											colorScheme={'gray'}
 											w={'full'}
 											isActive
 											type='submit'

@@ -103,7 +103,7 @@ const Header = ({ onToggle }: HeaderProps) => {
 							aria-label='cart'
 							onClick={() => router.push('/shop/cart')}
 							icon={<AiOutlineShoppingCart />}
-							colorScheme={'facebook'}
+							colorScheme={'gray'}
 							variant={'solid'}
 						/>
 						{[...courses, ...books].length ? (
@@ -158,7 +158,7 @@ const Header = ({ onToggle }: HeaderProps) => {
 								<BsFillSunFill />
 							)
 						}
-						colorScheme={'facebook'}
+						colorScheme={'gray'}
 						variant={'outline'}
 					/>
 					{user ? (
@@ -211,7 +211,7 @@ const Header = ({ onToggle }: HeaderProps) => {
 								display={{ base: 'none', md: 'flex' }}
 								rightIcon={<BiUserCircle />}
 								onClick={() => router.push('/auth')}
-								colorScheme={'facebook'}
+								colorScheme={'gray'}
 							>
 								{t('login', { ns: 'layout' })}
 							</Button>
@@ -220,7 +220,7 @@ const Header = ({ onToggle }: HeaderProps) => {
 								aria-label='login'
 								onClick={() => router.push('/auth')}
 								icon={<AiOutlineLogin />}
-								colorScheme={'facebook'}
+								colorScheme={'gray'}
 								variant={'outline'}
 							/>
 						</>

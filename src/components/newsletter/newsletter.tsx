@@ -24,7 +24,7 @@ const Newsletter = () => {
 							placeholder={t('newsletter_placeholder', { ns: 'home' }) || ''}
 							_placeholder={{ color: 'gray.500' }}
 						/>
-						<Button pos={'absolute'} right={2} top={2} colorScheme={'facebook'} zIndex={999}>
+						<Button pos={'absolute'} right={2} top={2} colorScheme={'gray'} zIndex={999}>
 							{t('newsletter_submit', { ns: 'home' })}
 						</Button>
 					</Box>

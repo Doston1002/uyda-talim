@@ -45,7 +45,7 @@ const DashboardPageComponent = () => {
 					<Tabs
 						isFitted
 						variant='enclosed-colored'
-						colorScheme={'facebook'}
+						colorScheme={'gray'}
 						orientation={'vertical'}
 						onChange={tabHandler}
 						defaultValue={tabIndex}

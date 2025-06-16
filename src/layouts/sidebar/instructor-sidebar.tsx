@@ -84,7 +84,7 @@ const InstructorSidebar: FC<SidebarProps> = ({ toggle }): JSX.Element => {
 					return (
 						<Link href={`/instructor/${item.route}`} key={idx}>
 							<Button
-								colorScheme={'facebook'}
+								colorScheme={'gray'}
 								variant={active ? 'solid' : 'ghost'}
 								w={'full'}
 								justifyContent={'flex-start'}
@@ -99,32 +99,6 @@ const InstructorSidebar: FC<SidebarProps> = ({ toggle }): JSX.Element => {
 						</Link>
 					);
 				})}
-				{/* {navigation.map((item, idx) => (
-					<Box key={idx} mt={10}>
-						<Text>{t(item.title, { ns: 'layout' })}</Text>
-						{item.links.map((nav, idx) => {
-							const active = `/${router.pathname.split('/')[1]}` == nav.route;
-
-							return (
-								<Link href={`${nav.route}`} key={idx}>
-									<Button
-										colorScheme={'facebook'}
-										variant={active ? 'solid' : 'ghost'}
-										w={'full'}
-										justifyContent={'flex-start'}
-										h={14}
-										mt={2}
-									>
-										<HStack gap={2}>
-											<Icon as={nav.icon} />
-											<Text>{t(nav.label, { ns: 'layout' })}</Text>
-										</HStack>
-									</Button>
-								</Link>
-							);
-						})}
-					</Box>
-				))} */}
 			</Container>
 		</Box>
 	);

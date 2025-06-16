@@ -20,7 +20,7 @@ const AboutPageComponent = () => {
 						{t('about_heading', { ns: 'global' })}
 					</Heading>
 					<Text>{t('about_text_1', { ns: 'global' })}</Text>
-					<Button colorScheme={'facebook'} h={14} variant={'outline'} w={'fit-content'}>
+					<Button colorScheme={'gray'} h={14} variant={'outline'} w={'fit-content'}>
 						{t('about_btn', { ns: 'global' })}
 					</Button>
 				</Stack>

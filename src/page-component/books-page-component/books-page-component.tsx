@@ -71,7 +71,7 @@ const BooksPageComponent = () => {
 				{booksCategory.map((item, idx) => (
 					<Button
 						key={item.id}
-						colorScheme={'facebook'}
+						colorScheme={'gray'}
 						variant={filter == item.id ? 'solid' : 'outline'}
 						borderRadius={0}
 						borderLeftRadius={idx == 0 ? 'md' : 0}
@@ -113,7 +113,7 @@ const BooksPageComponent = () => {
 								justify={'space-between'}
 							>
 								<Button
-									colorScheme={'facebook'}
+									colorScheme={'gray'}
 									rightIcon={<AiFillShopping />}
 									onClick={() => addToCart(item)}
 									isDisabled={cart.books.map(c => c._id).includes(item._id) ? true : false}

@@ -77,14 +77,14 @@ const StudentsPageComponent = () => {
 						placeholder={t('search_input_placeholder', { ns: 'courses' }) || ''}
 						_placeholder={{ color: 'gray.500' }}
 					/>
-					<Button pos={'absolute'} right={2} top={2} colorScheme={'facebook'} zIndex={999}>
+					<Button pos={'absolute'} right={2} top={2} colorScheme={'gray'} zIndex={999}>
 						{t('search_input_btn', { ns: 'courses' })}
 					</Button>
 				</Box>
 				<TableContainer mt={10}>
 					<Table variant='striped' colorScheme='teal'>
 						<TableCaption>
-							<Button colorScheme={'facebook'} variant={'outline'} rightIcon={<AiOutlineReload />}>
+							<Button colorScheme={'gray'} variant={'outline'} rightIcon={<AiOutlineReload />}>
 								{t('more', { ns: 'instructor' })}...
 							</Button>
 						</TableCaption>

@@ -70,7 +70,7 @@ const Verification = () => {
 								onChange={val => formik.setFieldValue('otp', val)}
 								otp
 								size={'lg'}
-								colorScheme={'facebook'}
+								colorScheme={'gray'}
 								focusBorderColor={'facebook.500'}
 							>
 								{new Array(6).fill(1).map((_, idx) => (

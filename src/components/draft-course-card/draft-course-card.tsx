@@ -84,7 +84,7 @@ const DraftCourseCard: FC<DraftCourseCardProps> = ({ item }): JSX.Element => {
 					</Box>
 				</Text>
 				<Button
-					colorScheme={'facebook'}
+					colorScheme={'gray'}
 					isLoading={isLoading}
 					loadingText={`${t('loading', { ns: 'global' })}`}
 					h={14}

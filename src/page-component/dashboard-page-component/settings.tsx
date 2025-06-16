@@ -126,7 +126,7 @@ const Settings = () => {
 							size='sm'
 							rounded='full'
 							top='-10px'
-							colorScheme='facebook'
+							colorScheme='gray'
 							aria-label='remove Image'
 							icon={<AiOutlineClose />}
 							onClick={() => setavatar(undefined)}
@@ -138,7 +138,7 @@ const Settings = () => {
 								size='sm'
 								rounded='full'
 								top='-10px'
-								colorScheme='facebook'
+								colorScheme='gray'
 								aria-label='remove Image'
 								icon={<MdEdit />}
 								onClick={openFile}
@@ -206,7 +206,7 @@ const Settings = () => {
 						mt={5}
 						h={14}
 						w={'full'}
-						colorScheme={'facebook'}
+						colorScheme={'gray'}
 						isActive
 						type='submit'
 						isLoading={isLoading}

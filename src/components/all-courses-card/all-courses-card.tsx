@@ -114,7 +114,7 @@ const AllCoursesCard = ({
 								{!isMyCourse && (
 									<Button
 										rightIcon={<BsMinecartLoaded />}
-										colorScheme={'facebook'}
+										colorScheme={'gray'}
 										onClick={addCourseToCardHandler}
 										isDisabled={
 											courses.map(c => c._id).includes(course._id)
@@ -127,7 +127,7 @@ const AllCoursesCard = ({
 								)}
 								<Button
 									onClick={onDetailedCourse}
-									colorScheme={'facebook'}
+									colorScheme={'gray'}
 									variant={'outline'}
 								>
 									Detail

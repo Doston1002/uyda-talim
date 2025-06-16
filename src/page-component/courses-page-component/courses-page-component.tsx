@@ -89,7 +89,7 @@ const CoursesPageComponent = () => {
 					pos={'absolute'}
 					right={2}
 					top={2}
-					colorScheme={'facebook'}
+					colorScheme={'gray'}
 					zIndex={999}
 				>
 					{t('search_input_btn', { ns: 'courses' })}
@@ -150,7 +150,7 @@ const FilterItem = ({
 					key={c.id}
 					onChange={() => setFilter({ category: c.id, id: item.id })}
 					value={c.id}
-					colorScheme={'facebook'}
+					colorScheme={'gray'}
 				>
 					<Flex gap={2}>
 						{item.id === 'rating' && (

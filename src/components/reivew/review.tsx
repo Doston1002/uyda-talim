@@ -90,7 +90,7 @@ const Review: FC<ReviewProps> = ({ reviews, isLoading }) => {
 				{data.length >= 5 && (
 					<Button
 						size={'sm'}
-						colorScheme={'facebook'}
+						colorScheme={'gray'}
 						variant={'outline'}
 						fontWeight={'bold'}
 					>

@@ -66,7 +66,7 @@ const AdminInstructorTable: FC<AdminInstructorTableProps> = ({
 			<TableContainer>
 				<Table variant='striped' colorScheme='teal'>
 					<TableCaption>
-						<Button colorScheme={'facebook'} variant={'outline'} rightIcon={<AiOutlineReload />}>
+						<Button colorScheme={'gray'} variant={'outline'} rightIcon={<AiOutlineReload />}>
 							{t('more', { ns: 'instructor' })}...
 						</Button>
 					</TableCaption>
@@ -104,7 +104,7 @@ const AdminInstructorTable: FC<AdminInstructorTableProps> = ({
 										) : (
 											<Button
 												size={'sm'}
-												colorScheme='facebook'
+												colorScheme='gray'
 												isLoading={isLoading}
 												onClick={() => approveInstructorHandler(instructor._id)}
 											>

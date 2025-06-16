@@ -81,9 +81,9 @@ const AuthNavbarComponent = () => {
 						<Menu placement='bottom'>
 							<MenuButton
 								as={Button}
-								rightIcon={<TbWorld />}
+								rightIcon={<TbWorld />} 
 								textTransform={'capitalize'}
-								colorScheme={'facebook'}
+								colorScheme={'gray'}
 								variant={'ghost'}
 							>
 								{i18n.resolvedLanguage}
@@ -105,7 +105,7 @@ const AuthNavbarComponent = () => {
 							aria-label='color-mode'
 							onClick={toggleColorMode}
 							icon={colorMode == 'light' ? <BsFillMoonFill /> : <BsFillSunFill />}
-							colorScheme={'facebook'}
+							colorScheme={'gray'}
 							variant={'outline'}
 						/>
 					</HStack>

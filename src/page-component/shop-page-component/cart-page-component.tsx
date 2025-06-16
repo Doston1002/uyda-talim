@@ -87,7 +87,7 @@ const CartPageComponent = () => {
 					>
 						<Button
 							h={14}
-							colorScheme={'facebook'}
+							colorScheme={'gray'}
 							borderRadius={0}
 							onClick={() => router.push('/shop/success')}
 						>
@@ -135,10 +135,10 @@ const ShoppingCartCard = ({ item, image }) => {
 					<Heading fontSize={'xl'}>{item.title}</Heading>
 					<Text>by Admin Platform</Text>
 					<HStack>
-						<Tag colorScheme={'facebook'}>Books</Tag>
-						<Tag colorScheme={'facebook'}>Usefull</Tag>
+						<Tag colorScheme={'gray'}>Books</Tag>
+						<Tag colorScheme={'gray'}>Usefull</Tag>
 						<Tag
-							colorScheme={'facebook'}
+							colorScheme={'gray'}
 							textTransform={'capitalize'}
 						>
 							{item.category}

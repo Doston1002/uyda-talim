@@ -97,7 +97,7 @@ const UserPageComponent = () => {
 						pos={'absolute'}
 						right={2}
 						top={2}
-						colorScheme={'facebook'}
+						colorScheme={'gray'}
 						zIndex={999}
 						onClick={searchUserHandler}
 					>
@@ -109,7 +109,7 @@ const UserPageComponent = () => {
 					<Table variant='striped' colorScheme='teal'>
 						<TableCaption>
 							<Button
-								colorScheme={'facebook'}
+								colorScheme={'gray'}
 								variant={'outline'}
 								rightIcon={<AiOutlineReload />}
 								isLoading={isLoading}

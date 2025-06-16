@@ -163,7 +163,7 @@ const DetailedCourseComponent = () => {
 										mt={5}
 										w={'full'}
 										h={14}
-										colorScheme={'facebook'}
+										colorScheme={'gray'}
 										onClick={navigateUser}
 									>
 										{user?.courses.includes(course?._id as string)
@@ -272,7 +272,7 @@ const DetailedCourseComponent = () => {
 				onChange={tabHandler}
 				defaultValue={tabIndex}
 				isFitted
-				colorScheme={'facebook'}
+				colorScheme={'gray'}
 			>
 				<TabList>
 					{tablist.map(tab => (

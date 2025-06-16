@@ -20,7 +20,7 @@ const Hero = () => {
 						<Heading>{t('hero_title', { ns: 'home' })}</Heading>
 						<Text>{t('hero_description', { ns: 'home' })}</Text>
 						<Grid gridTemplateColumns={{ base: '100%', md: '50% 50%' }} gap={3}>
-							<Button h={14} colorScheme={'facebook'} variant={'outline'} rightIcon={<VscDebugStart />}>
+							<Button h={14} colorScheme={'gray'} variant={'outline'} rightIcon={<VscDebugStart />}>
 								{t('hero_start_learning_btn', { ns: 'home' })}
 							</Button>
 						</Grid>
