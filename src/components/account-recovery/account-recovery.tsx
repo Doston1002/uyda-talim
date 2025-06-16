@@ -252,7 +252,7 @@ const AccountRecovery = ({ onNavigateStateComponent }: AccountRecoveryProps) => 
 
 	return (
 		<>
-			<Progress value={progress} colorScheme={'facebook'} hasStripe isAnimated />
+			<Progress value={progress} colorScheme={'gray'} hasStripe isAnimated />
 
 			<Stack spacing={4}>
 				{step == 1 && form1}
