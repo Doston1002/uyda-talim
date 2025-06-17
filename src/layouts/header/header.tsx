@@ -98,14 +98,6 @@ const Header = ({ onToggle }: HeaderProps) => {
 				<HStack>
 					<Box pos={'relative'}>
 						{/* <Button onClick={() => navigate(`/courses/${course.id}`)}>Detail</Button> */}
-
-						<IconButton
-							aria-label='cart'
-							onClick={() => router.push('/shop/cart')}
-							icon={<AiOutlineShoppingCart />}
-							colorScheme={'gray'}
-							variant={'solid'}
-						/>
 						{[...courses, ...books].length ? (
 							<Badge
 								pos={'absolute'}

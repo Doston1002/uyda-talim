@@ -19,6 +19,8 @@ import {
 	useToast,
 } from '@chakra-ui/react';
 import { Form, Formik, FormikValues } from 'formik';
+
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -123,7 +125,17 @@ const Header = () => {
 			>
 				<Stack gap={{ base: 0, md: 2 }} direction={'row'}>
 					<Link href='/'>
-						{colorMode === 'light' ? <DarkLogo /> : <LightLogo />}
+						{colorMode === 'light' ?  <Image
+          src="/images/logoDark.png"
+          alt={ 'Logo'}
+          width={120}
+          height={80}
+        /> : <Image
+		src="/images/logoWhite.png"
+		alt={'Logo'}
+		width={120}
+		height={80}
+	  />}
 					</Link>
 				</Stack>
 
@@ -144,7 +156,7 @@ const Header = () => {
 					<IconButton
 						icon={<FaTelegram />}
 						onClick={() =>
-							window.open('https://t.me/sammi_community')
+							window.open('https://t.me/uzedu')
 						}
 						aria-label={'comments'}
 						variant={'ghost'}
@@ -159,18 +171,8 @@ const Header = () => {
 						colorScheme={'green'}
 						display={{ base: 'none', md: 'flex' }}
 					/>
-					<Button
-						leftIcon={<HiHeart color='red' />}
-						onClick={() =>
-							window.open('https://t.me/samarbadriddinov/661')
-						}
-						colorScheme={'green'}
-						display={{ base: 'none', md: 'flex' }}
-					>
-						Sponsor
-					</Button>
 					<IconButton
-						onClick={() => router.push(`/course/${course?.slug}`)}
+						onClick={() => router.push(`/`)}
 						icon={<RiLogoutBoxLine />}
 						aria-label={'comments'}
 						variant={'outline'}
@@ -196,7 +198,7 @@ const Header = () => {
 								<Form>
 									<ModalBody>
 										<Text fontWeight='bold' mb='1rem'>
-											Kurs haqida o'z fikringizni yozishingiz mumkin.
+											Online darslar haqida o'z fikringizni yozishingiz mumkin.
 										</Text>
 										<Flex gap={2}>
 											<TextFiled

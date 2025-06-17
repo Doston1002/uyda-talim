@@ -111,26 +111,13 @@ const AllCoursesCard = ({
 							direction={{ base: 'column', md: 'row' }}
 						>
 							<Flex gap={4} mt={{ base: 5, md: 0 }}>
-								{!isMyCourse && (
-									<Button
-										rightIcon={<BsMinecartLoaded />}
-										colorScheme={'gray'}
-										onClick={addCourseToCardHandler}
-										isDisabled={
-											courses.map(c => c._id).includes(course._id)
-												? true
-												: false
-										}
-									>
-										Add to cart
-									</Button>
-								)}
+								
 								<Button
 									onClick={onDetailedCourse}
 									colorScheme={'gray'}
 									variant={'outline'}
 								>
-									Detail
+									Batafsil
 								</Button>
 							</Flex>
 						</Flex>
