@@ -138,14 +138,29 @@ export const categories = [
 	},
 ];
 
+// startup-client/src/config/constants.ts
 export const trustedCompeny = [
-	AiFillAmazonCircle,
-	SiAmd,
-	SiCisco,
-	FaApplePay,
-	SiLogitech,
-	SiSpotify,
-];
+	{
+	  name: 'Segun Adebayo',
+	  url: 'https://bit.ly/sage-adebayo',
+	  logo: '/images/segun.png', // logoni joylashuvi
+	},
+	{
+	  name: 'Kent Dodds',
+	  url: 'https://bit.ly/kent-c-dodds',
+	  logo: '/images/kent.png',
+	},
+	{
+	  name: 'Prosper Otemuyiwa',
+	  url: 'https://bit.ly/prosper-baba',
+	  logo: '/images/prosper.png',
+	},
+	{
+	  name: 'Christian Nwamba',
+	  url: 'https://bit.ly/code-beast',
+	  logo: '/images/christian.png',
+	},
+  ];
 
 export const language = [
 	{ nativeLng: "O'zbek", lng: 'uz', icon: UzbIcons },

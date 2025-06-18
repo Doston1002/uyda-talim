@@ -7,6 +7,7 @@ import { AuthService } from 'src/services/auth.service';
 
 const $axios = axios.create({
 	baseURL: API_URL,
+	withCredentials: true,
 	headers: {
 		'Content-Type': 'application/json',
 	},
