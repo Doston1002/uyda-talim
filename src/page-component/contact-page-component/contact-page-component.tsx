@@ -87,8 +87,8 @@ const ContactPageComponent = () => {
 							<FormLabel>{t('contact_email', { ns: 'global' })}</FormLabel>
 							<Input
 								name="phone"
-								type="text"
-								placeholder="+998 90 1234567"
+								type="number"
+								placeholder="+998 90 123 45 67"
 								h={14}
 								value={formData.phone}
 								onChange={handleChange}

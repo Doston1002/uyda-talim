@@ -377,7 +377,7 @@ const AttendancePageComponent = () => {
             {/* Personal Information */}
             <Flex justify={'flex-start'} direction={{ base: 'column', lg: 'row' }} align={'center'} gap={'4'}>
               <FormControl isRequired>
-                <FormLabel>Ismi</FormLabel>
+                <FormLabel>{t('full_name', { ns: 'global' })}</FormLabel>
                 <Input
                   name="fullName"
                   type="text"
@@ -388,7 +388,7 @@ const AttendancePageComponent = () => {
                 />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel>O'qituvchi ismi</FormLabel>
+                <FormLabel>{t('teacher_name', { ns: 'global' })}</FormLabel>
                 <Input
                   name="teacherName"
                   type="text"
@@ -402,7 +402,7 @@ const AttendancePageComponent = () => {
 
             {/* Region, District, School Selection */}
             <FormControl isRequired>
-              <FormLabel>Hudud</FormLabel>
+              <FormLabel>{t('region', { ns: 'global' })}</FormLabel>
               <Select 
                 placeholder='Tanlang'
                 name="region"
@@ -416,7 +416,7 @@ const AttendancePageComponent = () => {
             </FormControl>
 
             <FormControl isRequired>
-              <FormLabel>Tuman/Shahar</FormLabel>
+              <FormLabel>{t('district', { ns: 'global' })}</FormLabel>
               <Select 
                 placeholder='Tanlang'
                 name="district"
@@ -431,7 +431,7 @@ const AttendancePageComponent = () => {
             </FormControl>
 
             <FormControl isRequired>
-              <FormLabel>Maktab</FormLabel>
+              <FormLabel>{t('school', { ns: 'global' })}</FormLabel>
               <Select 
                 placeholder='Tanlang'
                 name="school"
@@ -448,7 +448,7 @@ const AttendancePageComponent = () => {
             {/* School Class and Subject Selection */}
             <Flex justify={'flex-start'} direction={{ base: 'column', lg: 'row' }} align={'center'} gap={'4'}>
               <FormControl isRequired>
-                <FormLabel>Sinf</FormLabel>
+                <FormLabel>{t('school_class', { ns: 'global' })}</FormLabel>
                 <Select 
                   placeholder='Tanlang'
                   name="schoolClass"
@@ -461,7 +461,7 @@ const AttendancePageComponent = () => {
                 </Select>
               </FormControl>
               <FormControl isRequired>
-                <FormLabel>Fan</FormLabel>
+                <FormLabel>{t('subject', { ns: 'global' })}</FormLabel>
                 <Select 
                   placeholder='Tanlang'
                   name="subject"
@@ -477,15 +477,15 @@ const AttendancePageComponent = () => {
             </Flex>
 
             <FormControl>
-              <FormLabel>Dars olib borishi</FormLabel>
+              <FormLabel>{t('teaching_method', { ns: 'global' })}</FormLabel>
               <RadioGroup 
                 onChange={handleTeachingMethodChange} 
                 value={formData.teachingMethod}
               >
                 <Stack direction="row">
-                  <Radio value="Alo">Alo</Radio>
-                  <Radio value="Ortra">Ortra</Radio>
-                  <Radio value="Contransiz">Contransiz</Radio>
+                  <Radio value="Alo">{t('excellent', { ns: 'global' })}</Radio>
+                  <Radio value="Ortra">{t('average', { ns: 'global' })}</Radio>
+                  <Radio value="Contransiz">{t('unsatisfactory', { ns: 'global' })}</Radio>
                 </Stack>
               </RadioGroup>
             </FormControl>
@@ -498,7 +498,7 @@ const AttendancePageComponent = () => {
                 onChange={handleChange}
                 colorScheme="red"
               >
-                O'qituvchi darsga kelmadi
+                {t('teacher_absent', { ns: 'global' })}
               </Checkbox>
             </FormControl>
 

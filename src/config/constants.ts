@@ -54,7 +54,7 @@ export const courseCategory = [
     '11-sinf',
     "Qo'shimcha fanlar",
 ];
-export const courseLevel = ['Beginner', 'Intermediate', 'Expert'];
+export const courseLevel = ['Boshlang\'ich', 'O\'rta', 'Professional'];
 
 export const navigation = [
 	{
@@ -70,11 +70,11 @@ export const navigation = [
 				route: '/courses',
 				icon: CiViewList,
 			},
-			{
-				label: 'sidebar_title_1_books',
-				route: '/books',
-				icon: FaBookReader,
-			},
+			// {
+			// 	label: 'sidebar_title_1_books',
+			// 	route: '/books',
+			// 	icon: FaBookReader,
+			// },
 			{
 				label: 'sidebar_title_1_articles',
 				route: '/articles',

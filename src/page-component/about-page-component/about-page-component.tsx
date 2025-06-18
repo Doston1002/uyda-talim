@@ -1,9 +1,11 @@
 import { Button, Grid, Heading, Image, Stack, Text } from '@chakra-ui/react';
 import { useTranslation } from 'react-i18next';
 import SectionTitle from 'src/components/section-title/section-title';
+import { useRouter } from 'next/router';
 
 const AboutPageComponent = () => {
 	const { t } = useTranslation();
+	const router = useRouter();
 
 	return (
 		<>
@@ -20,7 +22,7 @@ const AboutPageComponent = () => {
 						{t('about_heading', { ns: 'global' })}
 					</Heading>
 					<Text>{t('about_text_1', { ns: 'global' })}</Text>
-					<Button colorScheme={'gray'} h={14} variant={'outline'} w={'fit-content'}>
+					<Button colorScheme={'gray'} h={14} variant={'outline'} w={'fit-content'} onClick={() => router.push('/courses')}>
 						{t('about_btn', { ns: 'global' })}
 					</Button>
 				</Stack>
