@@ -23,24 +23,24 @@ $axios.interceptors.request.use(config => {
 $axios.interceptors.response.use(
 	config => config,
 	async error => {
-		const originalRequest = error.config;
-		if (
-			(error.response.status == 401 ||
-				errorCatch(error) == 'jwt expired' ||
-				errorCatch(error) == 'jwt must be provided') &&
-			error.config &&
-			!error.config._isRetry
-		) {
-			originalRequest._isRetry = true;
-			try {
-				await AuthService.getNewTokens();
-
-				return $axios.request(originalRequest);
-			} catch (error) {
-				if (errorCatch(error) === 'jwt expired') removeTokensCookie();
-			}
+	  const originalRequest = error.config;
+	  if (
+		(error.response?.status == 401 ||
+		  errorCatch(error) == 'jwt expired' ||
+		  errorCatch(error) == 'jwt must be provided') &&
+		error.config &&
+		!error.config._isRetry
+	  ) {
+		originalRequest._isRetry = true;
+		try {
+		  await AuthService.getNewTokens();
+		  return $axios.request(originalRequest);
+		} catch (error) {
+		  if (errorCatch(error) === 'jwt expired') removeTokensCookie();
 		}
+	  }
+	  // Xatolikni tashqariga uzatish
+	  throw error;
 	}
-);
-
+  );
 export default $axios;
