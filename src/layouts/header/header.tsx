@@ -67,7 +67,7 @@ const Header = ({ onToggle }: HeaderProps) => {
 			color={useColorModeValue('gray.700', 'gray.200')}
 			borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
 		>
-			
+		
 			<Flex h={'full'} justify={'space-between'} align={'center'}>
 				<HStack>
 					<Icon
@@ -219,6 +219,17 @@ const Header = ({ onToggle }: HeaderProps) => {
 					)}
 				</HStack>
 			</Flex>
+			<Box w="full" overflow="hidden" bg="transparent" h="30px" pos="relative" zIndex={1002}>
+				<Box
+					className="moving-red-text"
+					fontWeight="bold"
+					color="red.500"
+					fontSize="lg"
+					whiteSpace="nowrap"
+				>
+					sayt test rejimida ishlamoqda
+				</Box>
+			</Box>
 		</Box>
 	);
 };

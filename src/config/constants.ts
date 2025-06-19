@@ -141,13 +141,13 @@ export const categories = [
 // startup-client/src/config/constants.ts
 export const trustedCompeny = [
 	{
-	  name: 'Segun Adebayo',
-	  url: 'https://bit.ly/sage-adebayo',
-	  logo: '/images/segun.png', // logoni joylashuvi
+	  name: "Maktab va maktabgacha ta'lim vazirligi",
+	  url: 'https://uzedu.uz/uz',
+	  logo: '/images/logovazirlik.png', // logoni joylashuvi
 	},
 	{
-	  name: 'Kent Dodds',
-	  url: 'https://bit.ly/kent-c-dodds',
+	  name: 'Lex uz',
+	  url: 'https://lex.uz/uz/',
 	  logo: '/images/kent.png',
 	},
 	{
