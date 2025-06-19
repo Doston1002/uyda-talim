@@ -19,6 +19,14 @@ const nextConfig = {
         protocol: 'http',
         hostname: 'localhost',
       },
+      {
+        protocol: 'https',
+        hostname: 'uyda-talim.uz',
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.uyda-talim.uz',
+      },
     ],
   },
 };
