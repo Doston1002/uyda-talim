@@ -145,6 +145,7 @@ export const trustedCompeny = [
 	  url: 'https://uzedu.uz/uz',
 	  logo: '/images/logovazirlik.png', // logoni joylashuvi
 	},
+	
 	{
 	  name: 'Lex uz',
 	  url: 'https://lex.uz/uz/',
