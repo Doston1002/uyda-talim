@@ -260,19 +260,8 @@ export const faq = [
 	{
 		question: 'faq_question_4',
 		answer: 'faq_answer_4',
-	},
-	{
-		question: 'faq_question_5',
-		answer: 'faq_answer_5',
-	},
-	{
-		question: 'faq_question_6',
-		answer: 'faq_answer_6',
-	},
-	{
-		question: 'faq_question_7',
-		answer: 'faq_answer_7',
-	},
+	}
+	
 ];
 
 export const avatars = [

@@ -29,27 +29,15 @@
 	"average": "Average",
 	"unsatisfactory": "Unsatisfactory",
 	"teacher_absent": "The teacher did not come to the lesson",
-"faq_question_1": "How to register on uyda-ta’lim.uz?",
-  "faq_answer_1": "When you visit the site, click the “Login” button in the top right corner. Then go to the “Sign Up” page and enter your email and password. After registration, a confirmation link will be sent to your Gmail account (sometimes the email may end up in the Spam folder).\nYou can also sign up using your Google account.",
-
-  "faq_question_2": "How to register on uyda-ta’lim.uz?",
-  "faq_answer_2": "When you visit the site, click the “Login” button in the top right corner. Then go to the “Sign Up” page and enter your email and password. After registration, a confirmation link will be sent to your Gmail account (sometimes the email may end up in the Spam folder).\nYou can also sign up using your Google account.",
-
-  "faq_question_3": "How to register on uyda-ta’lim.uz?",
-  "faq_answer_3": "When you visit the site, click the “Login” button in the top right corner. Then go to the “Sign Up” page and enter your email and password. After registration, a confirmation link will be sent to your Gmail account (sometimes the email may end up in the Spam folder).\nYou can also sign up using your Google account.",
-
-  "faq_question_4": "How to register on uyda-ta’lim.uz?",
-  "faq_answer_4": "When you visit the site, click the “Login” button in the top right corner. Then go to the “Sign Up” page and enter your email and password. After registration, a confirmation link will be sent to your Gmail account (sometimes the email may end up in the Spam folder).\nYou can also sign up using your Google account.",
-
-  "faq_question_5": "How to register on uyda-ta’lim.uz?",
-  "faq_answer_5": "When you visit the site, click the “Login” button in the top right corner. Then go to the “Sign Up” page and enter your email and password. After registration, a confirmation link will be sent to your Gmail account (sometimes the email may end up in the Spam folder).\nYou can also sign up using your Google account.",
-
-  "faq_question_6": "How to register on uyda-ta’lim.uz?",
-  "faq_answer_6": "When you visit the site, click the “Login” button in the top right corner. Then go to the “Sign Up” page and enter your email and password. After registration, a confirmation link will be sent to your Gmail account (sometimes the email may end up in the Spam folder).\nYou can also sign up using your Google account.",
-
-  "faq_question_7": "How to register on uyda-ta’lim.uz?",
-  "faq_answer_7": "When you visit the site, click the “Login” button in the top right corner. Then go to the “Sign Up” page and enter your email and password. After registration, a confirmation link will be sent to your Gmail account (sometimes the email may end up in the Spam folder).\nYou can also sign up using your Google account.",
-	"auth_page_title_1": "Uyda ta'lim",
+"faq_question_1": "How to log in as a student on uyda-ta’lim.uz?",
+"faq_answer_1": "To log in as a student, click the \"Login\" button and enter your username and password. If you don’t have an account, click \"Register\" to create a new profile.",
+"faq_question_2": "How to view electronic textbooks?",
+"faq_answer_2": "To view electronic textbooks, log in to your profile and select the \"Textbooks\" section. Choose the desired textbook to read online or download it.",
+"faq_question_3": "How to watch video lessons?",
+"faq_answer_3": "To watch video lessons, log in to your profile and go to the \"Video Lessons\" section. Select the video you want and start watching.",
+"faq_question_4": "How to use the online mentor?",
+"faq_answer_4": "To use the online mentor service, log in to your profile and select the \"Mentor\" section. Write your questions and chat with the mentor.",
+  "auth_page_title_1": "Uyda ta'lim",
 	"auth_page_title_2": "ro'yxatdan o'tish",
 	"auth_page_you": "you",
 	"login_title": "Login",
