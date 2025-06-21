@@ -47,7 +47,6 @@ const booksData = [
 	{ id: '1-sinf', title: 'Matematika (4-qism)', file: "/books/1-sinf/1 sinf Matematika 4-qism (@elektron_darslikbot).pdf" },
 	{ id: '1-sinf', title: 'Musiqiy savodxonlik', file: "/books/1-sinf/1 sinf Musiqiy savodxonlik (@elektron_darslikbot).pdf" },
 
-
 	// 2-sinf
 	{ id: '2-sinf', title: 'Informatika', file: '/books/2-sinf/2-sinf-informatika.pdf' },
 	{ id: '2-sinf', title: 'Ona tili (1-qism)', file: '/books/2-sinf/2-sinf-Ona-tili-1-qism.pdf' },
@@ -125,35 +124,32 @@ const booksData = [
 	{ id: '11-sinf', title: 'Adabiyot (1-qism)', file: "/books/11-sinf/11-sinf Adabiyot 1-qism (@elekton_darslikbot).pdf" },
 	{ id: '11-sinf', title: 'Ona tili (2-qism)', file: "/books/11-sinf/11-sinf Ona tili 2-qism (@elekton_darslikbot).pdf" },
 	{ id: '11-sinf', title: 'Ona tili', file: "/books/11-sinf/11-sinf Ona tili (@elekton_darslikbot).pdf" },
-
-	// ... boshqa sinflar va kitoblar shu tarzda davom etadi
 ];
 
 const BooksPageComponent = () => {
 	const [filter, setFilter] = useState<string>('1-sinf');
-	const backgroundColor = useColorModeValue('gray.200', 'gray.900');
+	const cardBg = useColorModeValue('white', 'gray.800');
 	const { t } = useTranslation();
 
-	const filteredBooks = booksData.filter((book) => book.id === filter);
+	const filteredBooks = booksData.filter(book => book.id === filter);
 
 	return (
-		<Box mb={20}>
+		<Box mb={20} py={10}>
 			<SectionTitle
 				title={t('title', { ns: 'books' })}
 				subtitle={t('description', { ns: 'books' })}
 				textAlign={'center'}
 				pt={4}
 			/>
-			<Flex justify={'center'} mt={5} flexWrap={'wrap'}>
-				{SINFLAR.map((sinf, idx) => (
+			<Flex justify={'center'} mt={8} flexWrap={'wrap'} gap={3}>
+				{SINFLAR.map(sinf => (
 					<Button
 						key={sinf}
-						colorScheme={'gray'}
+						colorScheme={'blue'}
 						variant={filter === sinf ? 'solid' : 'outline'}
-						borderRadius={0}
-						borderLeftRadius={0}
-						borderRightRadius={idx === SINFLAR.length - 1 ? 'md' : 0}
 						onClick={() => setFilter(sinf)}
+						px={6}
+						borderRadius={'md'}
 					>
 						{sinf}
 					</Button>
@@ -161,33 +157,28 @@ const BooksPageComponent = () => {
 			</Flex>
 
 			<Grid
-				gridTemplateColumns={{
+				templateColumns={{
 					base: 'repeat(1, 1fr)',
 					md: 'repeat(2, 1fr)',
-					lg: 'repeat(3, 1fr)',
 				}}
-				rowGap={8}
-				gap={4}
-				mt={5}
+				gap={6}
+				mt={10}
 			>
-				{filteredBooks.map((book, idx) => (
+				{filteredBooks.map(book => (
 					<Box
-						key={book.id + book.title}
-						p={4}
-						bg={backgroundColor}
-						borderRadius="md"
-						boxShadow="md"
-						display="flex"
-						alignItems="center"
-						justifyContent="space-between"
+						key={book.file}
+						p={5}
+						bg={cardBg}
+						borderRadius='lg'
+						boxShadow='md'
+						display='flex'
+						alignItems='center'
+						justifyContent='space-between'
+						gap={4}
 					>
-						<Text fontWeight="bold">{book.title}</Text>
+						<Text fontWeight='medium'>{book.title}</Text>
 						<a href={book.file} download>
-							<Button
-								colorScheme="blue"
-								leftIcon={<AiOutlineDownload />}
-								variant="solid"
-							>
+							<Button colorScheme='blue' leftIcon={<AiOutlineDownload />} flexShrink={0}>
 								Yuklab olish
 							</Button>
 						</a>
