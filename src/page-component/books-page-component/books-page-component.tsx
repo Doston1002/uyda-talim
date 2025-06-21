@@ -72,6 +72,27 @@ const booksData = [
 	{ id: '2-sinf', title: 'Tasviriy san\'at', file: '/books/2-sinf/2-sinf-Tasviriy-sanat.pdf' },
 	{ id: '2-sinf', title: 'Tabiiy fanlar (2-qism)', file: '/books/2-sinf/2-sinf-Tabiiy-fanlar-2-qism.pdf' },
 
+	// 3-sinf
+	{ id: '3-sinf', title: 'Ona tili (1-qism)', file: "/books/3-sinf/3-sinf Ona tili 1-qism (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: 'Ona tili (2-qism)', file: "/books/3-sinf/3-sinf Ona tili 2-qism (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: 'Ona tili (3-qism)', file: "/books/3-sinf/3-sinf Ona tili 3-qism (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: 'Ona tili (4-qism)', file: "/books/3-sinf/3-sinf Ona tili 4-qism (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: "O'qish savodxonligi (1-qism)", file: "/books/3-sinf/3-sinf O'qish savodxonligi 1-qism (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: "O'qish savodxonligi (2-qism)", file: "/books/3-sinf/3-sinf O'qish savodxonligi 2-qism (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: "O'qish savodxonligi (3-qism)", file: "/books/3-sinf/3-sinf O'qish savodxonligi 3-qism (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: "O'qish savodxonligi (4-qism)", file: "/books/3-sinf/3-sinf O'qish savodxonligi 4-qism (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: 'Matematika (1-qism)', file: "/books/3-sinf/3-sinf Matematika 1-qism (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: 'Matematika (2-qism)', file: "/books/3-sinf/3-sinf Matematika 2-qism (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: 'Matematika (3-qism)', file: "/books/3-sinf/3-sinf Matematika 3-qism (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: 'Matematika (4-qism)', file: "/books/3-sinf/3-sinf Matematika 4-qism (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: 'Tabiiy fanlar (1-qism)', file: "/books/3-sinf/3-sinf Tabiiy fanlar 1-qism (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: 'Tabiiy fanlar (2-qism)', file: "/books/3-sinf/3-sinf Tabiiy fanlar 2-qism (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: 'Musiqiy savodxonlik', file: "/books/3-sinf/3-sinf Musiqiy savodxonlik (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: 'Texnologiya', file: "/books/3-sinf/3-sinf Texnologiya (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: 'Tarbiya', file: "/books/3-sinf/3-sinf Tarbiya (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: "Tasviriy san'at", file: "/books/3-sinf/3-sinf Tasviriy san'at (@elekton_darslikbot).pdf" },
+	{ id: '3-sinf', title: "Ingliz tili (Student's book)", file: "/books/3-sinf/Guess_what_Grade_3_Stiudent's_book_3_@elekton_darslikbot.pdf" },
+
 	// ... boshqa sinflar va kitoblar shu tarzda davom etadi
 ];
 
