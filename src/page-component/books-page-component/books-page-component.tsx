@@ -29,16 +29,24 @@ const SINFLAR = [
 // Har bir kitob uchun haqiqiy title va file ko‘rsatiladi
 const booksData = [
 	// 1-sinf
-	{ id: '1-sinf', title: 'Alifbe', file: '/books/1-sinf/1-sinf.pdf' },
-	{ id: '1-sinf', title: 'Matematika', file: '/books/1-sinf/matematika.pdf' },
-	{ id: '1-sinf', title: 'Ona tili', file: '/books/1-sinf/ona-tili.pdf' },
-	{ id: '1-sinf', title: 'Tabiat', file: '/books/1-sinf/tabiat.pdf' },
-	{ id: '1-sinf', title: 'Texnologiya', file: '/books/1-sinf/texnologiya.pdf' },
-	{ id: '1-sinf', title: 'Ingliz tili', file: '/books/1-sinf/ingliz-tili.pdf' },
-	{ id: '1-sinf', title: 'Rus tili', file: '/books/1-sinf/rus-tili.pdf' },
-	{ id: '1-sinf', title: 'Tasviriy san\'at', file: '/books/1-sinf/tasviriy-sanat.pdf' },
-	{ id: '1-sinf', title: 'Jismoniy tarbiya', file: '/books/1-sinf/jismoniy-tarbiya.pdf' },
-	{ id: '1-sinf', title: 'Musiqa', file: '/books/1-sinf/musiqa.pdf' },
+	{ id: '1-sinf', title: "O'qish savodxonligi (1-qism)", file: "/books/1-sinf/1 sinf O'qish savodxonligi 1-qism (@elektron_darslikbot).pdf" },
+	{ id: '1-sinf', title: "O'qish savodxonligi (2-qism)", file: "/books/1-sinf/1 sinf O'qish savodxonligi 2-qism (@elektron_darslikbot).pdf" },
+	{ id: '1-sinf', title: 'Tabiiy fanlar (1-qism)', file: "/books/1-sinf/1 sinf Tabiiy fanlar1-qism 2023 (@elektron_darslikbot).pdf" },
+	{ id: '1-sinf', title: 'Tabiiy fanlar (2-qism)', file: "/books/1-sinf/1 sinf Tabiiy fanlar 2-qism 2023 (@elektron_darslikbot).pdf" },
+	{ id: '1-sinf', title: 'Informatika va axborot texnologiyalari', file: "/books/1-sinf/1_sinf_Informatika_va_axborot_texnologiyalar_@elektron_darslikboti.pdf" },
+	{ id: '1-sinf', title: 'Tarbiya', file: "/books/1-sinf/1 sinf Tarbiya (@elektron_darslikbot).pdf" },
+	{ id: '1-sinf', title: 'Texnologiya (mashq daftari)', file: "/books/1-sinf/1 sinf Texnologiya (mashq daftari) (@elektron_darslikbot).pdf" },
+	{ id: '1-sinf', title: 'Texnologiya', file: "/books/1-sinf/1 sinf Texnalogiya (@elektron_darslikbot).pdf" },
+	{ id: '1-sinf', title: 'Ona tili (1-qism)', file: "/books/1-sinf/1-sinf Ona tili 1-qism (@elektron_darslikbot).pdf" },
+	{ id: '1-sinf', title: 'Ona tili (2-qism)', file: "/books/1-sinf/1-sinf Ona tili 2-qism (@elektron_darslikbot).pdf" },
+	{ id: '1-sinf', title: 'Jismoniy tarbiya (Ish daftari)', file: "/books/1-sinf/1-sinf Jismoniy tarbiya Ish daftar (@elektron_darslikbot)i.pdf" },
+	{ id: '1-sinf', title: "Tasviriy san'at", file: "/books/1-sinf/1-sinf Tasviriy san'at (@elektron_darslikbot).pdf" },
+	{ id: '1-sinf', title: 'Matematika (1-qism)', file: "/books/1-sinf/1 sinf Matematika 1-qism (@elektron_darslikbot).pdf" },
+	{ id: '1-sinf', title: 'Matematika (2-qism)', file: "/books/1-sinf/1 sinf Matematika 2-qism (@elektron_darslikbot).pdf" },
+	{ id: '1-sinf', title: 'Matematika (3-qism)', file: "/books/1-sinf/1 sinf Matematika 3-qism (@elektron_darslikbot).pdf" },
+	{ id: '1-sinf', title: 'Matematika (4-qism)', file: "/books/1-sinf/1 sinf Matematika 4-qism (@elektron_darslikbot).pdf" },
+	{ id: '1-sinf', title: 'Musiqiy savodxonlik', file: "/books/1-sinf/1 sinf Musiqiy savodxonlik (@elektron_darslikbot).pdf" },
+
 
 	// 2-sinf
 	{ id: '2-sinf', title: 'Informatika', file: '/books/2-sinf/2-sinf-informatika.pdf' },
