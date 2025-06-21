@@ -114,6 +114,18 @@ const booksData = [
 	{ id: '4-sinf', title: 'Jismoniy tarbiya', file: "/books/4-sinf/4-sinf Jismoniy tarbiya (@elekton_darslikbot).pdf" },
 	{ id: '4-sinf', title: 'Tarbiya', file: "/books/4-sinf/4 sinf Tarbiya (@elekton_darslikbot).pdf" },
 
+	// 11-sinf
+	{ id: '11-sinf', title: 'Huquq', file: "/books/11-sinf/11-sinf Huquq (@elekton_darslikbot).pdf" },
+	{ id: '11-sinf', title: 'Dunyo dinlari tarixi', file: "/books/11-sinf/11-sinf Dunyo dinlari tarixi (@elekton_darslikbot).pdf" },
+	{ id: '11-sinf', title: 'Astronomiya (2018)', file: "/books/11-sinf/11-sinf Astronomiya 2018 (@elekton_darslikbot).pdf" },
+	{ id: '11-sinf', title: "O'zbekiston tarixi", file: "/books/11-sinf/11-sinf O'zbekiston tarixi (@elekton_darslikbot).pdf" },
+	{ id: '11-sinf', title: 'Matematika (2-qism, 2018)', file: "/books/11-sinf/11-sinf-Matematika-2-qism 2018 (@elekton_darslikbot).pdf" },
+	{ id: '11-sinf', title: 'Matematika (1-qism, 2018)', file: "/books/11-sinf/11-sinf-Matematika-1-qism 2018 (@elekton_darslikbot).pdf" },
+	{ id: '11-sinf', title: 'Adabiyot (2-qism, 2018)', file: "/books/11-sinf/11-sinf Adabiyot darslik 2-qism 2018 (@elekton_darslikbot).pdf" },
+	{ id: '11-sinf', title: 'Adabiyot (1-qism)', file: "/books/11-sinf/11-sinf Adabiyot 1-qism (@elekton_darslikbot).pdf" },
+	{ id: '11-sinf', title: 'Ona tili (2-qism)', file: "/books/11-sinf/11-sinf Ona tili 2-qism (@elekton_darslikbot).pdf" },
+	{ id: '11-sinf', title: 'Ona tili', file: "/books/11-sinf/11-sinf Ona tili (@elekton_darslikbot).pdf" },
+
 	// ... boshqa sinflar va kitoblar shu tarzda davom etadi
 ];
 
