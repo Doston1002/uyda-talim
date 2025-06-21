@@ -50,7 +50,6 @@ const booksData = [
 
 	// 2-sinf
 	{ id: '2-sinf', title: 'Informatika', file: '/books/2-sinf/2-sinf-informatika.pdf' },
-	{ id: '2-sinf', title: "O'qish savodxonligi (2-mashq daftari)", file: "/books/2-sinf/2_sinf_o'qish_savodxonligi_2_mashq_daftari.pdf" },
 	{ id: '2-sinf', title: 'Ona tili (1-qism)', file: '/books/2-sinf/2-sinf-Ona-tili-1-qism.pdf' },
 	{ id: '2-sinf', title: 'Ona tili (2-qism)', file: '/books/2-sinf/2-sinf-Ona-tili-2-qism.pdf' },
 	{ id: '2-sinf', title: 'Ona tili (3-qism)', file: '/books/2-sinf/2-sinf-Ona-tili-3-qism.pdf' },
@@ -59,6 +58,7 @@ const booksData = [
 	{ id: '2-sinf', title: "O'qish savodxonligi (2-qism)", file: "/books/2-sinf/2-sinf-O'qish-savodxonligi-2-qism.pdf" },
 	{ id: '2-sinf', title: "O'qish savodxonligi (3-qism)", file: "/books/2-sinf/2-sinf-O'qish-savodxonligi-3-qism.pdf" },
 	{ id: '2-sinf', title: "O'qish savodxonligi (4-qism)", file: "/books/2-sinf/2-sinf-O'qish-savodxonligi-4-qism.pdf" },
+	{ id: '2-sinf', title: "O'qish savodxonligi (2-mashq daftari)", file: "/books/2-sinf/2_sinf_o'qish_savodxonligi_2_mashq_daftari.pdf" },
 	{ id: '2-sinf', title: 'Matematika (1-qism)', file: '/books/2-sinf/2-sinf-Matematika-1-qism.pdf' },
 	{ id: '2-sinf', title: 'Matematika (2-qism)', file: '/books/2-sinf/2-sinf-Matematika-2-qism.pdf' },
 	{ id: '2-sinf', title: 'Matematika (3-qism)', file: '/books/2-sinf/2-sinf-Matematika-3-qism.pdf' },
@@ -69,8 +69,8 @@ const booksData = [
 	{ id: '2-sinf', title: 'Musiqiy savodxonlik', file: '/books/2-sinf/2-sinf-Musiqiy-savodxonlik.pdf' },
 	{ id: '2-sinf', title: 'Texnologiya', file: '/books/2-sinf/2-sinf-Texnalogiya.pdf' },
 	{ id: '2-sinf', title: 'Tabiiy fanlar (1-qism)', file: '/books/2-sinf/2-sinf-Tabiy-fanlar-1-qism.pdf' },
-	{ id: '2-sinf', title: 'Tasviriy san\'at', file: '/books/2-sinf/2-sinf-Tasviriy-sanat.pdf' },
 	{ id: '2-sinf', title: 'Tabiiy fanlar (2-qism)', file: '/books/2-sinf/2-sinf-Tabiiy-fanlar-2-qism.pdf' },
+	{ id: '2-sinf', title: 'Tasviriy san\'at', file: '/books/2-sinf/2-sinf-Tasviriy-sanat.pdf' },
 
 	// 3-sinf
 	{ id: '3-sinf', title: 'Ona tili (1-qism)', file: "/books/3-sinf/3-sinf Ona tili 1-qism (@elekton_darslikbot).pdf" },
@@ -92,6 +92,27 @@ const booksData = [
 	{ id: '3-sinf', title: 'Tarbiya', file: "/books/3-sinf/3-sinf Tarbiya (@elekton_darslikbot).pdf" },
 	{ id: '3-sinf', title: "Tasviriy san'at", file: "/books/3-sinf/3-sinf Tasviriy san'at (@elekton_darslikbot).pdf" },
 	{ id: '3-sinf', title: "Ingliz tili (Student's book)", file: "/books/3-sinf/Guess_what_Grade_3_Stiudent's_book_3_@elekton_darslikbot.pdf" },
+
+	// 4-sinf
+	{ id: '4-sinf', title: 'Ona tili (1-qism)', file: "/books/4-sinf/4-sinf Ona tili 1-qism (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: 'Ona tili (2-qism)', file: "/books/4-sinf/4-sinf Ona tili 2-qism (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: 'Ona tili (3-qism)', file: "/books/4-sinf/4-sinf Ona tili 3-qism (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: 'Ona tili (4-qism)', file: "/books/4-sinf/4-sinf Ona tili 4-qism (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: "O'qish savodxonligi (1-qism)", file: "/books/4-sinf/4 sinf O'qish savodxonligi 1-qism (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: "O'qish savodxonligi (2-qism)", file: "/books/4-sinf/4 sinf O'qish savodxonligi 2-qism (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: "O'qish savodxonligi (3-qism)", file: "/books/4-sinf/4 sinf O'qish savodxonligi 3-qism (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: "O'qish savodxonligi (4-qism)", file: "/books/4-sinf/4 sinf O'qish savodxonligi 4-qism (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: 'Matematika (1-qism)', file: "/books/4-sinf/4 sinf Matematika 1-qism (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: 'Matematika (2-qism)', file: "/books/4-sinf/4 sinf Matematika 2-qism (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: 'Matematika (3-qism)', file: "/books/4-sinf/4 sinf Matematika 3-qism (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: 'Matematika (4-qism)', file: "/books/4-sinf/4 sinf Matematika 4-qism (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: 'Tabiiy fanlar (1-qism)', file: "/books/4-sinf/4 sinf Tabiiy fanlar 1-qism (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: 'Tabiiy fanlar (2-qism)', file: "/books/4-sinf/4 sinf Tabiiy fanlar 2-qism (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: 'Musiqiy savodxonlik', file: "/books/4-sinf/4 sinf Musiqiy savodxonlik (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: "Tasviriy san'at", file: "/books/4-sinf/4-sinf Tasviriy san'at (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: 'Texnologiya', file: "/books/4-sinf/4 sinf Texnologiya (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: 'Jismoniy tarbiya', file: "/books/4-sinf/4-sinf Jismoniy tarbiya (@elekton_darslikbot).pdf" },
+	{ id: '4-sinf', title: 'Tarbiya', file: "/books/4-sinf/4 sinf Tarbiya (@elekton_darslikbot).pdf" },
 
 	// ... boshqa sinflar va kitoblar shu tarzda davom etadi
 ];
