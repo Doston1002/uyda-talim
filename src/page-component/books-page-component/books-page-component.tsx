@@ -3,61 +3,76 @@ import {
 	Button,
 	Flex,
 	Grid,
-	HStack,
 	Text,
 	useColorModeValue,
-	useToast,
 } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AiFillShopping } from 'react-icons/ai';
+import { AiOutlineDownload } from 'react-icons/ai';
 import SectionTitle from 'src/components/section-title/section-title';
-import { booksCategory } from 'src/config/constants';
-import { loadImage } from 'src/helpers/image.helper';
-import { useActions } from 'src/hooks/useActions';
-import { useTypedSelector } from 'src/hooks/useTypedSelector';
-import { BooksType } from 'src/interfaces/books.interface';
+
+// Sinflar ro‘yxati
+const SINFLAR = [
+	'1-sinf',
+	'2-sinf',
+	'3-sinf',
+	'4-sinf',
+	'5-sinf',
+	'6-sinf',
+	'7-sinf',
+	'8-sinf',
+	'9-sinf',
+	'10-sinf',
+	'11-sinf',
+];
+
+// Har bir kitob uchun haqiqiy title va file ko‘rsatiladi
+const booksData = [
+	// 1-sinf
+	{ id: '1-sinf', title: 'Alifbe', file: '/books/1-sinf/1-sinf.pdf' },
+	{ id: '1-sinf', title: 'Matematika', file: '/books/1-sinf/matematika.pdf' },
+	{ id: '1-sinf', title: 'Ona tili', file: '/books/1-sinf/ona-tili.pdf' },
+	{ id: '1-sinf', title: 'Tabiat', file: '/books/1-sinf/tabiat.pdf' },
+	{ id: '1-sinf', title: 'Texnologiya', file: '/books/1-sinf/texnologiya.pdf' },
+	{ id: '1-sinf', title: 'Ingliz tili', file: '/books/1-sinf/ingliz-tili.pdf' },
+	{ id: '1-sinf', title: 'Rus tili', file: '/books/1-sinf/rus-tili.pdf' },
+	{ id: '1-sinf', title: 'Tasviriy san\'at', file: '/books/1-sinf/tasviriy-sanat.pdf' },
+	{ id: '1-sinf', title: 'Jismoniy tarbiya', file: '/books/1-sinf/jismoniy-tarbiya.pdf' },
+	{ id: '1-sinf', title: 'Musiqa', file: '/books/1-sinf/musiqa.pdf' },
+
+	// 2-sinf
+	{ id: '2-sinf', title: 'Informatika', file: '/books/2-sinf/2-sinf-informatika.pdf' },
+	{ id: '2-sinf', title: "O'qish savodxonligi (2-mashq daftari)", file: "/books/2-sinf/2_sinf_o'qish_savodxonligi_2_mashq_daftari.pdf" },
+	{ id: '2-sinf', title: 'Ona tili (1-qism)', file: '/books/2-sinf/2-sinf-Ona-tili-1-qism.pdf' },
+	{ id: '2-sinf', title: 'Ona tili (2-qism)', file: '/books/2-sinf/2-sinf-Ona-tili-2-qism.pdf' },
+	{ id: '2-sinf', title: 'Ona tili (3-qism)', file: '/books/2-sinf/2-sinf-Ona-tili-3-qism.pdf' },
+	{ id: '2-sinf', title: 'Ona tili (4-qism)', file: '/books/2-sinf/2-sinf-Ona-tili-4-qism.pdf' },
+	{ id: '2-sinf', title: "O'qish savodxonligi (1-qism)", file: "/books/2-sinf/2-sinf-O'qish-savodxonligi-1-qism.pdf" },
+	{ id: '2-sinf', title: "O'qish savodxonligi (2-qism)", file: "/books/2-sinf/2-sinf-O'qish-savodxonligi-2-qism.pdf" },
+	{ id: '2-sinf', title: "O'qish savodxonligi (3-qism)", file: "/books/2-sinf/2-sinf-O'qish-savodxonligi-3-qism.pdf" },
+	{ id: '2-sinf', title: "O'qish savodxonligi (4-qism)", file: "/books/2-sinf/2-sinf-O'qish-savodxonligi-4-qism.pdf" },
+	{ id: '2-sinf', title: 'Matematika (1-qism)', file: '/books/2-sinf/2-sinf-Matematika-1-qism.pdf' },
+	{ id: '2-sinf', title: 'Matematika (2-qism)', file: '/books/2-sinf/2-sinf-Matematika-2-qism.pdf' },
+	{ id: '2-sinf', title: 'Matematika (3-qism)', file: '/books/2-sinf/2-sinf-Matematika-3-qism.pdf' },
+	{ id: '2-sinf', title: 'Matematika (4-qism)', file: '/books/2-sinf/2-sinf-Matematika-4-qism.pdf' },
+	{ id: '2-sinf', title: 'Jismoniy tarbiya (Ish daftari)', file: '/books/2-sinf/2-sinf-Jismoniy-tarbiya-Ish-daftari.pdf' },
+	{ id: '2-sinf', title: 'Rus tili', file: '/books/2-sinf/2-klass-rus-tili.pdf' },
+	{ id: '2-sinf', title: 'Tarbiya', file: '/books/2-sinf/2-sinf-Tarbiya.pdf' },
+	{ id: '2-sinf', title: 'Musiqiy savodxonlik', file: '/books/2-sinf/2-sinf-Musiqiy-savodxonlik.pdf' },
+	{ id: '2-sinf', title: 'Texnologiya', file: '/books/2-sinf/2-sinf-Texnalogiya.pdf' },
+	{ id: '2-sinf', title: 'Tabiiy fanlar (1-qism)', file: '/books/2-sinf/2-sinf-Tabiy-fanlar-1-qism.pdf' },
+	{ id: '2-sinf', title: 'Tasviriy san\'at', file: '/books/2-sinf/2-sinf-Tasviriy-sanat.pdf' },
+	{ id: '2-sinf', title: 'Tabiiy fanlar (2-qism)', file: '/books/2-sinf/2-sinf-Tabiiy-fanlar-2-qism.pdf' },
+
+	// ... boshqa sinflar va kitoblar shu tarzda davom etadi
+];
 
 const BooksPageComponent = () => {
-	const [filter, setFilter] = useState<string>('all-categories');
-
+	const [filter, setFilter] = useState<string>('1-sinf');
 	const backgroundColor = useColorModeValue('gray.200', 'gray.900');
 	const { t } = useTranslation();
-	const { books } = useTypedSelector(state => state.books);
-	const cart = useTypedSelector(state => state.cart);
-	const { addBookToCart } = useActions();
-	const toast = useToast();
 
-	const filteredData = useCallback(() => {
-		switch (filter) {
-			case 'programming':
-				return books.filter(c => c.category === 'programming');
-			case 'design':
-				return books.filter(c => c.category === 'design');
-			case 'business':
-				return books.filter(c => c.category == 'business');
-			case 'history':
-				return books.filter(c => c.category == 'history');
-			case 'writing':
-				return books.filter(c => c.category == 'writing');
-			case 'lifestyle':
-				return books.filter(c => c.category == 'lifestyle');
-			default:
-				return books;
-		}
-	}, [filter, books]);
-
-	const addToCart = (book: BooksType) => {
-		const existingProduct = cart.books.find(c => c._id === book._id);
-		if (existingProduct) {
-			toast({ title: 'Book already exist in cart', position: 'bottom', status: 'warning' });
-			return;
-		}
-		addBookToCart(book);
-		toast({ title: 'Book added successfully', position: 'bottom' });
-	};
+	const filteredBooks = booksData.filter((book) => book.id === filter);
 
 	return (
 		<Box mb={20}>
@@ -68,64 +83,57 @@ const BooksPageComponent = () => {
 				pt={4}
 			/>
 			<Flex justify={'center'} mt={5} flexWrap={'wrap'}>
-				{booksCategory.map((item, idx) => (
+				{SINFLAR.map((sinf, idx) => (
 					<Button
-						key={item.id}
+						key={sinf}
 						colorScheme={'gray'}
-						variant={filter == item.id ? 'solid' : 'outline'}
+						variant={filter === sinf ? 'solid' : 'outline'}
 						borderRadius={0}
-						borderLeftRadius={idx == 0 ? 'md' : 0}
-						borderRightRadius={booksCategory.length - 1 === idx ? 'md' : 0}
-						onClick={() => setFilter(item.id)}
+						borderLeftRadius={0}
+						borderRightRadius={idx === SINFLAR.length - 1 ? 'md' : 0}
+						onClick={() => setFilter(sinf)}
 					>
-						{t(item.label, { ns: 'books' })}
+						{sinf}
 					</Button>
 				))}
 			</Flex>
 
 			<Grid
-				gridTemplateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }}
-				rowGap={20}
+				gridTemplateColumns={{
+					base: 'repeat(1, 1fr)',
+					md: 'repeat(2, 1fr)',
+					lg: 'repeat(3, 1fr)',
+				}}
+				rowGap={8}
 				gap={4}
 				mt={5}
 			>
-				{filteredData().map(item => (
-					<motion.div key={item._id} layout>
-						<Box pos={'relative'}>
-							<Box pos={'relative'} w={'full'} h={'250px'}>
-								<Image
-									src={loadImage(item.image)}
-									alt={item.title}
-									fill
-									style={{ borderRadius: '10px', objectFit: 'cover' }}
-								/>
-							</Box>
-							<HStack
-								pos={'absolute'}
-								minH={'90px'}
-								borderRadius={'lg'}
-								boxShadow={'dark-lg'}
-								bg={backgroundColor}
-								left={2}
-								right={2}
-								bottom={-10}
-								p={2}
-								justify={'space-between'}
+				{filteredBooks.map((book, idx) => (
+					<Box
+						key={book.id + book.title}
+						p={4}
+						bg={backgroundColor}
+						borderRadius="md"
+						boxShadow="md"
+						display="flex"
+						alignItems="center"
+						justifyContent="space-between"
+					>
+						<Text fontWeight="bold">{book.title}</Text>
+						<a href={book.file} download>
+							<Button
+								colorScheme="blue"
+								leftIcon={<AiOutlineDownload />}
+								variant="solid"
 							>
-								<Button
-									colorScheme={'gray'}
-									rightIcon={<AiFillShopping />}
-									onClick={() => addToCart(item)}
-									isDisabled={cart.books.map(c => c._id).includes(item._id) ? true : false}
-								>
-									Buy
-								</Button>
-							</HStack>
-						</Box>
-					</motion.div>
+								Yuklab olish
+							</Button>
+						</a>
+					</Box>
 				))}
 			</Grid>
 		</Box>
 	);
 };
+
 export default BooksPageComponent;

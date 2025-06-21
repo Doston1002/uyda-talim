@@ -70,11 +70,11 @@ export const navigation = [
 				route: '/courses',
 				icon: CiViewList,
 			},
-			// {
-			// 	label: 'sidebar_title_1_books',
-			// 	route: '/books',
-			// 	icon: FaBookReader,
-			// },
+			{
+				label: 'sidebar_title_1_books',
+				route: '/books',
+				icon: FaBookReader,
+			},
 			{
 				label: 'sidebar_title_1_articles',
 				route: '/articles',
@@ -147,14 +147,14 @@ export const trustedCompeny = [
 	},
 	
 	{
-	  name: 'Lex uz',
-	  url: 'https://lex.uz/uz/',
-	  logo: '/images/kent.png',
+	  name: 'EDU CARE',
+	  url: 'https://educare.uzedu.uz/uz/',
+	  logo: '/images/edu-care.png',
 	},
 	{
-	  name: 'Prosper Otemuyiwa',
-	  url: 'https://bit.ly/prosper-baba',
-	  logo: '/images/prosper.png',
+	  name: '',
+	  url: 'https://uzedu.uz',
+	  logo: '/images/kitob.png',
 	},
 	{
 	  name: 'Christian Nwamba',

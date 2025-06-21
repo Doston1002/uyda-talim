@@ -8,7 +8,7 @@ export default async function handler(
     const { question } = req.body;
 
     try {
-      const response = await fetch('https:/uyda-talim.uz//api/chat/ask', {
+      const response = await fetch('http://localhost:3000/api/chat/ask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
