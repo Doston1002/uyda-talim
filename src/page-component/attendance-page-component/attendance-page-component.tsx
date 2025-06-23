@@ -564,7 +564,7 @@ const AttendancePageComponent = () => {
                 <Stack direction="row">
                   <Radio value="Alo">{t('excellent', { ns: 'global' })}</Radio>
                   <Radio value="Ortra">{t('average', { ns: 'global' })}</Radio>
-                  <Radio value="Contransiz">{t('unsatisfactory', { ns: 'global' })}</Radio>
+                  <Radio value="Qoniqarsiz">{t('unsatisfactory', { ns: 'global' })}</Radio>
                 </Stack>
               </RadioGroup>
             </FormControl>
