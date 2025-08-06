@@ -23,6 +23,7 @@ import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 import { PlanCurriculumIcon } from 'src/icons';
 import { BooksType } from 'src/interfaces/books.interface';
+import BooksList from './books-list';
 
 const BooksPageComponent = () => {
 	const [booksValue, setBooksValue] = useState<BooksType | null>(null);
@@ -103,7 +104,7 @@ const BooksPageComponent = () => {
 							h={'250px'}
 							objectFit={'cover'}
 						/>
-
+<BooksList books={books} />
 						<Flex
 							pos={'absolute'}
 							left={2}

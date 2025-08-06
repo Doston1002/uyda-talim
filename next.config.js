@@ -17,15 +17,17 @@ const nextConfig = {
       },
       {
         protocol: 'http',
-        hostname: 'localhost',
+        hostname: 'localhost:3000',
       },
       {
         protocol: 'https',
         hostname: 'uyda-talim.uz',
       },
       {
-        protocol: 'https',
-        hostname: 'api.uyda-talim.uz',
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '8000',
+        pathname: '/uploads/**',
       },
     ],
   },
