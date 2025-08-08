@@ -21,7 +21,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'uyda-talim.uz',
+        hostname: 'uydatalim.uzedu.uz',
       },
       {
         protocol: 'http',
