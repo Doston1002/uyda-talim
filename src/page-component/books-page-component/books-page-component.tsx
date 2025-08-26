@@ -3,190 +3,143 @@ import {
 	Button,
 	Flex,
 	Grid,
+	HStack,
 	Text,
 	useColorModeValue,
+	useToast,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AiOutlineDownload } from 'react-icons/ai';
+import { AiFillShopping } from 'react-icons/ai';
 import SectionTitle from 'src/components/section-title/section-title';
-
-// Sinflar ro‘yxati
-const SINFLAR = [
-	'1-sinf',
-	'2-sinf',
-	'3-sinf',
-	'4-sinf',
-	'5-sinf',
-	'6-sinf',
-	'7-sinf',
-	'8-sinf',
-	'9-sinf',
-	'10-sinf',
-	'11-sinf',
-];
-
-// Har bir kitob uchun haqiqiy title va file ko‘rsatiladi
-const booksData = [
-	// 1-sinf
-	{ id: '1-sinf', title: "O'qish savodxonligi (1-qism)", file: "/books/1-sinf/1 sinf O'qish savodxonligi 1-qism (@elektron_darslikbot).pdf" },
-	{ id: '1-sinf', title: "O'qish savodxonligi (2-qism)", file: "/books/1-sinf/1 sinf O'qish savodxonligi 2-qism (@elektron_darslikbot).pdf" },
-	{ id: '1-sinf', title: 'Tabiiy fanlar (1-qism)', file: "/books/1-sinf/1 sinf Tabiiy fanlar1-qism 2023 (@elektron_darslikbot).pdf" },
-	{ id: '1-sinf', title: 'Tabiiy fanlar (2-qism)', file: "/books/1-sinf/1 sinf Tabiiy fanlar 2-qism 2023 (@elektron_darslikbot).pdf" },
-	{ id: '1-sinf', title: 'Informatika va axborot texnologiyalari', file: "/books/1-sinf/1_sinf_Informatika_va_axborot_texnologiyalar_@elektron_darslikboti.pdf" },
-	{ id: '1-sinf', title: 'Tarbiya', file: "/books/1-sinf/1 sinf Tarbiya (@elektron_darslikbot).pdf" },
-	{ id: '1-sinf', title: 'Texnologiya (mashq daftari)', file: "/books/1-sinf/1 sinf Texnologiya (mashq daftari) (@elektron_darslikbot).pdf" },
-	{ id: '1-sinf', title: 'Texnologiya', file: "/books/1-sinf/1 sinf Texnalogiya (@elektron_darslikbot).pdf" },
-	{ id: '1-sinf', title: 'Ona tili (1-qism)', file: "/books/1-sinf/1-sinf Ona tili 1-qism (@elektron_darslikbot).pdf" },
-	{ id: '1-sinf', title: 'Ona tili (2-qism)', file: "/books/1-sinf/1-sinf Ona tili 2-qism (@elektron_darslikbot).pdf" },
-	{ id: '1-sinf', title: 'Jismoniy tarbiya (Ish daftari)', file: "/books/1-sinf/1-sinf Jismoniy tarbiya Ish daftar (@elektron_darslikbot)i.pdf" },
-	{ id: '1-sinf', title: "Tasviriy san'at", file: "/books/1-sinf/1-sinf Tasviriy san'at (@elektron_darslikbot).pdf" },
-	{ id: '1-sinf', title: 'Matematika (1-qism)', file: "/books/1-sinf/1 sinf Matematika 1-qism (@elektron_darslikbot).pdf" },
-	{ id: '1-sinf', title: 'Matematika (2-qism)', file: "/books/1-sinf/1 sinf Matematika 2-qism (@elektron_darslikbot).pdf" },
-	{ id: '1-sinf', title: 'Matematika (3-qism)', file: "/books/1-sinf/1 sinf Matematika 3-qism (@elektron_darslikbot).pdf" },
-	{ id: '1-sinf', title: 'Matematika (4-qism)', file: "/books/1-sinf/1 sinf Matematika 4-qism (@elektron_darslikbot).pdf" },
-	{ id: '1-sinf', title: 'Musiqiy savodxonlik', file: "/books/1-sinf/1 sinf Musiqiy savodxonlik (@elektron_darslikbot).pdf" },
-
-	// 2-sinf
-	{ id: '2-sinf', title: 'Informatika', file: '/books/2-sinf/2-sinf-informatika.pdf' },
-	{ id: '2-sinf', title: 'Ona tili (1-qism)', file: '/books/2-sinf/2-sinf-Ona-tili-1-qism.pdf' },
-	{ id: '2-sinf', title: 'Ona tili (2-qism)', file: '/books/2-sinf/2-sinf-Ona-tili-2-qism.pdf' },
-	{ id: '2-sinf', title: 'Ona tili (3-qism)', file: '/books/2-sinf/2-sinf-Ona-tili-3-qism.pdf' },
-	{ id: '2-sinf', title: 'Ona tili (4-qism)', file: '/books/2-sinf/2-sinf-Ona-tili-4-qism.pdf' },
-	{ id: '2-sinf', title: "O'qish savodxonligi (1-qism)", file: "/books/2-sinf/2-sinf-O'qish-savodxonligi-1-qism.pdf" },
-	{ id: '2-sinf', title: "O'qish savodxonligi (2-qism)", file: "/books/2-sinf/2-sinf-O'qish-savodxonligi-2-qism.pdf" },
-	{ id: '2-sinf', title: "O'qish savodxonligi (3-qism)", file: "/books/2-sinf/2-sinf-O'qish-savodxonligi-3-qism.pdf" },
-	{ id: '2-sinf', title: "O'qish savodxonligi (4-qism)", file: "/books/2-sinf/2-sinf-O'qish-savodxonligi-4-qism.pdf" },
-	{ id: '2-sinf', title: "O'qish savodxonligi (2-mashq daftari)", file: "/books/2-sinf/2_sinf_o'qish_savodxonligi_2_mashq_daftari.pdf" },
-	{ id: '2-sinf', title: 'Matematika (1-qism)', file: '/books/2-sinf/2-sinf-Matematika-1-qism.pdf' },
-	{ id: '2-sinf', title: 'Matematika (2-qism)', file: '/books/2-sinf/2-sinf-Matematika-2-qism.pdf' },
-	{ id: '2-sinf', title: 'Matematika (3-qism)', file: '/books/2-sinf/2-sinf-Matematika-3-qism.pdf' },
-	{ id: '2-sinf', title: 'Matematika (4-qism)', file: '/books/2-sinf/2-sinf-Matematika-4-qism.pdf' },
-	{ id: '2-sinf', title: 'Jismoniy tarbiya (Ish daftari)', file: '/books/2-sinf/2-sinf-Jismoniy-tarbiya-Ish-daftari.pdf' },
-	{ id: '2-sinf', title: 'Rus tili', file: '/books/2-sinf/2-klass-rus-tili.pdf' },
-	{ id: '2-sinf', title: 'Tarbiya', file: '/books/2-sinf/2-sinf-Tarbiya.pdf' },
-	{ id: '2-sinf', title: 'Musiqiy savodxonlik', file: '/books/2-sinf/2-sinf-Musiqiy-savodxonlik.pdf' },
-	{ id: '2-sinf', title: 'Texnologiya', file: '/books/2-sinf/2-sinf-Texnalogiya.pdf' },
-	{ id: '2-sinf', title: 'Tabiiy fanlar (1-qism)', file: '/books/2-sinf/2-sinf-Tabiy-fanlar-1-qism.pdf' },
-	{ id: '2-sinf', title: 'Tabiiy fanlar (2-qism)', file: '/books/2-sinf/2-sinf-Tabiiy-fanlar-2-qism.pdf' },
-	{ id: '2-sinf', title: 'Tasviriy san\'at', file: '/books/2-sinf/2-sinf-Tasviriy-sanat.pdf' },
-
-	// 3-sinf
-	{ id: '3-sinf', title: 'Ona tili (1-qism)', file: "/books/3-sinf/3-sinf Ona tili 1-qism (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: 'Ona tili (2-qism)', file: "/books/3-sinf/3-sinf Ona tili 2-qism (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: 'Ona tili (3-qism)', file: "/books/3-sinf/3-sinf Ona tili 3-qism (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: 'Ona tili (4-qism)', file: "/books/3-sinf/3-sinf Ona tili 4-qism (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: "O'qish savodxonligi (1-qism)", file: "/books/3-sinf/3-sinf O'qish savodxonligi 1-qism (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: "O'qish savodxonligi (2-qism)", file: "/books/3-sinf/3-sinf O'qish savodxonligi 2-qism (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: "O'qish savodxonligi (3-qism)", file: "/books/3-sinf/3-sinf O'qish savodxonligi 3-qism (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: "O'qish savodxonligi (4-qism)", file: "/books/3-sinf/3-sinf O'qish savodxonligi 4-qism (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: 'Matematika (1-qism)', file: "/books/3-sinf/3-sinf Matematika 1-qism (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: 'Matematika (2-qism)', file: "/books/3-sinf/3-sinf Matematika 2-qism (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: 'Matematika (3-qism)', file: "/books/3-sinf/3-sinf Matematika 3-qism (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: 'Matematika (4-qism)', file: "/books/3-sinf/3-sinf Matematika 4-qism (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: 'Tabiiy fanlar (1-qism)', file: "/books/3-sinf/3-sinf Tabiiy fanlar 1-qism (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: 'Tabiiy fanlar (2-qism)', file: "/books/3-sinf/3-sinf Tabiiy fanlar 2-qism (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: 'Musiqiy savodxonlik', file: "/books/3-sinf/3-sinf Musiqiy savodxonlik (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: 'Texnologiya', file: "/books/3-sinf/3-sinf Texnologiya (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: 'Tarbiya', file: "/books/3-sinf/3-sinf Tarbiya (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: "Tasviriy san'at", file: "/books/3-sinf/3-sinf Tasviriy san'at (@elekton_darslikbot).pdf" },
-	{ id: '3-sinf', title: "Ingliz tili (Student's book)", file: "/books/3-sinf/Guess_what_Grade_3_Stiudent's_book_3_@elekton_darslikbot.pdf" },
-
-	// 4-sinf
-	{ id: '4-sinf', title: 'Ona tili (1-qism)', file: "/books/4-sinf/4-sinf Ona tili 1-qism (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: 'Ona tili (2-qism)', file: "/books/4-sinf/4-sinf Ona tili 2-qism (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: 'Ona tili (3-qism)', file: "/books/4-sinf/4-sinf Ona tili 3-qism (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: 'Ona tili (4-qism)', file: "/books/4-sinf/4-sinf Ona tili 4-qism (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: "O'qish savodxonligi (1-qism)", file: "/books/4-sinf/4 sinf O'qish savodxonligi 1-qism (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: "O'qish savodxonligi (2-qism)", file: "/books/4-sinf/4 sinf O'qish savodxonligi 2-qism (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: "O'qish savodxonligi (3-qism)", file: "/books/4-sinf/4 sinf O'qish savodxonligi 3-qism (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: "O'qish savodxonligi (4-qism)", file: "/books/4-sinf/4 sinf O'qish savodxonligi 4-qism (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: 'Matematika (1-qism)', file: "/books/4-sinf/4 sinf Matematika 1-qism (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: 'Matematika (2-qism)', file: "/books/4-sinf/4 sinf Matematika 2-qism (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: 'Matematika (3-qism)', file: "/books/4-sinf/4 sinf Matematika 3-qism (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: 'Matematika (4-qism)', file: "/books/4-sinf/4 sinf Matematika 4-qism (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: 'Tabiiy fanlar (1-qism)', file: "/books/4-sinf/4 sinf Tabiiy fanlar 1-qism (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: 'Tabiiy fanlar (2-qism)', file: "/books/4-sinf/4 sinf Tabiiy fanlar 2-qism (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: 'Musiqiy savodxonlik', file: "/books/4-sinf/4 sinf Musiqiy savodxonlik (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: "Tasviriy san'at", file: "/books/4-sinf/4-sinf Tasviriy san'at (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: 'Texnologiya', file: "/books/4-sinf/4 sinf Texnologiya (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: 'Jismoniy tarbiya', file: "/books/4-sinf/4-sinf Jismoniy tarbiya (@elekton_darslikbot).pdf" },
-	{ id: '4-sinf', title: 'Tarbiya', file: "/books/4-sinf/4 sinf Tarbiya (@elekton_darslikbot).pdf" },
-
-	// 11-sinf
-	{ id: '11-sinf', title: 'Huquq', file: "/books/11-sinf/11-sinf Huquq (@elekton_darslikbot).pdf" },
-	{ id: '11-sinf', title: 'Dunyo dinlari tarixi', file: "/books/11-sinf/11-sinf Dunyo dinlari tarixi (@elekton_darslikbot).pdf" },
-	{ id: '11-sinf', title: 'Astronomiya (2018)', file: "/books/11-sinf/11-sinf Astronomiya 2018 (@elekton_darslikbot).pdf" },
-	{ id: '11-sinf', title: "O'zbekiston tarixi", file: "/books/11-sinf/11-sinf O'zbekiston tarixi (@elekton_darslikbot).pdf" },
-	{ id: '11-sinf', title: 'Matematika (2-qism, 2018)', file: "/books/11-sinf/11-sinf-Matematika-2-qism 2018 (@elekton_darslikbot).pdf" },
-	{ id: '11-sinf', title: 'Matematika (1-qism, 2018)', file: "/books/11-sinf/11-sinf-Matematika-1-qism 2018 (@elekton_darslikbot).pdf" },
-	{ id: '11-sinf', title: 'Adabiyot (2-qism, 2018)', file: "/books/11-sinf/11-sinf Adabiyot darslik 2-qism 2018 (@elekton_darslikbot).pdf" },
-	{ id: '11-sinf', title: 'Adabiyot (1-qism)', file: "/books/11-sinf/11-sinf Adabiyot 1-qism (@elekton_darslikbot).pdf" },
-	{ id: '11-sinf', title: 'Ona tili (2-qism)', file: "/books/11-sinf/11-sinf Ona tili 2-qism (@elekton_darslikbot).pdf" },
-	{ id: '11-sinf', title: 'Ona tili', file: "/books/11-sinf/11-sinf Ona tili (@elekton_darslikbot).pdf" },
-];
+import { booksCategory } from 'src/config/constants';
+import { loadImage } from 'src/helpers/image.helper';
+import { useActions } from 'src/hooks/useActions';
+import { useTypedSelector } from 'src/hooks/useTypedSelector';
+import { BooksType } from 'src/interfaces/books.interface';
 
 const BooksPageComponent = () => {
-	const [filter, setFilter] = useState<string>('1-sinf');
-	const cardBg = useColorModeValue('white', 'gray.800');
-	const { t } = useTranslation();
+	const [filter, setFilter] = useState<string>('all-categories');
 
-	const filteredBooks = booksData.filter(book => book.id === filter);
+	const backgroundColor = useColorModeValue('gray.200', 'gray.900');
+	const { t } = useTranslation();
+	const { books } = useTypedSelector(state => state.books);
+	const cart = useTypedSelector(state => state.cart);
+	const { addBookToCart } = useActions();
+	const toast = useToast();
+
+	const filteredData = useCallback(() => {
+		switch (filter) {
+			case '1-sinf':
+				return books.filter(c => c.category === '1-sinf');
+			case '2-sinf':
+				return books.filter(c => c.category === '2-sinf');
+			case '3-sinf':
+				return books.filter(c => c.category == '3-sinf');
+			case '4-sinf':
+				return books.filter(c => c.category == '4-sinf');
+			case '5-sinf':
+				return books.filter(c => c.category == '5-sinf');
+			case '6-sinf':
+						return books.filter(c => c.category == '6-sinf');
+						case '7-sinf':
+							return books.filter(c => c.category === '7-sinf');
+						case '8-sinf':
+							return books.filter(c => c.category === '8-sinf');
+						case '9-sinf':
+							return books.filter(c => c.category == '9-sinf');
+						case '10-sinf':
+							return books.filter(c => c.category == '10-sinf');
+						case '11-sinf':
+							return books.filter(c => c.category == '11-sinf');
+						default:
+						return books;
+		}
+	}, [filter, books]);
+
+	const addToCart = (book: BooksType) => {
+		const existingProduct = cart.books.find(c => c._id === book._id);
+		if (existingProduct) {
+			toast({ title: 'Book already exist in cart', position: 'bottom', status: 'warning' });
+			return;
+		}
+		addBookToCart(book);
+		toast({ title: 'Book added successfully', position: 'bottom' });
+	};
 
 	return (
-		<Box mb={20} py={10}>
+		<Box mb={20}>
 			<SectionTitle
 				title={t('title', { ns: 'books' })}
 				subtitle={t('description', { ns: 'books' })}
 				textAlign={'center'}
 				pt={4}
 			/>
-			<Flex justify={'center'} mt={8} flexWrap={'wrap'} gap={3}>
-				{SINFLAR.map(sinf => (
+			<Flex justify={'center'} mt={5} flexWrap={'wrap'}>
+				{booksCategory.map((item, idx) => (
 					<Button
-						key={sinf}
-						colorScheme={'blue'}
-						variant={filter === sinf ? 'solid' : 'outline'}
-						onClick={() => setFilter(sinf)}
-						px={6}
-						borderRadius={'md'}
+						key={item.id}
+						colorScheme={'facebook'}
+						variant={filter == item.id ? 'solid' : 'outline'}
+						borderRadius={0}
+						borderLeftRadius={idx == 0 ? 'md' : 0}
+						borderRightRadius={booksCategory.length - 1 === idx ? 'md' : 0}
+						onClick={() => setFilter(item.id)}
 					>
-						{sinf}
+						{t(item.label, { ns: 'books' })}
 					</Button>
 				))}
 			</Flex>
 
 			<Grid
-				templateColumns={{
-					base: 'repeat(1, 1fr)',
-					md: 'repeat(2, 1fr)',
-				}}
-				gap={6}
-				mt={10}
+				gridTemplateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }}
+				rowGap={20}
+				gap={4}
+				mt={5}
 			>
-				{filteredBooks.map(book => (
-					<Box
-						key={book.file}
-						p={5}
-						bg={cardBg}
-						borderRadius='lg'
-						boxShadow='md'
-						display='flex'
-						alignItems='center'
-						justifyContent='space-between'
-						gap={4}
-					>
-						<Text fontWeight='medium'>{book.title}</Text>
-						<a href={book.file} download>
-							<Button colorScheme='blue' leftIcon={<AiOutlineDownload />} flexShrink={0}>
-								Yuklab olish
-							</Button>
-						</a>
-					</Box>
+				{filteredData().map(item => (
+					<motion.div key={item._id} layout>
+						<Box pos={'relative'}>
+							<Box pos={'relative'} w={'full'} h={'250px'}>
+								{/* <Image
+									src={loadImage(item.image)}
+									alt={item.title}
+									fill
+									style={{ borderRadius: '10px', objectFit: 'cover' }}
+								/> */}
+							</Box>
+							<HStack
+								pos={'absolute'}
+								minH={'90px'}
+								borderRadius={'lg'}
+								boxShadow={'dark-lg'}
+								bg={'Background'}
+								left={2}
+								right={2}
+								bottom={-10}
+								p={2}
+								justify={'space-between'}
+							>
+								<Text fontWeight="bold" noOfLines={1}>
+		{item.title}
+	</Text>
+	<Button
+		as="a"
+		href={item.image} // 🔹 Endi image yuklanadi
+		download
+		rightIcon={<AiFillShopping />}
+	>
+		Download
+	</Button>
+
+							</HStack>
+						</Box>
+					</motion.div>
 				))}
 			</Grid>
 		</Box>
 	);
 };
-
 export default BooksPageComponent;

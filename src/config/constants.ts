@@ -206,12 +206,17 @@ export const coursesFilter = [
 
 
 export const createBooksCategory = [
-	'programming',
-	'design',
-	'business',
-	'history',
-	'writing',
-	'lifestyle',
+	'1-sinf',
+	'2-sinf',
+	'3-sinf',
+	'4-sinf',
+	'5-sinf',
+	'6-sinf',
+	'7-sinf',
+	'8-sinf',
+	'9-sinf',
+	'10-sinf',
+	'11-sinf',
 ];
 
 export const booksCategory = [
@@ -220,29 +225,50 @@ export const booksCategory = [
 		id: 'all-categories',
 	},
 	{
-		label: 'filter_programmin',
-		id: 'programming',
+		label: '1-sinf',
+		id: '1-sinf',
 	},
 	{
-		label: 'filter_design',
-		id: 'design',
+		label: '2-sinf',
+		id: '2-sinf',
 	},
 	{
-		label: 'filter_business',
-		id: 'business',
+		label: '3-sinf',
+		id: '3-sinf',
 	},
 	{
-		label: 'filter_history',
-		id: 'history',
+		label: '4-sinf',
+		id: '4-sinf',
 	},
 	{
-		label: 'filter_writing',
-		id: 'writing',
+		label: '5-sinf',
+		id: '5-sinf',
 	},
 	{
-		label: 'filter_lifestyle',
-		id: 'lifestyle',
+		label: '6-sinf',
+		id: '6-sinf',
 	},
+	{
+		label: '7-sinf',
+		id: '7-sinf',
+	},
+	{
+		label: '8-sinf',
+		id: '8-sinf',
+	},
+	{
+		label: '9-sinf',
+		id: '9-sinf',
+	},
+	{
+		label: '10-sinf',
+		id: '10-sinf',
+	},
+	{
+		label: '11-sinf',
+		id: '11-sinf',
+	},
+	
 ];
 
 export const faq = [

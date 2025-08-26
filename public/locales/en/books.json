@@ -2,10 +2,15 @@
 	"title": "Interesting books",
 	"description": "You like reading, great! This place especially for you",
 	"filter_all_category": "All Category",
-	"filter_programmin": "Programming",
-	"filter_design": "Design",
-	"filter_business": "Business",
-	"filter_history": "History",
-	"filter_writing": "Writing",
-	"filter_lifestyle": "Lifestyle"
+	"1-sinf": "1-sinf",
+	"2-sinf": "2-sinf",
+	"3-sinf": "3-sinf",
+	"4-sinf": "4-sinf",
+	"5-sinf": "5-sinf",
+	"6-sinf": "6-sinf",
+	"7-sinf": "7-sinf",
+	"8-sinf": "8-sinf",
+	"9-sinf": "9-sinf",
+	"10-sinf": "10-sinf",
+	"11-sinf": "11-sinf"
 }

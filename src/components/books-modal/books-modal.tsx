@@ -19,7 +19,6 @@ import { FC, useEffect, useState } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
 import { useTranslation } from 'react-i18next';
 import { FaTimes } from 'react-icons/fa';
-import {  createBooksCategory } from 'src/config/constants';
 import { loadImage } from 'src/helpers/image.helper';
 import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
@@ -29,6 +28,7 @@ import ErrorAlert from '../error-alert/error-alert';
 import SelectField from '../select-field/select-field';
 import TextFiled from '../text-filed/text-filed';
 import { BookModalProps } from './books-modal.props';
+import { createBooksCategory } from 'src/config/constants';
 
 const BooksModal: FC<BookModalProps> = ({ isOpen, onClose, booksValue }): JSX.Element => {
 	const [values, setValues] = useState(data);
@@ -162,7 +162,7 @@ const BooksModal: FC<BookModalProps> = ({ isOpen, onClose, booksValue }): JSX.El
 										<FileUploader
 											handleChange={handleChange}
 											name='file'
-											types={['JPG', 'PNG', 'GIF']}
+											types={['JPG', 'PNG', 'GIF', 'PDF']}
 											style={{ minWidth: '100%' }}
 										/>
 										{errorFile && (

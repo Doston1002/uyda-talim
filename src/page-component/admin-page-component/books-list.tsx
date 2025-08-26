@@ -26,16 +26,7 @@ const BooksList = ({ books }) => (
             </Text>
           </Box>
         </Box>
-        <Button
-          as="a"
-          href={book.pdf}
-          target="_blank"
-          rel="noopener noreferrer"
-          colorScheme="red"
-          leftIcon={<FaFilePdf />}
-        >
-          Ochish / Yuklab olish
-        </Button>
+      kn'
       </Box>
     ))}
   </Box>
