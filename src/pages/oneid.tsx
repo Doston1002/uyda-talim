@@ -22,7 +22,7 @@ export default function OneIdPage() {
       const { code, state } = router.query;
   
       if (code) {
-        fetch(`${ONEID_URL}/OneId/OneIdApi?code=${code}&state=${state}`, {
+        fetch(`${ONEID_URL}OneId/OneIdApi?code=${code}&state=${state}`, {
           credentials: "include", // cookie olish uchun
         })
           .then(res => {
