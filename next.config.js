@@ -6,9 +6,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'api.uydatalim.uzedu.uz',
-        port: '8000',
-        pathname: '/uploads/**', // bu barcha uploads ichidagi papkalarga ruxsat beradi
+        hostname: 'api.uydatalim.uzedu.uz', // barcha uploads ichidagi papkalarga ruxsat beradi
       },
       {
         protocol: 'https',
@@ -16,7 +14,8 @@ const nextConfig = {
       },
       {
         protocol: 'http',
-        hostname: 'localhost:3000',
+        hostname: 'localhost', // portni alohida yozish shart emas
+        port: '', // bo'sh qoldiring
       },
       {
         protocol: 'https',
@@ -24,8 +23,8 @@ const nextConfig = {
       },
       {
         protocol: 'http',
-        hostname: 'localhost',
-        port: '8000',
+        hostname: 'localhost', 
+        port: '', // 8000 o‘rniga bo‘sh qoldiring
         pathname: '/uploads/**',
       },
     ],
