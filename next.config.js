@@ -15,7 +15,7 @@ const nextConfig = {
       {
         protocol: 'http',
         hostname: 'localhost', // portni alohida yozish shart emas
-        port: '', // bo'sh qoldiring
+        port: '8000', // bo'sh qoldiring
       },
       {
         protocol: 'https',

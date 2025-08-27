@@ -9,13 +9,11 @@ import {
 	useToast,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AiFillShopping } from 'react-icons/ai';
+import { AiOutlineDownload } from 'react-icons/ai';
 import SectionTitle from 'src/components/section-title/section-title';
 import { booksCategory } from 'src/config/constants';
-import { loadImage } from 'src/helpers/image.helper';
 import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 import { BooksType } from 'src/interfaces/books.interface';
@@ -23,7 +21,6 @@ import { BooksType } from 'src/interfaces/books.interface';
 const BooksPageComponent = () => {
 	const [filter, setFilter] = useState<string>('all-categories');
 
-	const backgroundColor = useColorModeValue('gray.200', 'gray.900');
 	const { t } = useTranslation();
 	const { books } = useTypedSelector(state => state.books);
 	const cart = useTypedSelector(state => state.cart);
@@ -59,29 +56,19 @@ const BooksPageComponent = () => {
 		}
 	}, [filter, books]);
 
-	const addToCart = (book: BooksType) => {
-		const existingProduct = cart.books.find(c => c._id === book._id);
-		if (existingProduct) {
-			toast({ title: 'Book already exist in cart', position: 'bottom', status: 'warning' });
-			return;
-		}
-		addBookToCart(book);
-		toast({ title: 'Book added successfully', position: 'bottom' });
-	};
 
 	return (
-		<Box mb={20}>
+		<Box mb={2}>
 			<SectionTitle
 				title={t('title', { ns: 'books' })}
 				subtitle={t('description', { ns: 'books' })}
 				textAlign={'center'}
-				pt={4}
+				pt={1}
 			/>
 			<Flex justify={'center'} mt={5} flexWrap={'wrap'}>
 				{booksCategory.map((item, idx) => (
 					<Button
 						key={item.id}
-						colorScheme={'facebook'}
 						variant={filter == item.id ? 'solid' : 'outline'}
 						borderRadius={0}
 						borderLeftRadius={idx == 0 ? 'md' : 0}
@@ -95,14 +82,14 @@ const BooksPageComponent = () => {
 
 			<Grid
 				gridTemplateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }}
-				rowGap={20}
+				rowGap={1}
 				gap={4}
 				mt={5}
 			>
 				{filteredData().map(item => (
 					<motion.div key={item._id} layout>
 						<Box pos={'relative'}>
-							<Box pos={'relative'} w={'full'} h={'250px'}>
+							<Box pos={'relative'} w={'full'} h={'150px'}>
 								{/* <Image
 									src={loadImage(item.image)}
 									alt={item.title}
@@ -116,9 +103,9 @@ const BooksPageComponent = () => {
 								borderRadius={'lg'}
 								boxShadow={'dark-lg'}
 								bg={'Background'}
-								left={2}
-								right={2}
-								bottom={-10}
+								left={1}
+								right={1}
+								bottom={1}
 								p={2}
 								justify={'space-between'}
 							>
@@ -126,13 +113,19 @@ const BooksPageComponent = () => {
 		{item.title}
 	</Text>
 	<Button
-		as="a"
-		href={item.image} // 🔹 Endi image yuklanadi
-		download
-		rightIcon={<AiFillShopping />}
-	>
-		Download
-	</Button>
+  onClick={() => {
+    // 1️⃣ Faylni yuklash
+    const link = document.createElement('a');
+    link.href = `${process.env.NEXT_PUBLIC_API_SERVICE}${item.image}`;
+    link.download = item.title;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }}
+  rightIcon={<AiOutlineDownload size={24} />}
+>
+</Button>
+
 
 							</HStack>
 						</Box>

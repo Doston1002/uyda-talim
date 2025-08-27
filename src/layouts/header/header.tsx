@@ -20,7 +20,6 @@ import { useTranslation } from 'react-i18next';
 import {
 	AiOutlineDashboard,
 	AiOutlineLogin,
-	AiOutlineShoppingCart,
 } from 'react-icons/ai';
 import { BiMenuAltLeft, BiUserCircle } from 'react-icons/bi';
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs';
