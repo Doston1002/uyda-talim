@@ -5,9 +5,9 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: '213.230.99.101',
-        port: '2246',
+        protocol: 'https',
+        hostname: 'api.uydatalim.uzedu.uz',
+        port: '22, 8000',
         pathname: '/uploads/**', // bu barcha uploads ichidagi papkalarga ruxsat beradi
       },
       {
