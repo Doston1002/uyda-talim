@@ -20,7 +20,7 @@ export default function OneIdPage() {
   return (
     <div style={{ padding: 40 }}>
       <h1>OneID Callback Page</h1>
-      <p>Agar code keldi: brauzer konsolini ochib tekshiring.</p>
+      <p>code keldi: brauzer konsolini ochib tekshiring.</p>
     </div>
   )
 }
