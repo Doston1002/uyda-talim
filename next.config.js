@@ -7,7 +7,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'api.uydatalim.uzedu.uz',
-        port: '22, 8000',
+        port: '8000',
         pathname: '/uploads/**', // bu barcha uploads ichidagi papkalarga ruxsat beradi
       },
       {
