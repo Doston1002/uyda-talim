@@ -19,7 +19,7 @@ export default function OneIdPage() {
     }
 
     // Backendga yuborish
-    fetch(`${process.env.API_URL}/api/OneId/OneIdApi?code=${code}&state=${state}`, {
+    fetch(`https://api.uydatalim.uzedu.uz/api/OneId/OneIdApi?code=${code}&state=${state}`, {
       method: "GET",
       credentials: "include", // cookie olish uchun
     })
