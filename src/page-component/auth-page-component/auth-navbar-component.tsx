@@ -19,7 +19,6 @@ import { BiMenuAltLeft } from 'react-icons/bi';
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs';
 import { TbWorld } from 'react-icons/tb';
 import { language, navigation } from 'src/config/constants';
-import { DarkLogo, LightLogo } from 'src/icons';
 import Image from 'next/image';
 
 const AuthNavbarComponent = () => {

@@ -14,13 +14,13 @@ import {
 	useColorMode,
 	useColorModeValue,
 } from '@chakra-ui/react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs';
 import { TbWorld } from 'react-icons/tb';
 import { adminSidebar, language } from 'src/config/constants';
-import { DarkLogo, LightLogo } from 'src/icons';
 
 const AdminSidebar = () => {
 	const { toggleColorMode, colorMode } = useColorMode();
@@ -45,7 +45,23 @@ const AdminSidebar = () => {
 		>
 			<Container mt={5}>
 				<HStack justify={'space-between'}>
-					<Link href={'/'}>{colorMode === 'light' ? <DarkLogo /> : <LightLogo />}</Link>
+				<Link href={'/'}>
+						{colorMode === 'light' ?  (
+        <Image
+          src="/images/logoDark.png"
+          alt={ 'Logo'}
+          width={120}
+          height={80}
+        />
+      ) : (
+        <Image
+          src="/images/logoWhite.png"
+          alt={'Logo'}
+          width={120}
+          height={80}
+        />
+      )}
+					</Link>
 					<HStack>
 						<Menu placement='bottom'>
 							<MenuButton

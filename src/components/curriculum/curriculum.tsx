@@ -57,7 +57,6 @@ const Curriculum = () => {
 										'facebook.500',
 										'facebook.200'
 									)}
-									color={useColorModeValue('white', 'black')}
 									borderRadius={'lg'}
 									_hover={{
 										backgroundColor: 'facebook.400',

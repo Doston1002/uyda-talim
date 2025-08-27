@@ -33,7 +33,6 @@ import ReactStars from 'react-stars';
 import TextAreaField from 'src/components/text-area-field/text-area-field';
 import TextFiled from 'src/components/text-filed/text-filed';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
-import { DarkLogo, LightLogo } from 'src/icons';
 import { CourseService } from 'src/services/course.service';
 
 const Header = () => {
