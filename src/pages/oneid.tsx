@@ -9,7 +9,7 @@ export default function OneIdPage() {
 
   useEffect(() => {
     const handleOneIdCallback = async (code: string) => {
-      const response = await fetch('/api/auth/oneid/callback', {
+      const response = await fetch(`${API_URL}/oneid/callback`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code }),
