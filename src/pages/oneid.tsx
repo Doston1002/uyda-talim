@@ -1,9 +1,19 @@
+'use client'
+
+import { useToast } from "@chakra-ui/react";
+import { useSearchParams } from "next/navigation"
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { API_URL } from "src/config/api.config";
 
-export default function OneIdPage() {
+export default function OneIdPage(query: any) {
   const router = useRouter();
+	const toast = useToast();
+  const { t } = useTranslation()
+  const searchParams = useSearchParams()
+  const search = searchParams?.get('code')  
+  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,18 +30,24 @@ export default function OneIdPage() {
         // Token va user ma'lumotlari
         localStorage.setItem('accessToken', data.accessToken);
         localStorage.setItem('refreshToken', data.refreshToken);
+        setLoading(false)
+        router.push('/');
+				toast({
+					title: `${t('successfully_logged', { ns: 'global' })}`,
+					status: 'info',
+					isClosable: true,
+					position: 'top-right',
+				});
       }
     };
 
-    const { code, state } = router.query;
-
-    if (!code) {
+    if (!search) {
       setError("Code kelmadi");
       setLoading(false);
       return;
     }
 
-    handleOneIdCallback(code as string)
+    handleOneIdCallback(search)
 
 
     // fetch(`${API_URL}/oneid/callback?code=${code}&state=${state}`, {
@@ -53,7 +69,7 @@ export default function OneIdPage() {
     //     setError(err.message);
     //   })
     //   .finally(() => setLoading(false));
-  }, [router.query]);
+  }, []);
 
   if (loading) {
     return (
