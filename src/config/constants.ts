@@ -147,9 +147,9 @@ export const trustedCompeny = [
 	},
 	
 	{
-	  name: 'EDU CARE',
-	  url: 'https://educare.uzedu.uz/uz/',
-	  logo: '/images/edu-care.png',
+	  name: 'respublika tashxis markazi',
+	  url: 'http://info-tashxis.uz/',
+	  logo: '/images/tashxis.png',
 	},
 	{
 	  name: '',

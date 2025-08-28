@@ -51,19 +51,6 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 		});
 	};
 
-	// OneID login bosilganda
-	const handleOneIdLogin = () => {
-		const authUrl = new URL(process.env.NEXT_PUBLIC_ONEID_AUTH_URL!);
-
-		authUrl.searchParams.set('response_type', 'one_code');
-		authUrl.searchParams.set('client_id', process.env.NEXT_PUBLIC_ONEID_CLIENT_ID!);
-		authUrl.searchParams.set('redirect_uri', process.env.NEXT_PUBLIC_ONEID_REDIRECT_URI!);
-		authUrl.searchParams.set('scope', process.env.NEXT_PUBLIC_ONEID_SCOPE!);
-		authUrl.searchParams.set('state', 'random_state'); // xavfsizlik uchun generate qiling
-
-		window.location.href = authUrl.toString();
-	};
-
 	return (
 		<Stack spacing={4}>
 			<Heading
@@ -121,6 +108,7 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 					<Button
 						w={'full'}
 						bgGradient='linear(to-r, facebook.400,gray.400)'
+						
 						_hover={{ bgGradient: 'linear(to-r, facebook.500,gray.500)', boxShadow: 'xl' }}
 						h={14}
 						type={'submit'}
@@ -131,17 +119,6 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 					</Button>
 				</Form>
 			</Formik>
-
-			{/* 🔹 OneID orqali login tugmasi */}
-			<Button
-				w={'full'}
-				colorScheme='teal'
-				variant='outline'
-				onClick={handleOneIdLogin}
-			>
-				OneID orqali kirish
-			</Button>
-
 			<Text>
 				{t('login_not_account_yet', { ns: 'global' })}{' '}
 				<Box
