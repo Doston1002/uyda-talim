@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { API_URL } from "src/config/api.config";
+import { saveTokensCookie } from "src/helpers/auth.helper";
 
 export default function OneIdPage(query: any) {
   const router = useRouter();
@@ -27,10 +28,11 @@ export default function OneIdPage(query: any) {
 
       const data = await response.json();
       if (data.success) {
-        // Token va user ma'lumotlari
-        localStorage.setItem('accessToken', data.accessToken);
-        localStorage.setItem('refreshToken', data.refreshToken);
         setLoading(false)
+        // Token va user ma'lumotlari
+        // localStorage.setItem('accessToken', data.accessToken);
+        // localStorage.setItem('refreshToken', data.refreshToken);
+        saveTokensCookie(data)
         router.push('/');
 				toast({
 					title: `${t('successfully_logged', { ns: 'global' })}`,
