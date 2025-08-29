@@ -29,6 +29,20 @@ export const login = createAsyncThunk<
 	}
 });
 
+// 🔹 OneID login
+export const oneIdLogin = createAsyncThunk<
+	AuthUserResponse,
+	{ code: string; callback: () => void }
+>('auth/oneid-login', async ({ code, callback }, thunkApi) => {
+	try {
+		const response = await AuthService.oneIdLogin(code);
+		callback();
+		return response.data;
+	} catch (error) {
+		return thunkApi.rejectWithValue(errorCatch(error));
+	}
+});
+
 export const sendVerificationCode = createAsyncThunk<
 	'Success',
 	{ email: string; isUser: boolean; callback: () => void }

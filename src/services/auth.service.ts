@@ -46,6 +46,19 @@ export const AuthService = {
 		return response;
 	},
 
+	async oneIdLogin(code: string) {
+		const response = await axios.post<AuthUserResponse>(
+			`${API_URL}${getAuthUrl('oneid/callback')}`,
+			{ code }
+		);
+
+		if (response.data.accessToken) {
+			saveTokensCookie(response.data);
+		}
+
+		return response;
+	},
+
 	async sendOtp(email: string, isUser: boolean) {
 		const response = await axios.post<'Success'>(
 			`${API_URL}${getMailUrl('send-otp')}`,
