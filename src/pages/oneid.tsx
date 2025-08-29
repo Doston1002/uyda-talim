@@ -117,9 +117,9 @@ export default function OneIdPage() {
           isClosable: true,
           position: "top-right",
         });
-        router.push("/"); // yoki "/dashboard"
-
-        window.location.reload();
+        router.push("/").then(() => {
+          window.location.reload(); // 🔹 sahifani qayta yuklash
+        });
       },
     });
   }, [search]);
