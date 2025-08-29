@@ -118,6 +118,8 @@ export default function OneIdPage() {
           position: "top-right",
         });
         router.push("/"); // yoki "/dashboard"
+
+        window.location.reload();
       },
     });
   }, [search]);
