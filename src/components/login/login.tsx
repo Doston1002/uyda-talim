@@ -232,6 +232,7 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 						placeholder={'info@gmail.com'}
 					/>
 					<TextFiled
+					paddingBottom={10}
 						name='password'
 						label={t('login_input_password_label', { ns: 'global' })}
 						type={!show ? 'password' : 'text'}
@@ -245,19 +246,9 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 							/>
 						</InputRightElement>
 					</TextFiled>
-					<HStack my={4} justify={'space-between'}>
-						<Checkbox colorScheme={'gray'}>{t('auth_remember_me', { ns: 'global' })}</Checkbox>
-						<Box
-							as={'a'}
-							onClick={() => onNavigateStateComponent('account-recovery')}
-							cursor={'pointer'}
-							color={'teal.500'}
-							_hover={{ textDecoration: 'underline' }}
-						>
-							{t('auth_forgot_password', { ns: 'global' })}
-						</Box>
-					</HStack>
+					
 					<Button
+						marginTop={2}
 						w={'full'}
 						bgGradient='linear(to-r, facebook.400,gray.400)'
 						_hover={{ bgGradient: 'linear(to-r, facebook.500,gray.500)', boxShadow: 'xl' }}
@@ -280,19 +271,6 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 			>
 				OneID orqali kirish
 			</Button>
-
-			<Text>
-				{t('login_not_account_yet', { ns: 'global' })}{' '}
-				<Box
-					as={'span'}
-					onClick={() => onNavigateStateComponent('register')}
-					color={'teal.500'}
-					cursor={'pointer'}
-					_hover={{ textDecoration: 'underline' }}
-				>
-					{t('login_redirect_to_register', { ns: 'global' })}
-				</Box>
-			</Text>
 		</Stack>
 	);
 };
