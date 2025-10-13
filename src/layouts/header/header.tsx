@@ -177,6 +177,16 @@ const Header = ({ onToggle }: HeaderProps) => {
 										{t('instructor_admin', { ns: 'instructor' })}
 									</MenuItem>
 								)}
+								   {user.role === 'ADMIN' && (
+                                    <MenuItem
+                                        h={14}
+                                        onClick={() => router.push('/admin/users')}
+                                        fontWeight={'bold'}
+                                        icon={<RiAdminFill fontSize={17} />}
+                                    >
+                                        {t('instructor_admin', { ns: 'admin' })}
+                                    </MenuItem>
+                                )}
 								<MenuItem
 									h={14}
 									onClick={() => router.push('/dashboard')}
