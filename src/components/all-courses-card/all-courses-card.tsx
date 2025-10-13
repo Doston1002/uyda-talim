@@ -10,17 +10,13 @@ import {
 	Image,
 	Stack,
 	Text,
-	useToast,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { AiOutlineClockCircle } from 'react-icons/ai';
-import { BsMinecartLoaded } from 'react-icons/bs';
 import { CiViewList } from 'react-icons/ci';
 import { SiGoogleanalytics } from 'react-icons/si';
 import ReactStars from 'react-stars';
 import { loadImage } from 'src/helpers/image.helper';
-import { useActions } from 'src/hooks/useActions';
-import { useTypedSelector } from 'src/hooks/useTypedSelector';
 import { AllCoursesCardProps } from './all-courses-card.props';
 
 const AllCoursesCard = ({
@@ -28,27 +24,10 @@ const AllCoursesCard = ({
 	isMyCourse,
 }: AllCoursesCardProps) => {
 	const router = useRouter();
-	const { addCourseToCart } = useActions();
-	const { courses } = useTypedSelector(state => state.cart);
-	const toast = useToast();
-
 	const onDetailedCourse = () =>
 		router.push(`/courses/${course.slug}`);
 
-	const addCourseToCardHandler = () => {
-		const existingProduct = courses.find(c => c._id === course._id);
 
-		if (existingProduct) {
-			toast({
-				title: 'Course already exist in cart',
-				position: 'bottom',
-				status: 'warning',
-			});
-			return;
-		}
-		addCourseToCart(course);
-		toast({ title: 'Course added successfully', position: 'bottom' });
-	};
 
 	return (
 		<>

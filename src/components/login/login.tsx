@@ -138,11 +138,8 @@
 
 
 import {
-	Box,
 	Button,
-	Checkbox,
 	Heading,
-	HStack,
 	Icon,
 	InputRightElement,
 	Stack,

@@ -5,7 +5,7 @@ import { useTypedSelector } from 'src/hooks/useTypedSelector';
 import { CardType } from 'src/interfaces/constants.interface';
 import { withLayout } from 'src/layouts/layout';
 
-const CheckoutPage: NextPage<CheckoutPageProps> = ({ cards }) => {
+const CheckoutPage: NextPage<CheckoutPageProps> = () => {
 	const { books, courses, product } = useTypedSelector(state => state.cart);
 
 	const checkCard = () => books.length || courses.length || product.id;

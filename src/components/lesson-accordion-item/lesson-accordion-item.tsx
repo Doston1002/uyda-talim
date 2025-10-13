@@ -10,8 +10,7 @@ import { LessonAccordionItemProps } from './lesson-accordion-item.props';
 
 const LessonAccordionItem = ({ lesson, sectionId, lessonIdx }: LessonAccordionItemProps) => {
 	const { isOpen, onToggle } = useDisclosure();
-	const { deleteLesson, getSection, editSection } = useActions();
-	const { course } = useTypedSelector(state => state.instructor);
+	const { deleteLesson, editSection } = useActions();
 	const { sections, isLoading } = useTypedSelector(state => state.section);
 
 	const onDeleteLesson = () => {

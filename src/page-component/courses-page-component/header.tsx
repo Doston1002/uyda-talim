@@ -27,7 +27,6 @@ import { useEffect, useState } from 'react';
 import { BsFillMoonStarsFill } from 'react-icons/bs';
 import { FaRegCommentDots, FaTelegram } from 'react-icons/fa';
 import { FiSun } from 'react-icons/fi';
-import { HiHeart } from 'react-icons/hi';
 import { RiLogoutBoxLine } from 'react-icons/ri';
 import ReactStars from 'react-stars';
 import TextAreaField from 'src/components/text-area-field/text-area-field';

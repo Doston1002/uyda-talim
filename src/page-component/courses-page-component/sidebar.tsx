@@ -9,7 +9,6 @@ import {
 	Checkbox,
 	Flex,
 	Heading,
-	Icon,
 	Spinner,
 	Text,
 	useColorModeValue,

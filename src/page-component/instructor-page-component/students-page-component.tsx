@@ -27,7 +27,7 @@ import { courseusers } from 'src/config/constants';
 Chart.register(CategoryScale);
 
 const StudentsPageComponent = () => {
-	const [chartData, setChartData] = useState({
+	const [chartData] = useState({
 		labels: courseusers.map(data => data.year),
 		datasets: [
 			{

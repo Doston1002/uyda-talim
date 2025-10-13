@@ -1,6 +1,4 @@
 import {
-	Alert,
-	AlertIcon,
 	Box,
 	Button,
 	Divider,
@@ -10,7 +8,6 @@ import {
 	Heading,
 	HStack,
 	IconButton,
-	Input,
 	Stack,
 	Tag,
 	Text,
@@ -20,21 +17,16 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Fragment, useState } from 'react';
 import { BsFillTrashFill } from 'react-icons/bs';
-import $axios from 'src/api/axios';
 import { ErrorAlert } from 'src/components';
 import SectionTitle from 'src/components/section-title/section-title';
-import { getPaymentUrl } from 'src/config/api.config';
 import { loadImage } from 'src/helpers/image.helper';
 import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 
 const CartPageComponent = () => {
-	const [active, setActive] = useState<boolean>(false);
 	const [error, setError] = useState<string>('');
-	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const cart = useTypedSelector(state => state.cart);
-	const { editCourseCart } = useActions();
 	const router = useRouter();
 
 	const getSubtitle = () => {

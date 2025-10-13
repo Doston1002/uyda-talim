@@ -27,9 +27,7 @@ import {
 	FaRibbon,
 	FaStar,
 	FaUserGraduate,
-	FaUserTie,
 } from 'react-icons/fa';
-import { GiInfinity } from 'react-icons/gi';
 import { MdPlayLesson } from 'react-icons/md';
 import { TbCertificate } from 'react-icons/tb';
 import { TfiAlarmClock, TfiTimer } from 'react-icons/tfi';
@@ -39,7 +37,6 @@ import { loadImage } from 'src/helpers/image.helper';
 import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 import {
-	CourseType,
 	ReviewType,
 } from 'src/interfaces/course.interface';
 import { CourseService } from 'src/services/course.service';
@@ -51,13 +48,10 @@ const DetailedCourseComponent = () => {
 
 	const { course } = useTypedSelector(state => state.course);
 	const { sections } = useTypedSelector(state => state.section);
-	const { user } = useTypedSelector(state => state.user);
-	const { courses } = useTypedSelector(state => state.cart);
 	const [media] = useMediaQuery('(min-width: 592px)');
 	const { t } = useTranslation();
-	const { getSection, addCourseToCart } = useActions();
+	const { getSection } = useActions();
 	const { push } = useRouter();
-	const toast = useToast();
 
 	
 

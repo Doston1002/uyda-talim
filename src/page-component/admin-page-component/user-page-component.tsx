@@ -30,7 +30,7 @@ import { useTypedSelector } from 'src/hooks/useTypedSelector';
 const UserPageComponent = () => {
 	const [limit, setLimit] = useState<number>(15);
 	const [query, setQuery] = useState<string>('');
-	const [chartData, setChartData] = useState({
+	const [chartData] = useState({
 		labels: courseusers.map(data => data.year),
 		datasets: [
 			{

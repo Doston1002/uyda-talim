@@ -5,8 +5,6 @@ import {
 	Grid,
 	HStack,
 	Text,
-	useColorModeValue,
-	useToast,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useCallback, useState } from 'react';
@@ -14,18 +12,13 @@ import { useTranslation } from 'react-i18next';
 import { AiOutlineDownload } from 'react-icons/ai';
 import SectionTitle from 'src/components/section-title/section-title';
 import { booksCategory } from 'src/config/constants';
-import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
-import { BooksType } from 'src/interfaces/books.interface';
 
 const BooksPageComponent = () => {
 	const [filter, setFilter] = useState<string>('all-categories');
 
 	const { t } = useTranslation();
 	const { books } = useTypedSelector(state => state.books);
-	const cart = useTypedSelector(state => state.cart);
-	const { addBookToCart } = useActions();
-	const toast = useToast();
 
 	const filteredData = useCallback(() => {
 		switch (filter) {

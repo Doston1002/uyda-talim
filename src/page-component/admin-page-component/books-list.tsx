@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Text } from '@chakra-ui/react';
+import { Box, Icon, Text } from '@chakra-ui/react';
 import { FaFilePdf } from 'react-icons/fa';
 
 const BooksList = ({ books }) => (

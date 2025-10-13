@@ -1,7 +1,5 @@
 import {
-	Avatar,
 	Box,
-	Divider,
 	Flex,
 	Heading,
 	HStack,
@@ -12,7 +10,6 @@ import {
 import Image from 'next/image';
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import { CiViewList } from 'react-icons/ci';
-import { SiGoogleanalytics } from 'react-icons/si';
 import ReactStars from 'react-stars';
 import { loadImage } from 'src/helpers/image.helper';
 import { PopularCoursesCardProps } from './popular-courses-card.props';
@@ -20,7 +17,7 @@ import { PopularCoursesCardProps } from './popular-courses-card.props';
 const PopularCoursesCard = ({ item }: PopularCoursesCardProps) => {
 	return (
 		<Stack key={item.title} spacing={3} p={3} cursor={'pointer'}>
-			<Box pos={'relative'} w={'full'} h={'210px'}>
+			<Box pos={'relative'} w={'full'} h={'280px'}>
 				<Image
 					src={loadImage(item.previewImage)}
 					alt={item.title}

@@ -1,7 +1,6 @@
 import { Button, Card, CardBody, Flex, FormControl, FormLabel, Heading, Input, Stack, Text, Textarea } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import SectionTitle from 'src/components/section-title/section-title';
 
 const ContactPageComponent = () => {
 	const { t } = useTranslation();
