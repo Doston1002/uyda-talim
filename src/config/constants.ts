@@ -1,12 +1,9 @@
 import {
-	AiFillAmazonCircle,
 	AiOutlineDashboard,
-	AiOutlineDollar,
 	AiOutlineUnorderedList,
 } from 'react-icons/ai';
 import { CiViewList } from 'react-icons/ci';
 import {
-	FaApplePay,
 	FaBookReader,
 	FaChalkboardTeacher,
 	FaDraftingCompass,
@@ -18,9 +15,7 @@ import {
 import { FiEdit } from 'react-icons/fi';
 import { ImBooks } from 'react-icons/im';
 import { MdImportContacts, MdOutlineContactMail, MdOutlineCreateNewFolder } from 'react-icons/md';
-import { SiAmd, SiCisco, SiLogitech, SiSpotify } from 'react-icons/si';
 import {
-	AnnouncementIcons,
 	CodingIcons,
 	DesignIcons,
 	EngIcons,
@@ -38,7 +33,6 @@ import {
 	TeachVal3Icon,
 	UzbIcons,
 } from 'src/icons';
-import { CourseType } from 'src/interfaces/course.interface';
 
 export const courseCategory = [
     '1-sinf',
@@ -147,20 +141,32 @@ export const trustedCompeny = [
 	},
 	
 	{
-	  name: 'respublika tashxis markazi',
+	  name: 'Respublika tashxis markazi',
 	  url: 'http://info-tashxis.uz/',
 	  logo: '/images/tashxis.png',
 	},
 	{
-	  name: '',
-	  url: 'https://uzedu.uz',
-	  logo: '/images/kitob.png',
+	  name: "Maktab va maktabgacha ta'lim vazirligi",
+	  url: 'https://uzedu.uz/uz',
+	  logo: '/images/logovazirlik.png', // logoni joylashuvi
+	},
+	
+	{
+	  name: 'Respublika tashxis markazi',
+	  url: 'http://info-tashxis.uz/',
+	  logo: '/images/tashxis.png',
 	},
 	{
-	  name: 'Christian Nwamba',
-	  url: 'https://bit.ly/code-beast',
-	  logo: '/images/christian.png',
+	  name: "Maktab va maktabgacha ta'lim vazirligi",
+	  url: 'https://uzedu.uz/uz',
+	  logo: '/images/logovazirlik.png', // logoni joylashuvi
 	},
+	
+	{
+	  name: 'Respublika tashxis markazi',
+	  url: 'http://info-tashxis.uz/',
+	  logo: '/images/tashxis.png',
+	}
   ];
 
 export const language = [
