@@ -7,7 +7,7 @@ import {
 	Grid,
 	HStack,
 	IconButton,
-	Image,
+	// Image,
 	useColorModeValue,
 	useDisclosure,
 	useToast,
@@ -18,7 +18,7 @@ import { CgAdd } from 'react-icons/cg';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { BooksModal } from 'src/components';
 import SectionTitle from 'src/components/section-title/section-title';
-import { loadImage } from 'src/helpers/image.helper';
+// import { loadImage } from 'src/helpers/image.helper';
 import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 import { PlanCurriculumIcon } from 'src/icons';
@@ -95,14 +95,18 @@ const BooksPageComponent = () => {
 			>
 				{books.map(item => (
 					<Box key={item._id} pos={'relative'}>
-						<Image
+						{/* <Image
 							src={loadImage(item.image)}
 							alt={item.title}
 							borderRadius={'lg'}
 							w={'full'}
 							h={'250px'}
 							objectFit={'cover'}
-						/>
+						/> */}
+
+					   <Box as="h1" w="full" h="100px" alignItems="center" px={4} fontWeight="bold" fontSize="lg">
+            {item.title}
+        </Box>
 						<Flex
 							pos={'absolute'}
 							left={2}
