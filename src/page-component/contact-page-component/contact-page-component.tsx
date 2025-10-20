@@ -9,7 +9,7 @@ const ContactPageComponent = () => {
 	const [formData, setFormData] = useState({ fullName: '', phone: '', message: '' });
 
 	// Handle form input changes
-	const handleChange = (e) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
 		setFormData((prev) => ({ ...prev, [name]: value }));
 	};
@@ -18,17 +18,25 @@ const ContactPageComponent = () => {
 	const handleSubmit = async () => {
 		const { fullName, phone, message } = formData;
 
+		// Telefon raqam validatsiyasi
+		const phoneRegex = /^\+998\s\d{2}\s\d{3}\s\d{2}\s\d{2}$/;
+
 		if (!fullName || !phone || !message) {
 			alert(t('contact_form_error', { ns: 'global' }));
 			return;
 		}
 
+		if (!phoneRegex.test(phone)) {
+			alert(t('contact_phone_invalid', { ns: 'global' }));
+			return;
+		}
+
 		const text = `
-		<b>Yangi Murojaat:</b> \n
-		<b>Ism:</b> ${fullName}\n
-		<b>Phope:</b> ${phone}\n
-		<b>Xabar:</b> ${message}
-		`;
+<b>Yangi Murojaat:</b> \n
+<b>Ism:</b> ${fullName}\n
+<b>Phone:</b> ${phone}\n
+<b>Xabar:</b> ${message}
+`;
 
 		const token = "7997799470:AAEg5oRtvteGcb_r6zAwzaiY3C51p1Q2KTA";
 		const chat_id = "5531717864";
@@ -51,7 +59,7 @@ const ContactPageComponent = () => {
 			const data = await response.json();
 
 			if (data.ok) {
-				alert(t('habaringiz yuborildi tez orada aloqaga chiqamz', { ns: 'global' }));
+				alert(t('habaringiz yuborildi tez orada aloqaga chiqamiz', { ns: 'global' }));
 				setFormData({ fullName: '', phone: '', message: '' });
 			} else {
 				alert(t('contact_error', { ns: 'global' }));
@@ -76,14 +84,14 @@ const ContactPageComponent = () => {
 							<Input
 								name="fullName"
 								type="text"
-								placeholder="ismingizni kiriting"
+								placeholder="Ismingizni kiriting"
 								h={14}
 								value={formData.fullName}
 								onChange={handleChange}
 							/>
 						</FormControl>
 						<FormControl>
-							<FormLabel>{t('contact_email', { ns: 'global' })}</FormLabel>
+							<FormLabel>{t('contact_phone', { ns: 'global' })}</FormLabel>
 							<Input
 								name="phone"
 								type="number"
@@ -97,7 +105,7 @@ const ContactPageComponent = () => {
 							<FormLabel>{t('contact_message', { ns: 'global' })}</FormLabel>
 							<Textarea
 								name="message"
-								placeholder="body"
+								placeholder="Xabaringizni kiriting"
 								height="150px"
 								value={formData.message}
 								onChange={handleChange}

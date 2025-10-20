@@ -13,7 +13,6 @@ import Image from 'next/image';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BsTrash } from 'react-icons/bs';
-import { VscOpenPreview } from 'react-icons/vsc';
 import { loadImage } from 'src/helpers/image.helper';
 import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
@@ -65,9 +64,6 @@ const AdminCourseCard: FC<AdminCourseCardProps> = ({ course }): JSX.Element => {
 					</Box>
 				</Text>
 				<ButtonGroup>
-					<Button w={'full'} rightIcon={<VscOpenPreview />} colorScheme={'gray'}>
-						{t('preview', { ns: 'instructor' })}
-					</Button>
 					<Button
 						w={'full'}
 						onClick={deleteCourseHandler}

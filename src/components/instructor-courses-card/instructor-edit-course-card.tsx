@@ -20,7 +20,6 @@ import { CiViewList } from 'react-icons/ci';
 import { FiEdit2 } from 'react-icons/fi';
 import { HiOutlineStatusOnline } from 'react-icons/hi';
 import { SiGoogleanalytics } from 'react-icons/si';
-import { VscOpenPreview } from 'react-icons/vsc';
 import { loadImage } from 'src/helpers/image.helper';
 import { useActions } from 'src/hooks/useActions';
 import { InstructoCoursesCardProps } from './instructor-courses-card.props';
@@ -53,7 +52,7 @@ const InstructorEditCourseCard: FC<InstructoCoursesCardProps> = ({ item }): JSX.
 	return (
 		<HStack key={item.title} p={5} boxShadow={'dark-lg'} mt={5} borderRadius={'lg'}>
 			<Stack spacing={5}>
-				<Box pos={'relative'} w={'100%'} h={'300px'}>
+				<Box pos={'relative'} w={'100%'} h={'450px'}>
 					<Image
 						fill
 						src={loadImage(item.previewImage)}
@@ -85,7 +84,6 @@ const InstructorEditCourseCard: FC<InstructoCoursesCardProps> = ({ item }): JSX.
 				</HStack>
 				<Divider />
 				<Flex flexWrap={'wrap'} gap={5}>
-					<Button rightIcon={<VscOpenPreview />}>{t('preview', { ns: 'instructor' })}</Button>
 					<Button
 						rightIcon={<FiEdit2 />}
 						onClick={() => router.push(`/instructor/edit-courses/${item.slug}`)}

@@ -1,11 +1,10 @@
-import { Box, Button, Divider, Flex, Heading, HStack, Icon, Stack, Text } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, HStack, Icon, Stack, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import { CiViewList } from 'react-icons/ci';
 import { SiGoogleanalytics } from 'react-icons/si';
-import { VscOpenPreview } from 'react-icons/vsc';
 import { loadImage } from 'src/helpers/image.helper';
 import { InstructoCoursesCardProps } from './instructor-courses-card.props';
 
@@ -38,11 +37,6 @@ const InstructorCoursesCard: FC<InstructoCoursesCardProps> = ({ item }): JSX.Ele
 					</Flex>
 				</HStack>
 				<Divider />
-				<HStack>
-					<Button rightIcon={<VscOpenPreview />} w={'full'} h={16} colorScheme={'gray'}>
-						{t('preview', { ns: 'instructor' })}
-					</Button>
-				</HStack>
 			</Stack>
 			<Box w={'30%'} h={'300px'} position={'relative'}>
 				<Image
