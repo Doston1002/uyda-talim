@@ -193,7 +193,7 @@ const Header = ({ onToggle }: HeaderProps) => {
 									fontWeight={'bold'}
 									icon={<AiOutlineDashboard fontSize={17} />}
 								>
-									Dashboard
+									 {t('instructor_admin', { ns: 'admin' })}
 								</MenuItem>
 
 								<MenuItem
