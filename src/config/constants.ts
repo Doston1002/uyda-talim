@@ -5,7 +5,7 @@ import {
 import { CiViewList } from 'react-icons/ci';
 import {
 	FaBookReader,
-	FaChalkboardTeacher,
+	// FaChalkboardTeacher,
 	FaDraftingCompass,
 	FaFirstdraft,
 	FaListAlt,
@@ -84,11 +84,11 @@ export const navigation = [
 				route: '/about',
 				icon: FaDraftingCompass,
 			},
-			{
-				label: 'sidebar_title_2_contact',
-				route: '/contact',
-				icon: MdOutlineContactMail,
-			},
+			// {
+			// 	label: 'sidebar_title_2_contact',
+			// 	route: '/contact',
+			// 	icon: MdOutlineContactMail,
+			// },
 			{
 				label: 'sidebar_title_2_info',
 				route: '/attendance',
@@ -421,11 +421,11 @@ export const adminSidebar = [
 		icon: FaUserGraduate,
 		route: 'users',
 	},
-	{
-		name: 'instructors_section_title',
-		icon: FaChalkboardTeacher,
-		route: 'instructors',
-	},
+	// {
+	// 	name: 'instructors_section_title',
+	// 	icon: FaChalkboardTeacher,
+	// 	route: 'instructors',
+	// },
 	{
 		name: 'courses_section_title',
 		icon: AiOutlineUnorderedList,
