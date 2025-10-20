@@ -22,11 +22,13 @@ import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 import { AuthService } from 'src/services/auth.service';
 import { FileService } from 'src/services/file.service';
+import { useTranslation } from 'react-i18next';
 
 const Settings = () => {
 	const [avatar, setavatar] = useState<File>();
 	const [values, setValues] = useState(data);
 	const [isLoading, setIsLoading] = useState(false);
+	const { t } = useTranslation('dashboard');
 
 	const { user } = useTypedSelector(state => state.user);
 	const toast = useToast();
@@ -159,7 +161,7 @@ const Settings = () => {
 					</Text>
 					<Text>
 						<Box fontWeight={'bold'} as={'span'}>
-							Email
+							{t('settings.email_label')}
 						</Box>
 						: {user?.email}
 					</Text>
@@ -174,32 +176,32 @@ const Settings = () => {
 					<Flex gap={5}>
 						<TextFiled
 							name='firstName'
-							label='Ismingiz'
+							label={t('settings.first_name_label')}
 							placeholder='Ism'
 						/>
 						<TextFiled
 							name='lastName'
-							label='Sharfingiz'
+							label={t('settings.last_name_label')}
 							placeholder='Sharfingiz'
 						/>
 					</Flex>
 					<Flex gap={5}>
 						<TextFiled
 							name='birthday'
-							label="Tug'ilgan sana"
-							placeholder="Tug'ilgan sana"
+							label={t('settings.birthday_label')}
+							placeholder='Tug`ilgan kun'
 							type='date'
 						/>
 						<TextFiled
 							name='job'
-							label='Kasbingiz'
+							label={t('settings.job_label')}
 							placeholder='Kasbingiz'
 						/>
 					</Flex>
 					<TextAreaField
 						name='bio'
 						placeholder="O'zingiz haqingizda"
-						label="Ma'lumot"
+						label={t('settings.bio_label') as string}
 						height='100'
 					/>
 					<Button
@@ -211,7 +213,7 @@ const Settings = () => {
 						type='submit'
 						isLoading={isLoading}
 					>
-						Submit
+						{t('settings.submit_btn')}
 					</Button>
 				</Form>
 			</Formik>

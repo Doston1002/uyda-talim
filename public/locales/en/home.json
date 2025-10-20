@@ -28,5 +28,8 @@
 	"newsletter_description": "Join our newsletter to stay informed about new courses, interactive resources, and smart ways to support your child's learning at home.",
 	"newsletter_placeholder": "Your email...",
 	"newsletter_submit": "Submit",
-	"sponsor_title": "Useful resources"
+	"sponsor_title": "Useful resources",
+	"newsletter_error_empty": "Please enter your email address",
+	"newsletter_success": "You have successfully subscribed",
+	"site_test_mode": "The site is running in test mode"
 }

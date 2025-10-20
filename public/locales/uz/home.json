@@ -28,5 +28,8 @@
 	"newsletter_description": "Siz bizning axborot byulletenimizga obuna bo‘lib, uyda ta’lim, bolalar uchun online kurslar va interaktiv darsliklar haqidagi yangiliklardan xabardor bo‘lib borishingiz mumkin.",
 	"newsletter_placeholder": "Email manzilingiz...",
 	"newsletter_submit": "Yuborish",
-	"sponsor_title": "Foydali resurslar"
+	"sponsor_title": "Foydali resurslar",
+	"newsletter_error_empty": "Iltimos, email manzilingizni kiriting",
+   "newsletter_success": "Siz muvaffaqiyatli obuna bo‘ldingiz",
+   "site_test_mode": "Sayt test rejimida ishlamoqda"
 }

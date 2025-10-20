@@ -16,10 +16,12 @@ import Account from './account';
 import DangerZone from './danger-zone';
 import MyCourses from './my-courses';
 import Settings from './settings';
+import { useTranslation } from 'react-i18next';
 
 const DashboardPageComponent = () => {
 	const [tabIndex, setTabIndex] = useState(0);
 	const { user } = useTypedSelector(state => state.user);
+	const { t } = useTranslation('dashboard');
 	const [isLoading, setIsLoading] = useState(false);
 	const [myCourses, setMyCourses] = useState<CourseType[]>([]);
 
@@ -51,10 +53,10 @@ const DashboardPageComponent = () => {
 						defaultValue={tabIndex}
 					>
 						<TabList mb='1em' h={'300'}>
-							<Tab>Account</Tab>
-							<Tab>Settings</Tab>
-							<Tab>My Courses</Tab>
-							<Tab>Danger Zone</Tab>
+							<Tab>{t('tabs.account')}</Tab>
+							<Tab>{t('tabs.settings')}</Tab>
+							<Tab>{t('tabs.my_courses')}</Tab>
+							<Tab>{t('tabs.danger_zone')}</Tab>
 						</TabList>
 						<TabPanels px={5}>
 							{isLoading ? (
