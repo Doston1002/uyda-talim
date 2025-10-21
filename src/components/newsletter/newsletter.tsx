@@ -31,7 +31,7 @@ const Newsletter = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/newsletter/subscribe`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVICE || 'http://localhost:3000'}/api/newsletter/subscribe`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
