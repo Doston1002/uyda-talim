@@ -28,7 +28,13 @@ export const AuthValidation = {
 	},
 	editPassword() {
 		return Yup.object({
-			password: Yup.string().min(6, 'password_shouldbe_min_6').required('password_is_required'),
+			password: Yup.string()
+				.min(8, 'password_shouldbe_min_8')
+				.matches(
+					/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
+					'password_complexity_requirements'
+				)
+				.required('password_is_required'),
 			confirmPassword: Yup.string()
 				.oneOf([Yup.ref('password')], "password_didn't_match")
 				.required('confirm_password_is_required'),
