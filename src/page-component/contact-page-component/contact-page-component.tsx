@@ -1,12 +1,28 @@
-import { Button, Card, CardBody, Flex, FormControl, FormLabel, Heading, Input, Stack, Text, Textarea } from '@chakra-ui/react';
+import {
+	Button,
+	Card,
+	CardBody,
+	Flex,
+	FormControl,
+	FormLabel,
+	Heading,
+	Input,
+	Stack,
+	Text,
+	Textarea,
+	useToast,
+} from '@chakra-ui/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ContactService } from 'src/services/contact.service';
 
 const ContactPageComponent = () => {
 	const { t } = useTranslation();
+	const toast = useToast();
 
 	// Form state
 	const [formData, setFormData] = useState({ fullName: '', phone: '', message: '' });
+	const [isLoading, setIsLoading] = useState(false);
 
 	// Handle form input changes
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -18,60 +34,64 @@ const ContactPageComponent = () => {
 	const handleSubmit = async () => {
 		const { fullName, phone, message } = formData;
 
-		// Telefon raqam validatsiyasi
-		const phoneRegex = /^\+998\s\d{2}\s\d{3}\s\d{2}\s\d{2}$/;
+		// ✅ Telefon raqam validatsiyasi (bo‘shliqli yoki bo‘shliqsiz formatlar uchun)
+		const phoneRegex = /^(\+998|998)?\s?\d{2}\s?\d{3}\s?\d{2}\s?\d{2}$/;
 
 		if (!fullName || !phone || !message) {
-			alert(t('contact_form_error', { ns: 'global' }));
+			toast({
+				title: 'Iltimos, barcha maydonlarni to‘ldiring.',
+				status: 'error',
+				duration: 3000,
+				isClosable: true,
+			});
 			return;
 		}
 
 		if (!phoneRegex.test(phone)) {
-			alert(t('contact_phone_invalid', { ns: 'global' }));
+			toast({
+				title: 'Telefon raqam noto‘g‘ri formatda. Masalan: +998901234567',
+				status: 'error',
+				duration: 3000,
+				isClosable: true,
+			});
 			return;
 		}
 
-		const text = `
-<b>Yangi Murojaat:</b> \n
-<b>Ism:</b> ${fullName}\n
-<b>Phone:</b> ${phone}\n
-<b>Xabar:</b> ${message}
-`;
-
-		const token = "7997799470:AAEg5oRtvteGcb_r6zAwzaiY3C51p1Q2KTA";
-		const chat_id = "5531717864";
-
-		const url = `https://api.telegram.org/bot${token}/sendMessage`;
+		setIsLoading(true);
 
 		try {
-			const response = await fetch(url, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({
-					chat_id: chat_id,
-					text: text,
-					parse_mode: "HTML",
-				}),
+			await ContactService.sendMessage({ fullName, phone, message });
+
+			toast({
+				title: 'Habaringiz yuborildi. Tez orada aloqaga chiqamiz.',
+				status: 'success',
+				duration: 3000,
+				isClosable: true,
 			});
 
-			const data = await response.json();
-
-			if (data.ok) {
-				alert(t('habaringiz yuborildi tez orada aloqaga chiqamiz', { ns: 'global' }));
-				setFormData({ fullName: '', phone: '', message: '' });
-			} else {
-				alert(t('contact_error', { ns: 'global' }));
-			}
+			setFormData({ fullName: '', phone: '', message: '' });
 		} catch (error) {
 			console.error(error);
-			alert(t('contact_error', { ns: 'global' }));
+			toast({
+				title: 'Xatolik yuz berdi. Iltimos, qayta urinib ko‘ring.',
+				status: 'error',
+				duration: 3000,
+				isClosable: true,
+			});
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
 	return (
-		<Flex h={'90vh'} w={'90vw'} justify={'flex-start'} direction={{ base: 'column', lg: 'row' }} align={'center'} gap={'4'}>
+		<Flex
+			h={'90vh'}
+			w={'90vw'}
+			justify={'flex-start'}
+			direction={{ base: 'column', lg: 'row' }}
+			align={'center'}
+			gap={'4'}
+		>
 			<Card w={{ base: '100%', lg: '60%' }}>
 				<CardBody>
 					<Heading fontSize={'2xl'}>{t('contact_heading', { ns: 'global' })}</Heading>
@@ -94,8 +114,8 @@ const ContactPageComponent = () => {
 							<FormLabel>{t('contact_phone', { ns: 'global' })}</FormLabel>
 							<Input
 								name="phone"
-								type="number"
-								placeholder="+998 90 123 45 67"
+								type="tel"
+								placeholder="+998901234567"
 								h={14}
 								value={formData.phone}
 								onChange={handleChange}
@@ -111,7 +131,14 @@ const ContactPageComponent = () => {
 								onChange={handleChange}
 							/>
 						</FormControl>
-						<Button w={'full'} h={14} colorScheme={'gray'} onClick={handleSubmit}>
+						<Button
+							w={'full'}
+							h={14}
+							colorScheme={'gray'}
+							onClick={handleSubmit}
+							isLoading={isLoading}
+							loadingText={t('sending', { ns: 'global' })}
+						>
 							{t('contact_btn', { ns: 'global' })}
 						</Button>
 					</Stack>

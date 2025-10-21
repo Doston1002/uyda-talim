@@ -12,3 +12,4 @@ export const getAdminUrl = (url: string) => `/admin/${url}`;
 export const getBooksUrl = (url: string) => `/books/${url}`;
 export const getPaymentUrl = (url: string) => `/payment/${url}`;
 export const getReviewUrl = (url: string) => `/review/${url}`;
+export const getContactUrl = (url: string) => `/contact/${url}`;

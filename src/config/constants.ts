@@ -69,11 +69,11 @@ export const navigation = [
 				route: '/books',
 				icon: FaBookReader,
 			},
-			{
-				label: 'sidebar_title_1_articles',
-				route: '/articles',
-				icon: MdImportContacts,
-			},
+			// {
+			// 	label: 'sidebar_title_1_articles',
+			// 	route: '/articles',
+			// 	icon: MdImportContacts,
+			// },
 		],
 	},
 	{
@@ -84,11 +84,11 @@ export const navigation = [
 				route: '/about',
 				icon: FaDraftingCompass,
 			},
-			// {
-			// 	label: 'sidebar_title_2_contact',
-			// 	route: '/contact',
-			// 	icon: MdOutlineContactMail,
-			// },
+			{
+				label: 'sidebar_title_1_articles',
+				route: '/contact',
+				icon: MdOutlineContactMail,
+			},
 			// {
 			// 	label: 'sidebar_title_2_info',
 			// 	route: '/attendance',
@@ -435,5 +435,10 @@ export const adminSidebar = [
 		name: 'books_section_title',
 		icon: ImBooks,
 		route: 'books',
+	},
+	{
+		name: 'contact_messages',
+		icon: MdOutlineContactMail,
+		route: 'contact-messages',
 	},
 ];

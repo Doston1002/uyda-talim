@@ -21,5 +21,7 @@
 	"user_section_descr": "Platformaga ro'yxatdan o'tgan foydalanuvchilar",
 	"role": "Rol",
 	"change_role": "Rolni o'zgartirish",
-	"not_found": "Topilmadi"
+	"not_found": "Topilmadi",
+	"contact_messages": "Aloqa xabarlari",
+	"contact_messages_descr": "Foydalanuvchilardan kelgan xabarlarni ko'rish va boshqarish"
 }
