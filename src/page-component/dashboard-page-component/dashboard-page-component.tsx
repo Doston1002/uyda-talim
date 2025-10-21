@@ -7,6 +7,10 @@ import {
 	TabList,
 	TabPanels,
 	Tabs,
+	Alert,
+	AlertIcon,
+	AlertTitle,
+	AlertDescription,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
@@ -29,7 +33,7 @@ const DashboardPageComponent = () => {
 		setIsLoading(true);
 		setTabIndex(idx);
 		try {
-			 if (idx == 3 && !myCourses.length) {
+			 if (idx == 2 && !myCourses.length) {
 				const response = await AuthService.getMyCourses();
 				setMyCourses(response);
 			}
@@ -39,6 +43,16 @@ const DashboardPageComponent = () => {
 			setIsLoading(false);
 		}
 	};
+
+	if (!user) {
+		return (
+			<Alert status="warning">
+				<AlertIcon />
+				<AlertTitle>Foydalanuvchi ma'lumotlari yuklanmadi!</AlertTitle>
+				<AlertDescription>Sahifani qayta yuklang yoki qaytadan kiring.</AlertDescription>
+			</Alert>
+		);
+	}
 
 	return (
 		<>
@@ -65,7 +79,7 @@ const DashboardPageComponent = () => {
 								</Center>
 							) : (
 								<>
-									{tabIndex === 0 && user && <Account />}
+									{tabIndex === 0 && <Account />}
 									{tabIndex === 1 && <Settings />}
 									{tabIndex === 2 && (
 										<MyCourses myCourses={myCourses} />

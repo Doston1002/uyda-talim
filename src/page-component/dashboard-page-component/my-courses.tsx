@@ -7,9 +7,13 @@ const MyCourses: FC<MyCoursesProps> = ({
 }): JSX.Element => {
 	return (
 		<>
-			{myCourses.map(course => (
-				<AllCoursesCard course={course} isMyCourse={true} />
-			))}
+			{myCourses && myCourses.length > 0 ? (
+				myCourses.map((course, index) => (
+					<AllCoursesCard key={course._id || index} course={course} isMyCourse={true} />
+				))
+			) : (
+				<div>Kurslar topilmadi</div>
+			)}
 		</>
 	);
 };

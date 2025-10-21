@@ -98,10 +98,10 @@ const Settings = () => {
 	useEffect(() => {
 		if (user) {
 			const { fullName, job, bio, birthday } = user;
-			const full: string[] = fullName?.split(' ') as string[];
+			const full: string[] = fullName?.split(' ') || [];
 			setValues({
-				firstName: full[0],
-				lastName: full[1],
+				firstName: full[0] || '',
+				lastName: full[1] || '',
 				job: job as string,
 				bio,
 				birthday,

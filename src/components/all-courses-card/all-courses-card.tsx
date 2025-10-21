@@ -44,7 +44,7 @@ const AllCoursesCard = ({
 						cursor={'pointer'}
 					/>
 					<Stack>
-						{!isMyCourse && (
+						{!isMyCourse && course.reviewAvg !== undefined && (
 							<HStack>
 								<Text color={'#e59819'}>{course.reviewAvg || 0}</Text>
 								<ReactStars
@@ -52,12 +52,12 @@ const AllCoursesCard = ({
 									value={course.reviewAvg || 5}
 									color2={'#e59819'}
 								/>
-								<Text opacity={'.8'}>({course.reviewCount})</Text>
+								<Text opacity={'.8'}>({course.reviewCount || 0})</Text>
 							</HStack>
 						)}
 						<Heading fontSize={'xl'}>{course.title}</Heading>
 						<Text>{course.exerpt}</Text>
-						{!isMyCourse && (
+						{!isMyCourse && course.author && (
 							<Flex
 								gap={2}
 								fontSize={'14px'}
@@ -70,15 +70,15 @@ const AllCoursesCard = ({
 								<HStack>
 									<Flex align={'center'} gap={1}>
 										<Icon as={CiViewList} />
-										<Text>{course.lessonCount} lesson</Text>
+										<Text>{course.lessonCount || 0} lesson</Text>
 									</Flex>
 									<Flex align={'center'} gap={1}>
 										<Icon as={AiOutlineClockCircle} />
-										<Text>{course.totalHour} hours</Text>
+										<Text>{course.totalHour || 0} hours</Text>
 									</Flex>
 									<Flex align={'center'} gap={1}>
 										<Icon as={SiGoogleanalytics} />
-										<Text>{course.level}</Text>
+										<Text>{course.level || 'Beginner'}</Text>
 									</Flex>
 								</HStack>
 							</Flex>
