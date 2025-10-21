@@ -9,7 +9,7 @@ interface Props {
 }
 
 const AuthProvider: FC<Props> = ({ children }): JSX.Element => {
-	const { user } = useAuth();
+	const { user, isLoading } = useAuth();
 	const { logout, checkAuth } = useActions();
 	const { pathname } = useRouter();
 
@@ -22,6 +22,17 @@ const AuthProvider: FC<Props> = ({ children }): JSX.Element => {
 		const refreshToken = Cookies.get('refresh');
 		if (!refreshToken && user) logout();
 	}, [pathname]);
+
+	// Dashboard va boshqa himoyalangan routelar
+	const protectedRoutes = ['/dashboard', '/admin', '/instructor'];
+	const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route));
+
+	useEffect(() => {
+		if (!isLoading && isProtectedRoute && !user) {
+			// Agar foydalanuvchi yo'q bo'lsa va himoyalangan route bo'lsa
+			window.location.href = '/';
+		}
+	}, [user, isLoading, pathname, isProtectedRoute]);
 
 	return <>{children}</>;
 };
