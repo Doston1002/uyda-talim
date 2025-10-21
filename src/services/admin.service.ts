@@ -1,6 +1,6 @@
 import axios from 'axios';
 import $axios from 'src/api/axios';
-import { API_URL, getAdminUrl, getCourseUrl } from 'src/config/api.config';
+import { API_URL, getAdminUrl, getCourseUrl, getUserUrl } from 'src/config/api.config';
 import { CourseType } from 'src/interfaces/course.interface';
 import { InstructorType } from 'src/interfaces/instructor.interface';
 import { UserType } from 'src/interfaces/user.interface';
@@ -61,6 +61,15 @@ export const AdminService = {
 	async deleteCourse(courseId: string) {
 		const { data } = await $axios.delete<CourseType[]>(`${getAdminUrl('delete-course')}`, {
 			params: { courseId },
+		});
+
+		return data;
+	},
+
+	async changeUserRole(userId: string, role: 'ADMIN' | 'INSTRUCTOR' | 'USER') {
+		const { data } = await $axios.put<{ message: string; user: UserType }>(`${getAdminUrl('update-user-role')}`, {
+			userId,
+			role,
 		});
 
 		return data;

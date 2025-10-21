@@ -20,5 +20,6 @@
 	"user_section_title": "Users",
 	"user_section_descr": "Registered users to platform",
 	"role": "Role",
+	"change_role": "Change Role",
 	"not_found": "Not found"
 }

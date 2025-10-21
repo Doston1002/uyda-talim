@@ -5,6 +5,7 @@ import {
 	CardBody,
 	Heading,
 	Input,
+	Select,
 	Stack,
 	Table,
 	TableCaption,
@@ -14,6 +15,7 @@ import {
 	Th,
 	Thead,
 	Tr,
+	useToast,
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
 import Cookies from 'js-cookie';
@@ -26,10 +28,14 @@ import SectionTitle from 'src/components/section-title/section-title';
 import { courseusers } from 'src/config/constants';
 import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
+import { AdminService } from 'src/services/admin.service';
+import { RoleUser } from 'src/interfaces/constants.interface';
 
 const UserPageComponent = () => {
 	const [limit, setLimit] = useState<number>(15);
 	const [query, setQuery] = useState<string>('');
+	const [changingRole, setChangingRole] = useState<string | null>(null);
+	const toast = useToast();
 	const [chartData] = useState({
 		labels: courseusers.map(data => data.year),
 		datasets: [
@@ -55,6 +61,31 @@ const UserPageComponent = () => {
 
 	const searchUserHandler = () => {
 		searchAdminUsers({ query, limit: String(limit - 5) });
+	};
+
+	const changeRoleHandler = async (userId: string, newRole: RoleUser) => {
+		try {
+			setChangingRole(userId);
+			await AdminService.changeUserRole(userId, newRole);
+			toast({
+				title: 'Role updated successfully',
+				status: 'success',
+				duration: 3000,
+				isClosable: true,
+			});
+			// Refresh the users list
+			const token = Cookies.get('refresh');
+			moreAdminUser({ limit: String(limit), token });
+		} catch (error) {
+			toast({
+				title: 'Failed to update role',
+				status: 'error',
+				duration: 3000,
+				isClosable: true,
+			});
+		} finally {
+			setChangingRole(null);
+		}
 	};
 
 	return (
@@ -126,6 +157,7 @@ const UserPageComponent = () => {
 								<Th>{t('email', { ns: 'instructor' })}</Th>
 								<Th>{t('full_name', { ns: 'instructor' })}</Th>
 								<Th>{t('role', { ns: 'admin' })}</Th>
+								<Th>{t('change_role', { ns: 'admin' })}</Th>
 								<Th>{t('enrolled_date', { ns: 'instructor' })}</Th>
 							</Tr>
 						</Thead>
@@ -135,7 +167,45 @@ const UserPageComponent = () => {
 									<Td>{idx + 1}</Td>
 									<Td>{user.email}</Td>
 									<Td>{user.fullName || t('not_found', { ns: 'admin' })}</Td>
-									<Td>{user.role || 'USER'}</Td>
+									<Td>
+										<Box
+											px={2}
+											py={1}
+											bg={
+												user.role === 'ADMIN'
+													? 'red.100'
+													: user.role === 'INSTRUCTOR'
+													? 'blue.100'
+													: 'green.100'
+											}
+											color={
+												user.role === 'ADMIN'
+													? 'red.800'
+													: user.role === 'INSTRUCTOR'
+													? 'blue.800'
+													: 'green.800'
+											}
+											borderRadius="md"
+											fontSize="sm"
+											fontWeight="bold"
+											textAlign="center"
+										>
+											{user.role || 'USER'}
+										</Box>
+									</Td>
+									<Td>
+										<Select
+											value={user.role || 'USER'}
+											onChange={(e) => changeRoleHandler(user.id, e.target.value as RoleUser)}
+											disabled={changingRole === user.id}
+											size="sm"
+											variant="outline"
+										>
+											<option value="USER">USER</option>
+											<option value="INSTRUCTOR">INSTRUCTOR</option>
+											<option value="ADMIN">ADMIN</option>
+										</Select>
+									</Td>
 									<Td>{format(new Date(user.createdAt as Date), 'dd MMMM, yyyy')}</Td>
 								</Tr>
 							))}
