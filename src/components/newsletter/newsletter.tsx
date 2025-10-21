@@ -1,25 +1,76 @@
-import { Box, Button, Card, CardBody, Input, Stack, Text } from '@chakra-ui/react';
+import { Box, Button, Card, CardBody, Input, Stack, Text, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import SectionTitle from '../section-title/section-title';
 
 const Newsletter = () => {
   const { t } = useTranslation();
+  const toast = useToast();
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {
-    if (!email) {
-		setError(t('newsletter_error_empty', { ns: 'home' }) as string);
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
+  const handleSubmit = async () => {
+    setError('');
+    
+    if (!email.trim()) {
+      setError(t('newsletter_error_empty', { ns: 'home' }) as string);
       return;
     }
 
-    setError('');
-    // Bu yerda API chaqiruvini amalga oshirish mumkin
-    console.log('Email submitted:', email);
+    if (!isValidEmail(email)) {
+      setError(t('newsletter_error_invalid', { ns: 'home' }) || 'Email noto\'g\'ri formatda');
+      return;
+    }
 
-    setEmail('');
+    setLoading(true);
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/newsletter/subscribe`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email.trim() }),
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        setError(data.error || 'Obuna bo\'lishda xato yuz berdi');
+        return;
+      }
+
+      // Muvaffaqiyatli obuna
+      toast({
+        title: 'Obunaga rahmat!',
+        description: 'Yangiliklarga obuna bo\'ldingiz.',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+        position: 'top-right',
+      });
+
+      setEmail('');
+      setError('');
+
+    } catch (error) {
+      console.error('Newsletter error:', error);
+      setError('Tarmoq xatosi. Iltimos qayta urinib ko\'ring.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && !loading) {
+      handleSubmit();
+    }
   };
 
   return (
@@ -42,7 +93,9 @@ const Newsletter = () => {
               _placeholder={{ color: 'gray.500' }}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              onKeyPress={handleKeyPress}
               borderColor={error ? 'red.500' : 'gray.200'}
+              disabled={loading}
             />
             <Button
               pos={'absolute'}
@@ -51,6 +104,8 @@ const Newsletter = () => {
               colorScheme={'gray'}
               zIndex={999}
               onClick={handleSubmit}
+              isLoading={loading}
+              loadingText="Yuborilmoqda..."
             >
               {t('newsletter_submit', { ns: 'home' })}
             </Button>

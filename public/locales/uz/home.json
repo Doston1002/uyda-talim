@@ -31,5 +31,6 @@
 	"sponsor_title": "Foydali resurslar",
 	"newsletter_error_empty": "Iltimos, email manzilingizni kiriting",
    "newsletter_success": "Siz muvaffaqiyatli obuna bo‘ldingiz",
+  "newsletter_error_invalid": "Email noto'g'ri formatda",
    "site_test_mode": "Sayt test rejimida ishlamoqda"
 }
