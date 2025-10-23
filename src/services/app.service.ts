@@ -20,7 +20,7 @@ export const AppService = {
 		return { courses, instructors };
 	},
 
-	async getCourses(language?: string, limit: string = '10') {
+	async getCourses(language?: string, limit: string = '20') {
 		const { data: courses } = await axios.get(
 			`${API_URL}${getCourseUrl(
 				'all'
