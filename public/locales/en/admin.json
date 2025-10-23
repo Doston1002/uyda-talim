@@ -21,5 +21,7 @@
 	"user_section_descr": "Registered users to platform",
 	"role": "Role",
 	"change_role": "Change Role",
-	"not_found": "Not found"
+	"not_found": "Not found",
+	"contact_messages": "Online mentor messages",
+	"contact_messages_descr": "View and manage messages from users"
 }
