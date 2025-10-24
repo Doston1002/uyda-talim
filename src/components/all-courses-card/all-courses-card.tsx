@@ -16,7 +16,7 @@ import { AiOutlineClockCircle } from 'react-icons/ai';
 import { CiViewList } from 'react-icons/ci';
 import { SiGoogleanalytics } from 'react-icons/si';
 import ReactStars from 'react-stars';
-import { loadImage } from 'src/helpers/image.helper';
+import { loadImage, formatRating } from 'src/helpers/image.helper';
 import { AllCoursesCardProps } from './all-courses-card.props';
 
 const AllCoursesCard = ({
@@ -46,7 +46,7 @@ const AllCoursesCard = ({
 					<Stack>
 						{!isMyCourse && course.reviewAvg !== undefined && (
 							<HStack>
-								<Text color={'#e59819'}>{course.reviewAvg || 0}</Text>
+								<Text color={'#e59819'}>{formatRating(course.reviewAvg)}</Text>
 								<ReactStars
 									edit={false}
 									value={course.reviewAvg || 5}

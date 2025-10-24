@@ -33,7 +33,7 @@ import { TbCertificate } from 'react-icons/tb';
 import { TfiAlarmClock, TfiTimer } from 'react-icons/tfi';
 import ReactStars from 'react-stars';
 import { Curriculum, Overview, Review } from 'src/components';
-import { loadImage } from 'src/helpers/image.helper';
+import { loadImage, formatRating } from 'src/helpers/image.helper';
 import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 import {
@@ -89,7 +89,7 @@ const DetailedCourseComponent = () => {
 								gap={1}
 							>
 								<Flex fontSize={'sm'} align={'flex-end'} gap={1}>
-									<Text>{course?.reviewAvg || 0}</Text>
+									<Text>{formatRating(course?.reviewAvg)}</Text>
 									<ReactStars
 										edit={false}
 										value={course?.reviewAvg || 5}

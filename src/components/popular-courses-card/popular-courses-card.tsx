@@ -11,7 +11,7 @@ import Image from 'next/image';
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import { CiViewList } from 'react-icons/ci';
 import ReactStars from 'react-stars';
-import { loadImage } from 'src/helpers/image.helper';
+import { loadImage, formatRating } from 'src/helpers/image.helper';
 import { PopularCoursesCardProps } from './popular-courses-card.props';
 
 const PopularCoursesCard = ({ item }: PopularCoursesCardProps) => {
@@ -26,7 +26,7 @@ const PopularCoursesCard = ({ item }: PopularCoursesCardProps) => {
 				/>
 			</Box>
 			<HStack>
-				<Text color={'#e59819'}>{item.reviewAvg || 0}</Text>
+				<Text color={'#e59819'}>{formatRating(item.reviewAvg)}</Text>
 				<ReactStars
 					edit={false}
 					value={item.reviewAvg || 5}

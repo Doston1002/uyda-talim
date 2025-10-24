@@ -13,13 +13,14 @@ import {
 import { formatDistance } from 'date-fns';
 import { enUS, ru, uz } from 'date-fns/locale';
 import Cookies from 'js-cookie';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactStars from 'react-stars';
 import { ReviewProps } from './review.props';
 
 const Review: FC<ReviewProps> = ({ reviews, isLoading }) => {
 	const { t } = useTranslation();
+	const [showAll, setShowAll] = useState(false);
 
 	const getLocalLanguage = () => {
 		const lng = Cookies.get('i18next');
@@ -34,6 +35,9 @@ const Review: FC<ReviewProps> = ({ reviews, isLoading }) => {
 		}
 	};
 
+	// Ko'rsatiladigan sharhlar sonini belgilash
+	const displayedReviews = showAll ? reviews : reviews.slice(0, 3);
+
 	return (
 		<>
 			<Heading mt={10}>{t('review', { ns: 'courses' })}</Heading>
@@ -45,7 +49,7 @@ const Review: FC<ReviewProps> = ({ reviews, isLoading }) => {
 				</Stack>
 			) : (
 				<>
-					{reviews.map((item, idx) => (
+					{displayedReviews.map((item, idx) => (
 						<Flex
 							key={idx}
 							gap={4}
@@ -57,13 +61,13 @@ const Review: FC<ReviewProps> = ({ reviews, isLoading }) => {
 								bg={useColorModeValue('gray.200', 'gray.600')}
 								display={{ base: 'none', md: 'block' }}
 								size={'md'}
-								name={item.author.fullName}
-								src={item.author.avatar}
+								name={item.author?.fullName || 'Anonymous'}
+								src={item.author?.avatar || ''}
 							/>
 							<Box>
 								<Flex align={'center'} gap={2} mt={1}>
 									<Text fontWeight={'bold'}>
-										{item.author.fullName}
+										{item.author?.fullName || 'Anonymous'}
 									</Text>
 									<Text>
 										{formatDistance(
@@ -87,14 +91,18 @@ const Review: FC<ReviewProps> = ({ reviews, isLoading }) => {
 				</>
 			)}
 			<Center mt={5}>
-				{data.length >= 5 && (
+				{reviews.length > 3 && (
 					<Button
 						size={'sm'}
 						colorScheme={'gray'}
 						variant={'outline'}
 						fontWeight={'bold'}
+						onClick={() => setShowAll(!showAll)}
 					>
-						{t('more', { ns: 'courses' })}...
+						{showAll 
+							? `${t('less', { ns: 'courses' })}...` 
+							: `${t('more', { ns: 'courses' })}...`
+						}
 					</Button>
 				)}
 			</Center>

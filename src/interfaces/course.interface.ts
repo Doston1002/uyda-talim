@@ -27,7 +27,7 @@ export interface AuthorType {
 }
 
 export interface ReviewType {
-	author: AuthorType;
+	author?: AuthorType;
 	createdAt: Date;
 	updatedAt: Date;
 	rating: number;

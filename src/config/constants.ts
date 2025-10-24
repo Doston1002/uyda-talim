@@ -189,16 +189,16 @@ export const coursesFilter = [
 		id: 'category',
 		categoryList: courseCategory.map(c => ({ name: c, id: c })),
 	},
-	{
-		title: 'fitler_rating_title',
-		id: 'rating',
-		categoryList: [
-			{ name: 'fitler_rating_item_1', id: '4.5' },
-			{ name: 'fitler_rating_item_2', id: '4' },
-			{ name: 'fitler_rating_item_3', id: '3.5' },
-			{ name: 'fitler_rating_item_4', id: '3' },
-		],
-	},
+	// {
+	// 	title: 'fitler_rating_title',
+	// 	id: 'rating',
+	// 	categoryList: [
+	// 		{ name: 'fitler_rating_item_1', id: '4.5' },
+	// 		{ name: 'fitler_rating_item_2', id: '4' },
+	// 		{ name: 'fitler_rating_item_3', id: '3.5' },
+	// 		{ name: 'fitler_rating_item_4', id: '3' },
+	// 	],
+	// },
 	{
 		title: 'filter_language_title',
 		id: 'language',
