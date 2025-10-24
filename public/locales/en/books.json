@@ -2,6 +2,8 @@
 	"title": "Interesting books",
 	"description": "You like reading, great! This place especially for you",
 	"filter_all_category": "All Category",
+	"view": "View",
+	"download": "Download",
 	"1-sinf": "1-school",
 	"2-sinf": "2-school",
 	"3-sinf": "3-school",

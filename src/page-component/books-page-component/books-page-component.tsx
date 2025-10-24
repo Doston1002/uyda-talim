@@ -9,7 +9,7 @@ import {
 import { motion } from 'framer-motion';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AiOutlineDownload } from 'react-icons/ai';
+import { AiOutlineDownload, AiOutlineEye } from 'react-icons/ai';
 import SectionTitle from 'src/components/section-title/section-title';
 import { booksCategory } from 'src/config/constants';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
@@ -90,7 +90,7 @@ const BooksPageComponent = () => {
 									style={{ borderRadius: '10px', objectFit: 'cover' }}
 								/> */}
 							</Box>
-							<HStack
+							<Box
 								pos={'absolute'}
 								minH={'90px'}
 								borderRadius={'lg'}
@@ -99,28 +99,90 @@ const BooksPageComponent = () => {
 								left={1}
 								right={1}
 								bottom={1}
-								p={2}
-								justify={'space-between'}
+								p={3}
 							>
-								<Text fontWeight="bold" noOfLines={1}>
-		{item.title}
-	</Text>
-	<Button
-  onClick={() => {
-    // 1️⃣ Faylni yuklash
-    const link = document.createElement('a');
-    link.href = `${process.env.NEXT_PUBLIC_API_SERVICE}${item.image}`;
-    link.download = item.title;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }}
-  rightIcon={<AiOutlineDownload size={24} />}
->
-</Button>
-
-
-							</HStack>
+								{/* Title */}
+								<Text fontWeight="bold" noOfLines={1} mb={3}>
+									{item.title}
+								</Text>
+								
+								{/* Tugmalar */}
+								<HStack spacing={2} justify="center">
+									{/* Ko'rish tugmasi */}
+									<Button
+										size="sm"
+										colorScheme="blue"
+										variant="solid"
+										onClick={() => {
+											// PDF faylni yangi tabda ochish
+											window.open(`${process.env.NEXT_PUBLIC_API_SERVICE}${item.image}`, '_blank');
+										}}
+										leftIcon={<AiOutlineEye size={16} />}
+										fontSize="xs"
+									>
+										{t('view', { ns: 'books' })}
+									</Button>
+									
+									{/* Yuklab olish tugmasi */}
+									<Button
+										size="sm"
+										colorScheme="green"
+										variant="solid"
+										onClick={async () => {
+											try {
+												const url = `${process.env.NEXT_PUBLIC_API_SERVICE}${item.image}`;
+												
+												// Faylni fetch qilish
+												const response = await fetch(url, {
+													method: 'GET',
+													mode: 'cors',
+												});
+												
+												if (!response.ok) {
+													throw new Error('Fayl yuklanmadi');
+												}
+												
+												// Blob yaratish
+												const blob = await response.blob();
+												
+												// Download URL yaratish
+												const downloadUrl = window.URL.createObjectURL(blob);
+												
+												// Link element yaratish va yuklash
+												const link = document.createElement('a');
+												link.href = downloadUrl;
+												link.download = `${item.title}.pdf`;
+												link.style.display = 'none';
+												
+												document.body.appendChild(link);
+												link.click();
+												document.body.removeChild(link);
+												
+												// Memory tozalash
+												window.URL.revokeObjectURL(downloadUrl);
+												
+											} catch (error) {
+												console.error('Yuklash xatosi:', error);
+												
+												// Fallback: oddiy yuklash
+												const link = document.createElement('a');
+												link.href = `${process.env.NEXT_PUBLIC_API_SERVICE}${item.image}`;
+												link.download = `${item.title}.pdf`;
+												link.target = '_blank';
+												link.style.display = 'none';
+												
+												document.body.appendChild(link);
+												link.click();
+												document.body.removeChild(link);
+											}
+										}}
+										leftIcon={<AiOutlineDownload size={16} />}
+										fontSize="xs"
+									>
+										{t('download', { ns: 'books' })}
+									</Button>
+								</HStack>
+							</Box>
 						</Box>
 					</motion.div>
 				))}
