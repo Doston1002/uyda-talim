@@ -9,8 +9,8 @@ export const siteConfig = {
 	  ogImage: "https://media.graphassets.com/BW4BRUnCQJWCazTdKnVQ",
 	},
 	baseURL: "https://uydatalim.uzedu.uz",
-	logo: "/images/logo.svg",
+	logo: "/images/logoDark.png",
 	logoText: "uyda-talim",
-	favicon: "/images/logo.svg",
+	favicon: "/images/logoDark.png",
   };
   
