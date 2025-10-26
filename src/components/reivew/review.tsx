@@ -16,6 +16,7 @@ import Cookies from 'js-cookie';
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactStars from 'react-stars';
+import { loadImage } from 'src/helpers/image.helper';
 import { ReviewProps } from './review.props';
 
 const Review: FC<ReviewProps> = ({ reviews, isLoading }) => {
@@ -62,7 +63,7 @@ const Review: FC<ReviewProps> = ({ reviews, isLoading }) => {
 								display={{ base: 'none', md: 'block' }}
 								size={'md'}
 								name={item.author?.fullName || 'Anonymous'}
-								src={item.author?.avatar || ''}
+								src={loadImage(item.author?.avatar) || ''}
 							/>
 							<Box>
 								<Flex align={'center'} gap={2} mt={1}>

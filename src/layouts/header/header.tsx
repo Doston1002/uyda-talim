@@ -27,6 +27,7 @@ import { IoIosLogOut } from 'react-icons/io';
 import { RiAdminFill } from 'react-icons/ri';
 import { TbWorld } from 'react-icons/tb';
 import { language } from 'src/config/constants';
+import { loadImage } from 'src/helpers/image.helper';
 import { useActions } from 'src/hooks/useActions';
 import { useAuth } from 'src/hooks/useAuth';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
@@ -163,7 +164,7 @@ const Header = ({ onToggle }: HeaderProps) => {
 							>
 								<Avatar
 									backgroundColor={'facebook.500'}
-									src={user.avatar}
+									src={loadImage(user.avatar)}
 								/>
 							</MenuButton>
 							<MenuList p={0} m={0}>
