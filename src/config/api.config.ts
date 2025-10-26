@@ -1,5 +1,7 @@
-export const API_URL = `${process.env.NEXT_PUBLIC_API_SERVICE}/api`;
-export const ONEID_URL = `${process.env.NEXT_PUBLIC_API_SERVICE}/`;
+const BASE_API_URL = process.env.NEXT_PUBLIC_API_SERVICE || 'https://api.uydatalim.uzedu.uz';
+
+export const API_URL = `${BASE_API_URL}/api`;
+export const ONEID_URL = `${BASE_API_URL}/`;
 export const getAuthUrl = (url: string) => `/auth/${url}`;
 export const getMailUrl = (url: string) => `/mail/${url}`;
 export const getUserUrl = (url: string) => `/user/${url}`;

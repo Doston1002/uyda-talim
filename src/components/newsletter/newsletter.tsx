@@ -1,6 +1,7 @@
 import { Box, Button, Card, CardBody, Input, Stack, Text, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ONEID_URL } from 'src/config/api.config';
 import SectionTitle from '../section-title/section-title';
 
 const Newsletter = () => {
@@ -31,7 +32,7 @@ const Newsletter = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_SERVICE || 'http://localhost:3000'}/api/newsletter/subscribe`, {
+      const response = await fetch(`${ONEID_URL}api/newsletter/subscribe`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

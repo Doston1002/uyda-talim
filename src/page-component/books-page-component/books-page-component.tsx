@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { AiOutlineDownload, AiOutlineEye } from 'react-icons/ai';
 import SectionTitle from 'src/components/section-title/section-title';
 import { booksCategory } from 'src/config/constants';
+import { loadImage } from 'src/helpers/image.helper';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 
 const BooksPageComponent = () => {
@@ -113,10 +114,10 @@ const BooksPageComponent = () => {
 										size="sm"
 										colorScheme="blue"
 										variant="solid"
-										onClick={() => {
-											// PDF faylni yangi tabda ochish
-											window.open(`${process.env.NEXT_PUBLIC_API_SERVICE}${item.image}`, '_blank');
-										}}
+									onClick={() => {
+										// PDF faylni yangi tabda ochish
+										window.open(loadImage(item.image), '_blank');
+									}}
 										leftIcon={<AiOutlineEye size={16} />}
 										fontSize="xs"
 									>
@@ -130,7 +131,7 @@ const BooksPageComponent = () => {
 										variant="solid"
 										onClick={async () => {
 											try {
-												const url = `${process.env.NEXT_PUBLIC_API_SERVICE}${item.image}`;
+												const url = loadImage(item.image);
 												
 												// Faylni fetch qilish
 												const response = await fetch(url, {
@@ -166,7 +167,7 @@ const BooksPageComponent = () => {
 												
 												// Fallback: oddiy yuklash
 												const link = document.createElement('a');
-												link.href = `${process.env.NEXT_PUBLIC_API_SERVICE}${item.image}`;
+												link.href = loadImage(item.image);
 												link.download = `${item.title}.pdf`;
 												link.target = '_blank';
 												link.style.display = 'none';
