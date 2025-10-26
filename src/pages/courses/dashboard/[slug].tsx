@@ -16,11 +16,15 @@ const DashboardCourse: NextPage<CourseDashboardPage> = ({
 	const router = useRouter();
 
 	useEffect(() => {
-		getCourse(course);
+		if (course) {
+			getCourse(course);
+		}
 	}, [course]);
 
 	useEffect(() => {
-		const link = `/courses/dashboard/${course?.slug}`;
+		if (!course?._id) return;
+		
+		const link = `/courses/dashboard/${course.slug}`;
 		const lessonId = localStorage.getItem(course._id);
 
 		if (sections.length) {

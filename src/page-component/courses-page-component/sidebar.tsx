@@ -37,7 +37,9 @@ const Sidebar: FC<CourseDashboardProps> = ({ ...props }) => {
 	const router = useRouter();
 
 	useEffect(() => {
-		getSection({ courseId: course?._id, callback: () => {} });
+		if (course?._id) {
+			getSection({ courseId: course._id, callback: () => {} });
+		}
 	}, [course]);
 
 	const onLesson = (lesson: LessonType) => {

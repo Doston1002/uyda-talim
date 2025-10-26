@@ -29,6 +29,9 @@ export const SectionService = {
 	},
 
 	async getSection(body: SectionBodyType) {
+		if (!body.courseId) {
+			throw new Error('Course ID is required');
+		}
 		const response = await $axios.get(`${getSectionUrl('get')}/${body.courseId}`);
 
 		return response.data;
