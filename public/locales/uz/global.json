@@ -141,6 +141,25 @@
 	"contact_phone_invalid": "Telefon raqam noto'g'ri formatda",
 	"contact_error": "Xatolik yuz berdi",
 	"habaringiz yuborildi tez orada aloqaga chiqamiz": "Xabaringiz yuborildi, tez orada aloqaga chiqamiz",
-	"sending": "Yuborilmoqda..."
+	"sending": "Yuborilmoqda...",
+	"online_mentor_title": "Online Mentor",
+	"online_mentor_description": "O'quvchilar uchun dars jarayoni bo'yicha real vaqt rejimida yoki yozma shaklda onlayn savol-javoblarni tashkil qilish imkoniyatini boshqarish.",
+	"ask_question": "Savol bering",
+	"question_topic": "Mavzu",
+	"question_topic_placeholder": "Savolingiz mavzusini kiriting",
+	"question_label": "Savol",
+	"question_placeholder": "Savolingizni batafsil yozing",
+	"submit_question": "Savol yuborish",
+	"submitting": "Yuborilmoqda...",
+	"my_questions": "Mening savollarim",
+	"no_questions": "Hozircha savollar yo'q",
+	"sent_on": "Yuborilgan:",
+	"answer": "Javob:",
+	"answered_by": "Javob berdi:",
+	"previous": "Oldingi",
+	"next": "Keyingi",
+	"status_pending": "Kutilmoqda",
+	"status_answered": "Javob berildi",
+	"status_closed": "Yopildi"
 }
 

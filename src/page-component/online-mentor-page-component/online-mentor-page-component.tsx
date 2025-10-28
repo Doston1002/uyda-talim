@@ -167,11 +167,11 @@ const OnlineMentorPageComponent = () => {
 	const getStatusText = (status: string) => {
 		switch (status) {
 			case 'pending':
-				return 'Kutilmoqda';
+				return t('status_pending', { ns: 'global' });
 			case 'answered':
-				return 'Javob berildi';
+				return t('status_answered', { ns: 'global' });
 			case 'closed':
-				return 'Yopildi';
+				return t('status_closed', { ns: 'global' });
 			default:
 				return status;
 		}
@@ -179,35 +179,34 @@ const OnlineMentorPageComponent = () => {
 
 	return (
 		<Container maxW="container.xl" py={10}>
-			<Heading mb={6}>Online Mentor</Heading>
+			<Heading mb={6}>{t('online_mentor_title', { ns: 'global' })}</Heading>
 			<Text fontSize="lg" mb={8}>
-				O'quvchilar uchun dars jarayoni bo'yicha real vaqt rejimida yoki yozma shaklda onlayn
-				savol-javoblarni tashkil qilish imkoniyatini boshqarish.
+				{t('online_mentor_description', { ns: 'global' })}
 			</Text>
 
 			{/* Savol berish formasi */}
 			<Card mb={10}>
 				<CardBody>
 					<Heading size="md" mb={4}>
-						Savol bering
+						{t('ask_question', { ns: 'global' })}
 					</Heading>
 					<Stack spacing={4}>
 						<FormControl isRequired>
-							<FormLabel>Mavzu</FormLabel>
+							<FormLabel>{t('question_topic', { ns: 'global' })}</FormLabel>
 							<Input
 								name="title"
 								type="text"
-								placeholder="Savolingiz mavzusini kiriting"
+								placeholder={t('question_topic_placeholder', { ns: 'global' }) as string}
 								value={formData.title}
 								onChange={handleChange}
 								bg={useColorModeValue('white', 'gray.900')}
 							/>
 						</FormControl>
 						<FormControl isRequired>
-							<FormLabel>Savol</FormLabel>
+							<FormLabel>{t('question_label', { ns: 'global' })}</FormLabel>
 							<Textarea
 								name="description"
-								placeholder="Savolingizni batafsil yozing"
+								placeholder={t('question_placeholder', { ns: 'global' }) as string}
 								rows={6}
 								value={formData.description}
 								onChange={handleChange}
@@ -218,9 +217,9 @@ const OnlineMentorPageComponent = () => {
 							colorScheme="facebook"
 							onClick={handleSubmit}
 							isLoading={loading}
-							loadingText="Yuborilmoqda..."
+							loadingText={t('submitting', { ns: 'global' })}
 						>
-							Savol yuborish
+							{t('submit_question', { ns: 'global' })}
 						</Button>
 					</Stack>
 				</CardBody>
@@ -230,12 +229,12 @@ const OnlineMentorPageComponent = () => {
 			{user && (
 				<Box>
 					<Heading size="md" mb={4}>
-						Mening savollarim
+						{t('my_questions', { ns: 'global' })}
 					</Heading>
 					{questionsLoading ? (
-						<Text>Yuklanmoqda...</Text>
+						<Text>{t('loading', { ns: 'global' })}</Text>
 					) : myQuestions.length === 0 ? (
-						<Text>Hozircha savollar yo'q</Text>
+						<Text>{t('no_questions', { ns: 'global' })}</Text>
 					) : (
 						<Stack spacing={4}>
 							{myQuestions.map(question => (
@@ -249,7 +248,7 @@ const OnlineMentorPageComponent = () => {
 										</Flex>
 										<Text mb={2}>{question.description}</Text>
 										<Text fontSize="sm" color="gray.500" mb={3}>
-											Yuborilgan: {format(new Date(question.createdAt), 'dd.MM.yyyy HH:mm')}
+											{t('sent_on', { ns: 'global' })} {format(new Date(question.createdAt), 'dd.MM.yyyy HH:mm')}
 										</Text>
 
 										{question.answer && (
@@ -261,12 +260,12 @@ const OnlineMentorPageComponent = () => {
 													borderRadius="md"
 												>
 													<Text fontWeight="bold" mb={2}>
-														Javob:
+														{t('answer', { ns: 'global' })}
 													</Text>
 													<Text>{question.answer}</Text>
 													{question.answeredBy && (
 														<Text fontSize="sm" color="gray.500" mt={2}>
-															Javob berdi: {question.answeredBy.fullName} -{' '}
+															{t('answered_by', { ns: 'global' })} {question.answeredBy.fullName} -{' '}
 															{question.answeredAt &&
 																format(new Date(question.answeredAt), 'dd.MM.yyyy HH:mm')}
 														</Text>
@@ -288,7 +287,7 @@ const OnlineMentorPageComponent = () => {
 								isLoading={questionsLoading}
 								size="sm"
 							>
-								Oldingi
+								{t('previous', { ns: 'global' })}
 							</Button>
 							<Text alignSelf="center">
 								{page} / {totalPages}
@@ -299,7 +298,7 @@ const OnlineMentorPageComponent = () => {
 								isLoading={questionsLoading}
 								size="sm"
 							>
-								Keyingi
+								{t('next', { ns: 'global' })}
 							</Button>
 						</Flex>
 					)}
