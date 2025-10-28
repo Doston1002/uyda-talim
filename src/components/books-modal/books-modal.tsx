@@ -14,12 +14,10 @@ import {
 	VStack,
 } from '@chakra-ui/react';
 import { Form, Formik, FormikValues } from 'formik';
-import Image from 'next/image';
 import { FC, useEffect, useState } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
 import { useTranslation } from 'react-i18next';
 import { FaTimes } from 'react-icons/fa';
-import { loadImage } from 'src/helpers/image.helper';
 import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 import { FileService } from 'src/services/file.service';
@@ -32,37 +30,40 @@ import { createBooksCategory } from 'src/config/constants';
 
 const BooksModal: FC<BookModalProps> = ({ isOpen, onClose, booksValue }): JSX.Element => {
 	const [values, setValues] = useState(data);
-	const [file, setFile] = useState<File | string | null>();
-	const [errorFile, setErrorFile] = useState('');
+	const [pdfFile, setPdfFile] = useState<File | string | null>();
+	const [errorPdfFile, setErrorPdfFile] = useState('');
 
 	const { startCreateBooksLoading, createBooks, clearBooksError, updateBooks } = useActions();
 	const { isLoading, error } = useTypedSelector(state => state.books);
 	const toast = useToast();
 	const { t } = useTranslation();
 
-	const handleChange = (file: File) => {
-		setFile(file);
+	const handlePdfChange = (file: File) => {
+		setPdfFile(file);
 	};
 
 	const onSubmit = async (fomrikValues: FormikValues) => {
-		if (!file) {
-			setErrorFile(t('preview_img_is_requried', { ns: 'global' }) as string);
+		if (!pdfFile) {
+			setErrorPdfFile(t('pdf_is_requried', { ns: 'global' }) as string);
 			return;
 		}
-		let imageUrl = file;
-		if (typeof file !== 'string') {
-			startCreateBooksLoading();
+		
+		startCreateBooksLoading();
+
+		// Upload PDF
+		let pdfUrl = pdfFile;
+		if (typeof pdfFile !== 'string') {
 			const formData = new FormData();
-			formData.append('image', file as File);
+			formData.append('image', pdfFile as File);
 			const response = await FileService.fileUpload(formData, 'books');
-			imageUrl = response.url;
+			pdfUrl = response.url;
 		}
 
 		if (!booksValue) {
 			createBooks({
 				title: fomrikValues.title,
-				pdf: fomrikValues.pdf,
-				image: imageUrl as string,
+				pdf: pdfUrl as string,
+				image: '', // Empty string for image
 				category: fomrikValues.category,
 				callback: () => {
 					toast({
@@ -71,17 +72,17 @@ const BooksModal: FC<BookModalProps> = ({ isOpen, onClose, booksValue }): JSX.El
 						isClosable: true,
 						status: 'success',
 					});
-					setFile(null);
+					setPdfFile(null);
 					onClose();
 				},
 			});
 		} else {
 			updateBooks({
 				title: fomrikValues.title,
-				pdf: fomrikValues.pdf,
+				pdf: pdfUrl as string,
 				_id: booksValue._id,
 				category: fomrikValues.category,
-				image: imageUrl as string,
+				image: booksValue.image || '', // Keep existing image or empty
 				callback: () => {
 					toast({
 						title: t('successfully_edited', { ns: 'instructor' }),
@@ -89,7 +90,7 @@ const BooksModal: FC<BookModalProps> = ({ isOpen, onClose, booksValue }): JSX.El
 						isClosable: true,
 						status: 'success',
 					});
-					setFile(null);
+					setPdfFile(null);
 					onClose();
 				},
 			});
@@ -97,13 +98,13 @@ const BooksModal: FC<BookModalProps> = ({ isOpen, onClose, booksValue }): JSX.El
 	};
 
 	useEffect(() => {
-		setErrorFile('');
+		setErrorPdfFile('');
 		if (booksValue) {
 			setValues(booksValue);
-			setFile(booksValue.image);
+			setPdfFile(booksValue.pdf);
 		} else {
 			setValues(data);
-			setFile(null);
+			setPdfFile(null);
 		}
 	}, [booksValue]);
 
@@ -128,50 +129,59 @@ const BooksModal: FC<BookModalProps> = ({ isOpen, onClose, booksValue }): JSX.El
 									label={t('title', { ns: 'instructor' })}
 									placeholder={'Harry Poter'}
 								/>
-								<TextFiled name='pdf' label={t('pdf_link', { ns: 'admin' })} />
 								<SelectField
 									name='category'
 									label={t('category', { ns: 'instructor' })}
 									placeholder='-'
 									arrOptions={createBooksCategory}
 								/>
-								{file ? (
-									<Box pos={'relative'} w={'full'} h={200}>
-										<Image
-											src={
-												typeof file === 'string'
-													? loadImage(file as string)
-													: URL.createObjectURL(file)
-											}
-											alt={'preview image'}
-											fill
-											style={{ objectFit: 'cover', borderRadius: '8px' }}
-										/>
-										<Icon
-											as={FaTimes}
-											fontSize={20}
-											pos={'absolute'}
-											right={2}
-											top={2}
-											cursor={'pointer'}
-											onClick={() => setFile(null)}
-										/>
-									</Box>
-								) : (
+
+								{/* PDF File Upload */}
+								<Box w={'full'}>
+									<Text mb={2} fontSize='14px' fontWeight='bold'>
+										{t('pdf_file', { ns: 'admin' })} *
+									</Text>
+									
+									{pdfFile && (
+										<Box 
+											pos={'relative'} 
+											w={'full'} 
+											p={4} 
+											mb={3}
+											border='2px' 
+											borderColor='green.500' 
+											borderRadius='8px'
+											bg='green.50'
+										>
+											<Text fontSize='14px' color='green.700'>
+												📄 {typeof pdfFile === 'string' ? 'PDF yuklangan' : pdfFile.name}
+											</Text>
+											<Icon
+												as={FaTimes}
+												fontSize={20}
+												pos={'absolute'}
+												right={2}
+												top={2}
+												cursor={'pointer'}
+												onClick={() => setPdfFile(null)}
+											/>
+										</Box>
+									)}
+									
 									<Box>
 										<FileUploader
-											handleChange={handleChange}
-											name='file'
-											types={['JPG', 'PNG', 'GIF', 'PDF']}
+											handleChange={handlePdfChange}
+											name='pdfFile'
+											types={['PDF']}
 											style={{ minWidth: '100%' }}
 										/>
-										{errorFile && (
+										{errorPdfFile && (
 											<Text mt={2} fontSize='14px' color='red.500'>
-												{errorFile}
+												{errorPdfFile}
 											</Text>
 										)}
 									</Box>
-								)}
+								</Box>
 							</VStack>
 						</ModalBody>
 
@@ -191,6 +201,5 @@ export default BooksModal;
 
 const data = {
 	title: '',
-	pdf: '',
 	category: '',
 };
