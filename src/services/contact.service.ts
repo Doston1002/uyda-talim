@@ -48,9 +48,13 @@ export const ContactService = {
 		return response.data;
 	},
 
-	async getMessages(limit: string = '10', page: string = '1') {
+	async getMessages(limit: string = '10', page: string = '1', type?: 'contact' | 'attendance') {
+		const params: any = { limit, page };
+		if (type) {
+			params.type = type;
+		}
 		const { data } = await $axios.get<ContactResponse>(getContactUrl('messages'), {
-			params: { limit, page },
+			params,
 		});
 		return data;
 	},

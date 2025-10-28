@@ -26,7 +26,7 @@ import { ContactService, ContactMessage } from 'src/services/contact.service';
 import { ErrorAlert } from 'src/components';
 import SectionTitle from 'src/components/section-title/section-title';
 
-const ContactMessagesComponent = () => {
+const AttendanceMessagesComponent = () => {
 	const { t } = useTranslation();
 	const toast = useToast();
 	
@@ -42,7 +42,7 @@ const ContactMessagesComponent = () => {
 		setError(null);
 		
 		try {
-			const response = await ContactService.getMessages('10', pageNum.toString(), 'contact');
+			const response = await ContactService.getMessages('10', pageNum.toString(), 'attendance');
 			setMessages(response.contacts);
 			setTotalPages(response.totalPages);
 			setPage(pageNum);
@@ -184,8 +184,8 @@ const ContactMessagesComponent = () => {
 				<CardBody>
 					<Stack>
 						<SectionTitle
-							title="Contact Messages"
-							subtitle={`Total messages: ${messages.length} | Unread: ${unreadCount}`}
+							title={t('attendance_monitoring', { ns: 'admin' })}
+							subtitle={t('attendance_monitoring_descr', { ns: 'admin' })}
 						/>
 					</Stack>
 				</CardBody>
@@ -198,12 +198,11 @@ const ContactMessagesComponent = () => {
 					<Table variant="striped" colorScheme="teal">
 						<Thead>
 							<Tr>
-								<Th>Name</Th>
-								<Th>Phone</Th>
-								<Th>Message</Th>
+								<Th>Ism</Th>
+								<Th>Ma'lumotlar</Th>
 								<Th>Status</Th>
-								<Th>Date</Th>
-								<Th>Actions</Th>
+								<Th>Sana</Th>
+								<Th>Amallar</Th>
 							</Tr>
 						</Thead>
 						<Tbody>
@@ -212,14 +211,20 @@ const ContactMessagesComponent = () => {
 									<Td>
 										<Text fontWeight="bold">{message.fullName}</Text>
 										{!message.isRead && (
-											<Badge colorScheme="red" size="sm">New</Badge>
+											<Badge colorScheme="red" size="sm" ml={2}>NEW</Badge>
 										)}
 									</Td>
-									<Td>{message.phone}</Td>
 									<Td>
-										<Text maxW="300px" isTruncated>
-											{message.message}
-										</Text>
+										<Stack spacing={1}>
+											<Text fontSize="sm"><strong>O'qituvchi:</strong> {message.teacherName}</Text>
+											<Text fontSize="sm"><strong>Hudud:</strong> {message.region}</Text>
+											<Text fontSize="sm"><strong>Tuman:</strong> {message.district}</Text>
+											<Text fontSize="sm"><strong>Maktab:</strong> {message.school}</Text>
+											<Text fontSize="sm"><strong>Sinf:</strong> {message.schoolClass}</Text>
+											<Text fontSize="sm"><strong>Fan:</strong> {message.subject}</Text>
+											<Text fontSize="sm"><strong>Holat:</strong> {message.isAbsent ? "O'qituvchi darsga kelmadi" : "O'qituvchi kelmadi degan gap yo'q"}</Text>
+											<Text fontSize="sm"><strong>Dars olib borishi:</strong> {message.teachingMethod}</Text>
+										</Stack>
 									</Td>
 									<Td>
 										<Badge colorScheme={getStatusColor(message.status)}>
@@ -289,4 +294,5 @@ const ContactMessagesComponent = () => {
 	);
 };
 
-export default ContactMessagesComponent;
+export default AttendanceMessagesComponent;
+

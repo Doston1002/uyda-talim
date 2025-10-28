@@ -14,7 +14,7 @@ import {
 } from 'react-icons/fa';
 import { FiEdit } from 'react-icons/fi';
 import { ImBooks } from 'react-icons/im';
-import { MdImportContacts, MdOutlineContactMail, MdOutlineCreateNewFolder } from 'react-icons/md';
+import { MdImportContacts, MdOutlineContactMail, MdOutlineCreateNewFolder, MdOutlineFactCheck } from 'react-icons/md';
 import {
 	CodingIcons,
 	DesignIcons,
@@ -440,5 +440,10 @@ export const adminSidebar = [
 		name: 'contact_messages',
 		icon: MdOutlineContactMail,
 		route: 'contact-messages',
+	},
+	{
+		name: 'attendance_monitoring',
+		icon: MdOutlineFactCheck,
+		route: 'attendance-messages',
 	},
 ];
