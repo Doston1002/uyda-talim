@@ -377,31 +377,8 @@ const AttendancePageComponent = () => {
       return;
     }
 
-    // now date
-    const now = new Date();
-    const dateTimeString = now.toLocaleString(); 
-    
-    const text = `
-    <b>Yangi Murojaat:</b> \n
-    <b>Sana va vaqt:</b> ${dateTimeString}\n
-    <b>Ismi:</b> ${fullName}\n
-    <b>O'qituvchi ismi:</b> ${teacherName}\n
-    <b>Hudud:</b> ${regions.find(r => r.id.toString() === region)?.name}\n
-    <b>Tuman/Shahar:</b> ${district}\n
-    <b>Maktab:</b> ${school}\n
-    <b>Sinf:</b> ${schoolClass}\n
-    <b>Fan:</b> ${subject}\n
-    ${isAbsent ? '<b>Holat:</b> O\'qituvchi darsga kelmadi' : ''}
-    <b>Dars olib borishi:</b> ${teachingMethod || 'Mavjud emas'}\n
-    `;
-
-    const token = "8127037042:AAHlzOvruTi3H22cxXTK--svT6OZnQVTlkY";
-    const chat_id = "5531717864";
-
-    const url = `https://api.telegram.org/bot${token}/sendMessage`;
-
     try {
-      // Send to backend
+      // Send to backend only
       await ContactService.sendMessage({
         fullName,
         teacherName,
@@ -415,49 +392,26 @@ const AttendancePageComponent = () => {
         type: 'attendance'
       });
 
-      // Send to Telegram
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          chat_id: chat_id,
-          text: text,
-          parse_mode: "HTML",
-        }),
+      toast({
+        title: t('yuborgan ma\'lumotlaringiz uchun raxmat', { ns: 'global' }),
+        status: 'success',
+        duration: 3000,
+        isClosable: true,
       });
-
-      const data = await response.json();
-
-      if (data.ok) {
-        toast({
-          title: t('yuborgan ma\'lumotlaringiz uchun raxmat', { ns: 'global' }),
-          status: 'success',
-          duration: 3000,
-          isClosable: true,
-        });
-        setFormData({ 
-          fullName: '', 
-          teacherName: '', 
-          message: '',
-          isAbsent: false,
-          teachingMethod: '',
-          region: '',
-          district: '',
-          school: '',
-          schoolClass: '',
-          subject: ''
-        });
-        setDistricts([]);
-      } else {
-        toast({
-          title: t('contact_error', { ns: 'global' }),
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-        });
-      }
+      
+      setFormData({ 
+        fullName: '', 
+        teacherName: '', 
+        message: '',
+        isAbsent: false,
+        teachingMethod: '',
+        region: '',
+        district: '',
+        school: '',
+        schoolClass: '',
+        subject: ''
+      });
+      setDistricts([]);
     } catch (error) {
       console.error(error);
       toast({
@@ -580,7 +534,7 @@ const AttendancePageComponent = () => {
               >
                 <Stack direction="row">
                   <Radio value="Alo">{t('excellent', { ns: 'global' })}</Radio>
-                  <Radio value="Ortra">{t('average', { ns: 'global' })}</Radio>
+                  <Radio value="O'rta">{t('average', { ns: 'global' })}</Radio>
                   <Radio value="Qoniqarsiz">{t('unsatisfactory', { ns: 'global' })}</Radio>
                 </Stack>
               </RadioGroup>
