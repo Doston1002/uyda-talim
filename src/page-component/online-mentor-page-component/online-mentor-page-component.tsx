@@ -214,8 +214,10 @@ const OnlineMentorPageComponent = () => {
 							/>
 						</FormControl>
 						<Button
-							colorScheme="facebook"
-							onClick={handleSubmit}
+						w={'full'}
+						h={14}
+						colorScheme={'gray'}
+						onClick={handleSubmit}
 							isLoading={loading}
 							loadingText={t('submitting', { ns: 'global' })}
 						>
