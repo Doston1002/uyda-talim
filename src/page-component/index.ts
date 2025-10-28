@@ -9,6 +9,7 @@ export { default as BecomeInstructorPageComponent } from './become-instructor-pa
 export { default as BooksPageComponent } from './books-page-component/books-page-component';
 export { default as ContactPageComponent } from './contact-page-component/contact-page-component';
 export { default as AttendancePageComponent } from './attendance-page-component/attendance-page-component';
+export { default as OnlineMentorPageComponent } from './online-mentor-page-component/online-mentor-page-component';
 export { default as CoursesPageComponent } from './courses-page-component/courses-page-component';
 export { default as DashboardPageComponent } from './courses-page-component/dashboard-page-component';
 export { default as DetailedCourseComponent } from './courses-page-component/detailed-course-component';

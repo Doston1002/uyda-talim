@@ -95,6 +95,11 @@ export const navigation = [
 				icon: MdOutlineContactMail,
 			},
 			{
+				label: 'online_mentor',
+				route: '/online-mentor',
+				icon: FaQuestionCircle,
+			},
+			{
 				label: 'sidebar_title_2_faq',
 				route: '/faq',
 				icon: FaQuestionCircle,
@@ -445,5 +450,10 @@ export const adminSidebar = [
 		name: 'attendance_monitoring',
 		icon: MdOutlineFactCheck,
 		route: 'attendance-messages',
+	},
+	{
+		name: 'online_mentor_questions',
+		icon: FaQuestionCircle,
+		route: 'questions',
 	},
 ];
