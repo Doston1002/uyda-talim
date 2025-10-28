@@ -198,9 +198,9 @@ const ContactMessagesComponent = () => {
 					<Table variant="striped" colorScheme="teal">
 						<Thead>
 							<Tr>
+								<Th>Type</Th>
 								<Th>Name</Th>
-								<Th>Phone</Th>
-								<Th>Message</Th>
+								<Th>Details</Th>
 								<Th>Status</Th>
 								<Th>Date</Th>
 								<Th>Actions</Th>
@@ -210,16 +210,36 @@ const ContactMessagesComponent = () => {
 							{messages.map((message) => (
 								<Tr key={message.id}>
 									<Td>
+										<Badge colorScheme={message.type === 'attendance' ? 'purple' : 'blue'}>
+											{message.type === 'attendance' ? 'Davomat' : 'Xabar'}
+										</Badge>
+									</Td>
+									<Td>
 										<Text fontWeight="bold">{message.fullName}</Text>
 										{!message.isRead && (
-											<Badge colorScheme="red" size="sm">New</Badge>
+											<Badge colorScheme="red" size="sm" ml={2}>NEW</Badge>
 										)}
 									</Td>
-									<Td>{message.phone}</Td>
 									<Td>
-										<Text maxW="300px" isTruncated>
-											{message.message}
-										</Text>
+										{message.type === 'attendance' ? (
+											<Stack spacing={1}>
+												<Text fontSize="sm"><strong>O'qituvchi:</strong> {message.teacherName}</Text>
+												<Text fontSize="sm"><strong>Hudud:</strong> {message.region}</Text>
+												<Text fontSize="sm"><strong>Tuman:</strong> {message.district}</Text>
+												<Text fontSize="sm"><strong>Maktab:</strong> {message.school}</Text>
+												<Text fontSize="sm"><strong>Sinf:</strong> {message.schoolClass}</Text>
+												<Text fontSize="sm"><strong>Fan:</strong> {message.subject}</Text>
+												<Text fontSize="sm"><strong>Holat:</strong> {message.isAbsent ? "O'qituvchi darsga kelmadi" : "O'qituvchi kelmadi degan gap yo'q"}</Text>
+												<Text fontSize="sm"><strong>Dars olib borishi:</strong> {message.teachingMethod}</Text>
+											</Stack>
+										) : (
+											<Stack spacing={1}>
+												<Text fontSize="sm"><strong>Telefon:</strong> {message.phone}</Text>
+												<Text fontSize="sm" maxW="300px">
+													<strong>Xabar:</strong> {message.message}
+												</Text>
+											</Stack>
+										)}
 									</Td>
 									<Td>
 										<Badge colorScheme={getStatusColor(message.status)}>

@@ -4,8 +4,17 @@ import { getContactUrl } from 'src/config/api.config';
 export interface ContactMessage {
 	id: string;
 	fullName: string;
-	phone: string;
-	message: string;
+	phone?: string;
+	message?: string;
+	teacherName?: string;
+	region?: string;
+	district?: string;
+	school?: string;
+	schoolClass?: string;
+	subject?: string;
+	teachingMethod?: string;
+	isAbsent?: boolean;
+	type?: 'contact' | 'attendance';
 	isRead: boolean;
 	status: 'pending' | 'replied' | 'closed';
 	createdAt: string;
@@ -13,8 +22,17 @@ export interface ContactMessage {
 
 export interface CreateContactDto {
 	fullName: string;
-	phone: string;
-	message: string;
+	phone?: string;
+	message?: string;
+	teacherName?: string;
+	region?: string;
+	district?: string;
+	school?: string;
+	schoolClass?: string;
+	subject?: string;
+	teachingMethod?: string;
+	isAbsent?: boolean;
+	type?: 'contact' | 'attendance';
 }
 
 export interface ContactResponse {

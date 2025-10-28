@@ -89,11 +89,11 @@ export const navigation = [
 				route: '/contact',
 				icon: MdOutlineContactMail,
 			},
-			// {
-			// 	label: 'sidebar_title_2_info',
-			// 	route: '/attendance',
-			// 	icon: MdOutlineContactMail,
-			// },
+			{
+				label: 'sidebar_title_2_info',
+				route: '/attendance',
+				icon: MdOutlineContactMail,
+			},
 			{
 				label: 'sidebar_title_2_faq',
 				route: '/faq',

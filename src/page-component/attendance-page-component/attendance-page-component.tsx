@@ -12,13 +12,16 @@ import {
   RadioGroup, 
   Select, 
   Stack, 
-  Text
+  Text,
+  useToast
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ContactService } from 'src/services/contact.service';
 
 const AttendancePageComponent = () => {
   const { t } = useTranslation();
+  const toast = useToast();
 
   // Regions data
   const regions = [
@@ -322,8 +325,6 @@ const AttendancePageComponent = () => {
   });
 
   const [districts, setDistricts] = useState([]);
-  const [schools, setSchools] = useState([]);
-  const [subjects, setSubjects] = useState([]);
   
   // Handle form input changes
   const handleChange = (e) => {
@@ -339,21 +340,12 @@ const AttendancePageComponent = () => {
     const regionId = e.target.value;
     setFormData(prev => ({ ...prev, region: regionId, district: '', school: '' }));
     setDistricts(districtsData[regionId] || []);
-    setSchools([]);
   };
 
   // Handle district change
   const handleDistrictChange = (e) => {
     const districtName = e.target.value;
     setFormData(prev => ({ ...prev, district: districtName, school: '' }));
-    setSchools(schoolsData[districtName] || []);
-  };
-
-  // Handle class change
-  const handleClassChange = (e) => {
-    const className = e.target.value;
-    setFormData(prev => ({ ...prev, schoolClass: className, subject: '' }));
-    setSubjects(subjectsByClass[className] || []);
   };
 
   // Handle radio group change
@@ -376,7 +368,12 @@ const AttendancePageComponent = () => {
     } = formData;
 
     if (!fullName || !teacherName || !region || !district || !school || !schoolClass || !subject) {
-      alert(t('Ma\'lumotlarni to\'liq to\'ldiring', { ns: 'global' }));
+      toast({
+        title: t('Ma\'lumotlarni to\'liq to\'ldiring', { ns: 'global' }),
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
       return;
     }
 
@@ -404,6 +401,21 @@ const AttendancePageComponent = () => {
     const url = `https://api.telegram.org/bot${token}/sendMessage`;
 
     try {
+      // Send to backend
+      await ContactService.sendMessage({
+        fullName,
+        teacherName,
+        region: regions.find(r => r.id.toString() === region)?.name || region,
+        district,
+        school,
+        schoolClass,
+        subject,
+        teachingMethod,
+        isAbsent,
+        type: 'attendance'
+      });
+
+      // Send to Telegram
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -419,7 +431,12 @@ const AttendancePageComponent = () => {
       const data = await response.json();
 
       if (data.ok) {
-        alert(t('yuborgan ma\'lumotlaringiz uchun raxmat', { ns: 'global' }));
+        toast({
+          title: t('yuborgan ma\'lumotlaringiz uchun raxmat', { ns: 'global' }),
+          status: 'success',
+          duration: 3000,
+          isClosable: true,
+        });
         setFormData({ 
           fullName: '', 
           teacherName: '', 
@@ -433,14 +450,22 @@ const AttendancePageComponent = () => {
           subject: ''
         });
         setDistricts([]);
-        setSchools([]);
-        setSubjects([]);
       } else {
-        alert(t('contact_error', { ns: 'global' }));
+        toast({
+          title: t('contact_error', { ns: 'global' }),
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        });
       }
     } catch (error) {
       console.error(error);
-      alert(t('contact_error', { ns: 'global' }));
+      toast({
+        title: t('contact_error', { ns: 'global' }),
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 
@@ -511,47 +536,39 @@ const AttendancePageComponent = () => {
 
             <FormControl isRequired>
               <FormLabel>{t('school', { ns: 'global' })}</FormLabel>
-              <Select 
-                placeholder='Tanlang'
+              <Input
+                placeholder="Maktabingizni kiriting"
                 name="school"
+                type="text"
+                h={14}
                 value={formData.school}
                 onChange={handleChange}
-                isDisabled={!formData.district}
-              >
-                {schools.map((school, index) => (
-                  <option key={index} value={school}>{school}</option>
-                ))}
-              </Select>
+              />
             </FormControl>
 
             {/* School Class and Subject Selection */}
             <Flex justify={'flex-start'} direction={{ base: 'column', lg: 'row' }} align={'center'} gap={'4'}>
               <FormControl isRequired>
                 <FormLabel>{t('school_class', { ns: 'global' })}</FormLabel>
-                <Select 
-                  placeholder='Tanlang'
+                <Input
+                  placeholder="Sinfingizni kiriting"
                   name="schoolClass"
+                  type="text"
+                  h={14}
                   value={formData.schoolClass}
-                  onChange={handleClassChange}
-                >
-                  {schoolClasses.map(cls => (
-                    <option key={cls.id} value={cls.name}>{cls.name}</option>
-                  ))}
-                </Select>
+                  onChange={handleChange}
+                />
               </FormControl>
               <FormControl isRequired>
                 <FormLabel>{t('subject', { ns: 'global' })}</FormLabel>
-                <Select 
-                  placeholder='Tanlang'
+                <Input
+                  placeholder="Fanni kiriting"
                   name="subject"
+                  type="text"
+                  h={14}
                   value={formData.subject}
                   onChange={handleChange}
-                  isDisabled={!formData.schoolClass}
-                >
-                  {subjects.map((subject, index) => (
-                    <option key={index} value={subject}>{subject}</option>
-                  ))}
-                </Select>
+                />
               </FormControl>
             </Flex>
 
