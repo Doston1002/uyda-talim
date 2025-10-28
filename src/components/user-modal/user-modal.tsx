@@ -13,12 +13,23 @@ import {
 	Select,
 	useToast,
 	VStack,
+	Box,
+	Text,
+	HStack,
+	Icon,
+	Progress,
+	Alert,
+	AlertIcon,
+	AlertDescription,
+	InputGroup,
+	InputRightElement,
 } from '@chakra-ui/react';
 import { FC, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AdminService } from 'src/services/admin.service';
 import { UserType } from 'src/interfaces/user.interface';
 import ErrorAlert from '../error-alert/error-alert';
+import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 
 interface UserModalProps {
 	isOpen: boolean;
@@ -34,9 +45,37 @@ const UserModal: FC<UserModalProps> = ({ isOpen, onClose, userValue, onSuccess }
 	const [role, setRole] = useState<'ADMIN' | 'INSTRUCTOR' | 'USER'>('USER');
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState('');
+	const [showPassword, setShowPassword] = useState(false);
+	const [passwordStrength, setPasswordStrength] = useState(0);
+	const [passwordRequirements, setPasswordRequirements] = useState({
+		length: false,
+		uppercase: false,
+		lowercase: false,
+		number: false,
+		special: false,
+	});
 
 	const toast = useToast();
 	const { t } = useTranslation();
+
+	// Parol murakkabligini tekshirish
+	const checkPasswordStrength = (pwd: string) => {
+		const requirements = {
+			length: pwd.length >= 8,
+			uppercase: /[A-Z]/.test(pwd),
+			lowercase: /[a-z]/.test(pwd),
+			number: /\d/.test(pwd),
+			special: /[@$!%*?&]/.test(pwd),
+		};
+
+		const strength = Object.values(requirements).filter(Boolean).length;
+		setPasswordRequirements(requirements);
+		setPasswordStrength(strength);
+	};
+
+	useEffect(() => {
+		checkPasswordStrength(password);
+	}, [password]);
 
 	useEffect(() => {
 		if (userValue) {
@@ -51,6 +90,14 @@ const UserModal: FC<UserModalProps> = ({ isOpen, onClose, userValue, onSuccess }
 			setRole('USER');
 		}
 		setError('');
+		setPasswordStrength(0);
+		setPasswordRequirements({
+			length: false,
+			uppercase: false,
+			lowercase: false,
+			number: false,
+			special: false,
+		});
 	}, [userValue, isOpen]);
 
 	const handleSubmit = async () => {
@@ -61,9 +108,40 @@ const UserModal: FC<UserModalProps> = ({ isOpen, onClose, userValue, onSuccess }
 			return;
 		}
 
+		// Email formatini tekshirish
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!emailRegex.test(email)) {
+			setError(t('email_is_invalid', { ns: 'global' }) as string);
+			return;
+		}
+
 		if (!userValue && !password) {
 			setError(t('password_is_required', { ns: 'global' }) as string);
 			return;
+		}
+
+		// Parol kiritilgan bo'lsa, murakkabligini tekshirish
+		if (password) {
+			if (password.length < 8) {
+				setError(t('password_min_length', { ns: 'global' }) as string);
+				return;
+			}
+			if (!/[A-Z]/.test(password)) {
+				setError(t('password_uppercase', { ns: 'global' }) as string);
+				return;
+			}
+			if (!/[a-z]/.test(password)) {
+				setError(t('password_lowercase', { ns: 'global' }) as string);
+				return;
+			}
+			if (!/\d/.test(password)) {
+				setError(t('password_number', { ns: 'global' }) as string);
+				return;
+			}
+							if (!/[@$!%*?&]/.test(password)) {
+								setError(t('password_special_char', { ns: 'global' }) as string);
+								return;
+							}
 		}
 
 		try {
@@ -152,18 +230,109 @@ const UserModal: FC<UserModalProps> = ({ isOpen, onClose, userValue, onSuccess }
 							/>
 						</FormControl>
 
-						<FormControl isRequired={!userValue}>
-							<FormLabel>
-								{t('password', { ns: 'global' })}
-								{userValue && ` (${t('leave_empty_to_keep', { ns: 'admin' })})`}
-							</FormLabel>
+					<FormControl isRequired={!userValue}>
+						<FormLabel>
+							{t('password', { ns: 'global' })}
+							{userValue && ` (${t('leave_empty_to_keep', { ns: 'admin' })})`}
+						</FormLabel>
+						<InputGroup>
 							<Input
-								type="password"
+								type={showPassword ? 'text' : 'password'}
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 								placeholder={userValue ? '********' : ''}
 							/>
-						</FormControl>
+							<InputRightElement>
+								<Icon
+									as={showPassword ? AiOutlineEyeInvisible : AiOutlineEye}
+									cursor="pointer"
+									onClick={() => setShowPassword(!showPassword)}
+								/>
+							</InputRightElement>
+						</InputGroup>
+
+						{/* Parol kuchi indikatori */}
+						{password && (
+							<Box mt={2}>
+								<Progress
+									value={(passwordStrength / 5) * 100}
+									size="sm"
+									colorScheme={
+										passwordStrength <= 2
+											? 'red'
+											: passwordStrength <= 4
+											? 'yellow'
+											: 'green'
+									}
+									borderRadius="md"
+								/>
+								<Text fontSize="xs" mt={1}>
+									{t('password_strength', { ns: 'global' })}: {' '}
+									{passwordStrength <= 2
+										? t('weak', { ns: 'global' })
+										: passwordStrength <= 4
+										? t('medium', { ns: 'global' })
+										: t('strong', { ns: 'global' })}
+								</Text>
+							</Box>
+						)}
+
+						{/* Parol talablari */}
+						{password && (
+							<Box mt={3} p={3} borderWidth="1px" borderRadius="md">
+								<Text fontSize="sm" fontWeight="bold" mb={2}>
+									{t('password_requirements', { ns: 'global' })}:
+								</Text>
+								<VStack align="start" spacing={1}>
+									<HStack>
+										<Icon
+											as={passwordRequirements.length ? AiOutlineCheck : AiOutlineClose}
+											color={passwordRequirements.length ? 'green.500' : 'red.500'}
+										/>
+										<Text fontSize="xs">
+											{t('password_min_length', { ns: 'global' })}
+										</Text>
+									</HStack>
+									<HStack>
+										<Icon
+											as={passwordRequirements.uppercase ? AiOutlineCheck : AiOutlineClose}
+											color={passwordRequirements.uppercase ? 'green.500' : 'red.500'}
+										/>
+										<Text fontSize="xs">
+											{t('password_uppercase', { ns: 'global' })}
+										</Text>
+									</HStack>
+									<HStack>
+										<Icon
+											as={passwordRequirements.lowercase ? AiOutlineCheck : AiOutlineClose}
+											color={passwordRequirements.lowercase ? 'green.500' : 'red.500'}
+										/>
+										<Text fontSize="xs">
+											{t('password_lowercase', { ns: 'global' })}
+										</Text>
+									</HStack>
+									<HStack>
+										<Icon
+											as={passwordRequirements.number ? AiOutlineCheck : AiOutlineClose}
+											color={passwordRequirements.number ? 'green.500' : 'red.500'}
+										/>
+										<Text fontSize="xs">
+											{t('password_number', { ns: 'global' })}
+										</Text>
+									</HStack>
+									<HStack>
+										<Icon
+											as={passwordRequirements.special ? AiOutlineCheck : AiOutlineClose}
+											color={passwordRequirements.special ? 'green.500' : 'red.500'}
+										/>
+										<Text fontSize="xs">
+											{t('password_special_char', { ns: 'global' })}
+										</Text>
+									</HStack>
+								</VStack>
+							</Box>
+						)}
+					</FormControl>
 
 						<FormControl isRequired>
 							<FormLabel>{t('role', { ns: 'admin' })}</FormLabel>
