@@ -287,31 +287,31 @@ const CoursesPageComponent = () => {
 				title={t('title', { ns: 'courses' })}
 				subtitle={t('description', { ns: 'courses' })}
 			/>
-			<Box pos={'relative'} mt={5}>
-				<Input
-					h={14}
-					w={'full'}
-					bg={'white'}
-					color={'gray.900'}
-					placeholder={
-						t('search_input_placeholder', { ns: 'courses' }) || ''
-					}
-					_placeholder={{ color: 'gray.500' }}
-					value={searchQuery}
-					onChange={(e) => setSearchQuery(e.target.value)}
-					onKeyPress={handleKeyPress}
-				/>
-				<Button
-					pos={'absolute'}
-					right={2}
-					top={2}
-					colorScheme={'gray'}
-					zIndex={999}
-					onClick={handleSearch}
-				>
-					{t('search_input_btn', { ns: 'courses' })}
-				</Button>
-			</Box>
+		<Box pos={'relative'} mt={5}>
+			<Input
+				h={14}
+				w={'full'}
+				bg={useColorModeValue('white','gray.900')}
+				color={useColorModeValue('white', 'gray.900')}
+				placeholder={
+					t('search_input_placeholder', { ns: 'courses' }) || ''
+				}
+				_placeholder={{ color: 'gray.500' }}
+				value={searchQuery}
+				onChange={(e) => setSearchQuery(e.target.value)}
+				onKeyPress={handleKeyPress}
+			/>
+			<Button
+				pos={'absolute'}
+				right={2}
+				top={2}
+				colorScheme={'gray'}
+				zIndex={999}
+				onClick={handleSearch}
+			>
+				{t('search_input_btn', { ns: 'courses' })}
+			</Button>
+		</Box>
 			<Flex mt={5} gap={5} direction={{ base: 'column', lg: 'row' }}>
 				<Box
 					w={{ base: '100%', lg: '30%' }}

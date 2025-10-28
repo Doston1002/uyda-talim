@@ -15,6 +15,7 @@ import {
 	Th,
 	Thead,
 	Tr,
+	useColorModeValue,
 	useToast,
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
@@ -117,8 +118,8 @@ const UserPageComponent = () => {
 					<Input
 						h={14}
 						w={'full'}
-						bg={'white'}
-						color={'gray.900'}
+						bg={useColorModeValue('white','gray.900')}
+						color={useColorModeValue('white', 'gray.900')}
 						placeholder={t('search_input_placeholder', { ns: 'courses' }) || ''}
 						_placeholder={{ color: 'gray.500' }}
 						value={query}

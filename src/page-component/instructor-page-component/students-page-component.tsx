@@ -17,6 +17,7 @@ import {
 	Spinner,
 	Flex,
 	Text,
+	useColorModeValue,
 } from '@chakra-ui/react';
 import { CategoryScale } from 'chart.js';
 import Chart from 'chart.js/auto';
@@ -224,8 +225,8 @@ const StudentsPageComponent = () => {
 					<Input
 						h={14}
 						w={'full'}
-						bg={'white'}
-						color={'gray.900'}
+						bg={useColorModeValue('white','gray.900')}
+						color={useColorModeValue('white', 'gray.900')}
 						placeholder={t('search_input_placeholder', { ns: 'courses' }) || ''}
 						_placeholder={{ color: 'gray.500' }}
 						value={query}
