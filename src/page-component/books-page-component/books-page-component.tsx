@@ -116,7 +116,7 @@ const BooksPageComponent = () => {
 										variant="solid"
 									onClick={() => {
 										// PDF faylni yangi tabda ochish
-										window.open(loadImage(item.image), '_blank');
+										window.open(loadImage(item.pdf), '_blank');
 									}}
 										leftIcon={<AiOutlineEye size={16} />}
 										fontSize="xs"
@@ -131,7 +131,7 @@ const BooksPageComponent = () => {
 										variant="solid"
 										onClick={async () => {
 											try {
-												const url = loadImage(item.image);
+												const url = loadImage(item.pdf);
 												
 												// Faylni fetch qilish
 												const response = await fetch(url, {
@@ -167,7 +167,7 @@ const BooksPageComponent = () => {
 												
 												// Fallback: oddiy yuklash
 												const link = document.createElement('a');
-												link.href = loadImage(item.image);
+												link.href = loadImage(item.pdf);
 												link.download = `${item.title}.pdf`;
 												link.target = '_blank';
 												link.style.display = 'none';
