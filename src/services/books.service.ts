@@ -11,7 +11,9 @@ export const BooksService = {
 	},
 
 	async update(body: BooksType) {
-		const { data } = await $axios.patch<BooksType>(`${getBooksUrl('update')}/${body._id}`, body);
+		// ✅ _id ni body'dan olib tashlaymiz, chunki u URL'da mavjud
+		const { _id, ...updateData } = body;
+		const { data } = await $axios.patch<BooksType>(`${getBooksUrl('update')}/${_id}`, updateData);
 
 		return data;
 	},
