@@ -4,6 +4,7 @@ import {
 	Card,
 	CardBody,
 	Heading,
+	IconButton,
 	Input,
 	Select,
 	Stack,
@@ -16,6 +17,7 @@ import {
 	Thead,
 	Tr,
 	useColorModeValue,
+	useDisclosure,
 	useToast,
 } from '@chakra-ui/react';
 import { format } from 'date-fns';
@@ -23,19 +25,22 @@ import Cookies from 'js-cookie';
 import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import { AiOutlineFieldNumber, AiOutlineReload } from 'react-icons/ai';
-import { ErrorAlert } from 'src/components';
+import { AiOutlineDelete, AiOutlineEdit, AiOutlineFieldNumber, AiOutlinePlus, AiOutlineReload } from 'react-icons/ai';
+import { ErrorAlert, UserModal } from 'src/components';
 import SectionTitle from 'src/components/section-title/section-title';
 import { courseusers } from 'src/config/constants';
 import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 import { AdminService } from 'src/services/admin.service';
 import { RoleUser } from 'src/interfaces/constants.interface';
+import { UserType } from 'src/interfaces/user.interface';
 
 const UserPageComponent = () => {
 	const [limit, setLimit] = useState<number>(15);
 	const [query, setQuery] = useState<string>('');
 	const [changingRole, setChangingRole] = useState<string | null>(null);
+	const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
+	const { isOpen, onOpen, onClose } = useDisclosure();
 	const toast = useToast();
 	const [chartData] = useState({
 		labels: courseusers.map(data => data.year),
@@ -75,8 +80,7 @@ const UserPageComponent = () => {
 				isClosable: true,
 			});
 			// Refresh the users list
-			const token = Cookies.get('refresh');
-			moreAdminUser({ limit: String(limit), token });
+			refreshUsers();
 		} catch (error) {
 			toast({
 				title: 'Failed to update role',
@@ -87,6 +91,51 @@ const UserPageComponent = () => {
 		} finally {
 			setChangingRole(null);
 		}
+	};
+
+	const refreshUsers = () => {
+		const token = Cookies.get('refresh');
+		moreAdminUser({ limit: String(limit), token });
+	};
+
+	const handleAddUser = () => {
+		setSelectedUser(null);
+		onOpen();
+	};
+
+	const handleEditUser = (user: UserType) => {
+		setSelectedUser(user);
+		onOpen();
+	};
+
+	const handleDeleteUser = async (userId: string, userEmail: string) => {
+		if (!window.confirm(`${t('confirm_delete_user', { ns: 'admin' })} "${userEmail}"?`)) {
+			return;
+		}
+
+		try {
+			await AdminService.deleteUser(userId);
+			toast({
+				title: t('user_deleted_successfully', { ns: 'admin' }),
+				status: 'success',
+				duration: 3000,
+				isClosable: true,
+				position: 'top-right',
+			});
+			refreshUsers();
+		} catch (error: any) {
+			toast({
+				title: error?.response?.data?.message || t('delete_failed', { ns: 'admin' }),
+				status: 'error',
+				duration: 3000,
+				isClosable: true,
+			});
+		}
+	};
+
+	const handleModalClose = () => {
+		setSelectedUser(null);
+		onClose();
 	};
 
 	return (
@@ -113,7 +162,16 @@ const UserPageComponent = () => {
 				</CardBody>
 			</Card>
 			<Box mt={10}>
-				<Heading>{t('all_users', { ns: 'instructor' })}</Heading>
+				<Box display="flex" justifyContent="space-between" alignItems="center" mb={5}>
+					<Heading>{t('all_users', { ns: 'instructor' })}</Heading>
+					<Button
+						leftIcon={<AiOutlinePlus />}
+						colorScheme="blue"
+						onClick={handleAddUser}
+					>
+						{t('add_user', { ns: 'admin' })}
+					</Button>
+				</Box>
 				<Box pos={'relative'} mt={5}>
 					<Input
 						h={14}
@@ -160,6 +218,7 @@ const UserPageComponent = () => {
 								<Th>{t('role', { ns: 'admin' })}</Th>
 								<Th>{t('change_role', { ns: 'admin' })}</Th>
 								<Th>{t('enrolled_date', { ns: 'instructor' })}</Th>
+								<Th>{t('actions', { ns: 'admin' })}</Th>
 							</Tr>
 						</Thead>
 						<Tbody>
@@ -208,12 +267,38 @@ const UserPageComponent = () => {
 										</Select>
 									</Td>
 									<Td>{format(new Date(user.createdAt as Date), 'dd MMMM, yyyy')}</Td>
+									<Td>
+										<Box display="flex" gap={2}>
+											<IconButton
+												aria-label="Edit user"
+												icon={<AiOutlineEdit />}
+												size="sm"
+												colorScheme="blue"
+												onClick={() => handleEditUser(user)}
+											/>
+											<IconButton
+												aria-label="Delete user"
+												icon={<AiOutlineDelete />}
+												size="sm"
+												colorScheme="red"
+												onClick={() => handleDeleteUser(user.id, user.email || '')}
+											/>
+										</Box>
+									</Td>
 								</Tr>
 							))}
 						</Tbody>
 					</Table>
 				</TableContainer>
 			</Box>
+
+			{/* User Modal */}
+			<UserModal
+				isOpen={isOpen}
+				onClose={handleModalClose}
+				userValue={selectedUser}
+				onSuccess={refreshUsers}
+			/>
 		</>
 	);
 };

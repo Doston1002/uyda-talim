@@ -23,4 +23,5 @@ export { default as SectionForm } from './section-form/section-form';
 export { default as SocialMedia } from './social-media/social-media';
 export { default as Sposorship } from './sposorship/sposorship';
 export { default as StatsCard } from './stats-card/stats-card';
+export { default as UserModal } from './user-modal/user-modal';
 export { default as Verification } from './verification/verification';

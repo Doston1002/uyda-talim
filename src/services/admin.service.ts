@@ -74,4 +74,35 @@ export const AdminService = {
 
 		return data;
 	},
+
+	async createUser(email: string, fullName: string, password: string, role?: 'ADMIN' | 'INSTRUCTOR' | 'USER') {
+		const { data } = await $axios.post<UserType>(`${getAdminUrl('create-user')}`, {
+			email,
+			fullName,
+			password,
+			role: role || 'USER',
+		});
+
+		return data;
+	},
+
+	async updateUser(userId: string, email?: string, fullName?: string, password?: string, role?: 'ADMIN' | 'INSTRUCTOR' | 'USER') {
+		const { data } = await $axios.put<UserType>(`${getAdminUrl('update-user')}`, {
+			userId,
+			email,
+			fullName,
+			password,
+			role,
+		});
+
+		return data;
+	},
+
+	async deleteUser(userId: string) {
+		const { data } = await $axios.delete<{ message: string }>(`${getAdminUrl('delete-user')}`, {
+			data: { userId },
+		});
+
+		return data;
+	},
 };

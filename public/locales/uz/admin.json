@@ -23,5 +23,16 @@
 	"change_role": "Rolni o'zgartirish",
 	"not_found": "Topilmadi",
 	"contact_messages": "Online mentor xabarlari",
-	"contact_messages_descr": "Foydalanuvchilardan kelgan xabarlarni ko'rish va boshqarish"
+	"contact_messages_descr": "Foydalanuvchilardan kelgan xabarlarni ko'rish va boshqarish",
+	"add_user": "Foydalanuvchi qo'shish",
+	"edit_user": "Foydalanuvchini tahrirlash",
+	"please_fill_all_fields": "Barcha maydonlarni to'ldiring",
+	"successfully_created_user": "Foydalanuvchi muvaffaqiyatli yaratildi",
+	"error_occurred": "Xatolik yuz berdi",
+	"leave_empty_to_keep": "o'zgartirmaslik uchun bo'sh qoldiring",
+	"cancel": "Bekor qilish",
+	"save_changes": "O'zgarishlarni saqlash",
+	"confirm_delete_user": "Foydalanuvchini o'chirishni tasdiqlaysizmi?",
+	"user_deleted_successfully": "Foydalanuvchi muvaffaqiyatli o'chirildi",
+	"delete_failed": "O'chirib bo'lmadi"
 }

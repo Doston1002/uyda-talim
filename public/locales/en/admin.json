@@ -23,5 +23,16 @@
 	"change_role": "Change Role",
 	"not_found": "Not found",
 	"contact_messages": "Online mentor messages",
-	"contact_messages_descr": "View and manage messages from users"
+	"contact_messages_descr": "View and manage messages from users",
+	"add_user": "Add user",
+	"edit_user": "Edit user",
+	"please_fill_all_fields": "Please fill all fields",
+	"successfully_created_user": "User successfully created",
+	"error_occurred": "An error occurred",
+	"leave_empty_to_keep": "leave empty to keep unchanged",
+	"cancel": "Cancel",
+	"save_changes": "Save changes",
+	"confirm_delete_user": "Confirm user deletion?",
+	"user_deleted_successfully": "User successfully deleted",
+	"delete_failed": "Failed to delete"
 }
