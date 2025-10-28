@@ -33,5 +33,6 @@
 	"save_changes": "Сохранить изменения",
 	"confirm_delete_user": "Подтвердить удаление пользователя?",
 	"user_deleted_successfully": "Пользователь успешно удален",
-	"delete_failed": "Не удалось удалить"
+	"delete_failed": "Не удалось удалить",
+	"email_already_exists": "Этот email уже существует в системе"
 }

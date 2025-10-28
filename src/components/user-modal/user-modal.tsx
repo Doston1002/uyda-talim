@@ -102,7 +102,14 @@ const UserModal: FC<UserModalProps> = ({ isOpen, onClose, userValue, onSuccess }
 			onSuccess();
 			onClose();
 		} catch (err: any) {
-			setError(err?.response?.data?.message || t('error_occurred', { ns: 'global' }));
+			const errorMessage = err?.response?.data?.message || '';
+			
+			// Email mavjud bo'lsa maxsus xabar
+			if (errorMessage.includes('already exists') || errorMessage.includes('Email already exists')) {
+				setError(t('email_already_exists', { ns: 'admin' }) as string);
+			} else {
+				setError(errorMessage || t('error_occurred', { ns: 'global' }));
+			}
 		} finally {
 			setIsLoading(false);
 		}

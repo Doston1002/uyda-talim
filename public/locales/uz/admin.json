@@ -34,5 +34,6 @@
 	"save_changes": "O'zgarishlarni saqlash",
 	"confirm_delete_user": "Foydalanuvchini o'chirishni tasdiqlaysizmi?",
 	"user_deleted_successfully": "Foydalanuvchi muvaffaqiyatli o'chirildi",
-	"delete_failed": "O'chirib bo'lmadi"
+	"delete_failed": "O'chirib bo'lmadi",
+	"email_already_exists": "Bu email allaqachon tizimda mavjud"
 }
