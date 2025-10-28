@@ -102,10 +102,15 @@ const UserModal: FC<UserModalProps> = ({ isOpen, onClose, userValue, onSuccess }
 			onSuccess();
 			onClose();
 		} catch (err: any) {
-			const errorMessage = err?.response?.data?.message || '';
+			console.log('Error details:', err);
+			console.log('Error response:', err?.response);
+			console.log('Error response data:', err?.response?.data);
+			
+			const errorMessage = err?.response?.data?.message || err?.message || '';
 			
 			// Email mavjud bo'lsa maxsus xabar
-			if (errorMessage.includes('already exists') || errorMessage.includes('Email already exists')) {
+			if (errorMessage.toLowerCase().includes('already exists') || 
+			    errorMessage.toLowerCase().includes('email already')) {
 				setError(t('email_already_exists', { ns: 'admin' }) as string);
 			} else {
 				setError(errorMessage || t('error_occurred', { ns: 'global' }));

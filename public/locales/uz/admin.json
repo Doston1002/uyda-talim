@@ -35,5 +35,5 @@
 	"confirm_delete_user": "Foydalanuvchini o'chirishni tasdiqlaysizmi?",
 	"user_deleted_successfully": "Foydalanuvchi muvaffaqiyatli o'chirildi",
 	"delete_failed": "O'chirib bo'lmadi",
-	"email_already_exists": "Bu email allaqachon tizimda mavjud"
+	"email_already_exists": "Bunday foydalanuvchi tizimda mavjud"
 }
