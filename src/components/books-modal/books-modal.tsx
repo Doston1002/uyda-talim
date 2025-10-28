@@ -60,10 +60,10 @@ const BooksModal: FC<BookModalProps> = ({ isOpen, onClose, booksValue }): JSX.El
 		}
 
 		if (!booksValue) {
+			// ✅ Yangi kitob yaratilganda image fieldini umuman yubormaslik (faqat PDF kerak)
 			createBooks({
 				title: fomrikValues.title,
 				pdf: pdfUrl as string,
-				image: '', // Empty string for image
 				category: fomrikValues.category,
 				callback: () => {
 					toast({
@@ -77,12 +77,12 @@ const BooksModal: FC<BookModalProps> = ({ isOpen, onClose, booksValue }): JSX.El
 				},
 			});
 		} else {
-			updateBooks({
+			// ✅ Yangilanishda faqat image mavjud bo'lsa yuborish
+			const updateData: any = {
 				title: fomrikValues.title,
 				pdf: pdfUrl as string,
 				_id: booksValue._id,
 				category: fomrikValues.category,
-				image: booksValue.image || '', // Keep existing image or empty
 				callback: () => {
 					toast({
 						title: t('successfully_edited', { ns: 'instructor' }),
@@ -93,7 +93,14 @@ const BooksModal: FC<BookModalProps> = ({ isOpen, onClose, booksValue }): JSX.El
 					setPdfFile(null);
 					onClose();
 				},
-			});
+			};
+			
+			// Faqat image mavjud bo'lsa qo'shish
+			if (booksValue.image) {
+				updateData.image = booksValue.image;
+			}
+			
+			updateBooks(updateData);
 		}
 	};
 
