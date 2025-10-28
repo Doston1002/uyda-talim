@@ -172,17 +172,17 @@ const UserPageComponent = () => {
 						{t('add_user', { ns: 'admin' })}
 					</Button>
 				</Box>
-				<Box pos={'relative'} mt={5}>
-					<Input
-						h={14}
-						w={'full'}
-						bg={useColorModeValue('white','gray.900')}
-						color={useColorModeValue('white', 'gray.900')}
-						placeholder={t('search_input_placeholder', { ns: 'courses' }) || ''}
-						_placeholder={{ color: 'gray.500' }}
-						value={query}
-						onChange={e => setQuery(e.target.value)}
-					/>
+			<Box pos={'relative'} mt={5}>
+				<Input
+					h={14}
+					w={'full'}
+					bg={useColorModeValue('white','gray.900')}
+					color={useColorModeValue('gray.900', 'white')}
+					placeholder={t('search_input_placeholder', { ns: 'courses' }) || ''}
+					_placeholder={{ color: 'gray.500' }}
+					value={query}
+					onChange={e => setQuery(e.target.value)}
+				/>
 					<Button
 						pos={'absolute'}
 						right={2}

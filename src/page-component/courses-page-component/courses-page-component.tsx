@@ -292,7 +292,7 @@ const CoursesPageComponent = () => {
 				h={14}
 				w={'full'}
 				bg={useColorModeValue('white','gray.900')}
-				color={useColorModeValue('white', 'gray.900')}
+				color={useColorModeValue('gray.900', 'white')}
 				placeholder={
 					t('search_input_placeholder', { ns: 'courses' }) || ''
 				}
