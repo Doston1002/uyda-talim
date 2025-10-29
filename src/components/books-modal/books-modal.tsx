@@ -39,7 +39,23 @@ const BooksModal: FC<BookModalProps> = ({ isOpen, onClose, booksValue }): JSX.El
 	const { t } = useTranslation();
 
 	const handlePdfChange = (file: File) => {
+		// ✅ Fayl hajmini tekshirish (50MB dan katta bo'lsa ogohlantirish)
+		const maxSize = 50 * 1024 * 1024; // 50MB
+		
+		if (file.size > maxSize) {
+			toast({
+				title: 'PDF fayl juda katta!',
+				description: `Fayl hajmi: ${(file.size / 1024 / 1024).toFixed(2)}MB. Maksimal ruxsat etilgan hajm: 50MB`,
+				status: 'error',
+				duration: 5000,
+				isClosable: true,
+			});
+			setErrorPdfFile('PDF fayl hajmi 50MB dan kichik bo\'lishi kerak');
+			return;
+		}
+		
 		setPdfFile(file);
+		setErrorPdfFile('');
 	};
 
 	const onSubmit = async (fomrikValues: FormikValues) => {
@@ -53,10 +69,34 @@ const BooksModal: FC<BookModalProps> = ({ isOpen, onClose, booksValue }): JSX.El
 		// Upload PDF
 		let pdfUrl = pdfFile;
 		if (typeof pdfFile !== 'string') {
-			const formData = new FormData();
-			formData.append('image', pdfFile as File);
-			const response = await FileService.fileUpload(formData, 'books');
-			pdfUrl = response.url;
+			try {
+				const formData = new FormData();
+				formData.append('image', pdfFile as File);
+				const response = await FileService.fileUpload(formData, 'books');
+				pdfUrl = response.url;
+			} catch (error: any) {
+				// ✅ 413 xatosi uchun maxsus xabar
+				if (error?.response?.status === 413) {
+					toast({
+						title: 'Fayl juda katta!',
+						description: 'Server bu hajmli faylni qabul qilmaydi. Iltimos, kichikroq fayl yuklang (maksimal 50MB)',
+						status: 'error',
+						duration: 6000,
+						isClosable: true,
+					});
+					setErrorPdfFile('Fayl juda katta yoki server sozlamalari cheklangan');
+				} else {
+					toast({
+						title: 'Fayl yuklashda xatolik',
+						description: error?.message || 'Noma\'lum xato',
+						status: 'error',
+						duration: 5000,
+						isClosable: true,
+					});
+					setErrorPdfFile('Fayl yuklashda xatolik yuz berdi');
+				}
+				return;
+			}
 		}
 
 		if (!booksValue) {
