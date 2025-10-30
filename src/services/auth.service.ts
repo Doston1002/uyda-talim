@@ -83,17 +83,16 @@ export const AuthService = {
 		return response;
 	},
 
-	async editProfilePassword(email: string, password: string) {
+	async editProfilePassword(email: string, password: string, token: string) {
 		const response = await axios.put<'Success'>(
-			`${API_URL}${getUserUrl('edit-password')}`,
-			{
-				email,
-				password,
-			}
+		  `${API_URL}${getUserUrl('edit-password')}`,
+		  { email, password },
+		  {
+			headers: { 'Authorization': `Bearer ${token}` }
+		  }
 		);
-
 		return response;
-	},
+	  },
 
 	async checkUser(email: string) {
 		const respone = await axios.post<'user' | 'no-user'>(

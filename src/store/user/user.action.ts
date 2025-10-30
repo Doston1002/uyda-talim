@@ -70,16 +70,22 @@ export const verifyVerificationCode = createAsyncThunk<
 });
 
 export const editProfilePassword = createAsyncThunk<
-	'Success',
-	{ email: string; password: string; callback: () => void }
+  'Success',
+  { email: string; password: string; callback: () => void }
 >('auth/edit-user', async ({ email, password, callback }, thunkApi) => {
-	try {
-		const response = await AuthService.editProfilePassword(email, password);
-		callback();
-		return response.data;
-	} catch (error) {
-		return thunkApi.rejectWithValue(errorCatch(error));
-	}
+  try {
+    // ◀️ 1. redux state dan tokenni olamiz:
+    // userSlice yoki authSlice state'ida accessToken saqlangan bo'lsa...
+    const state: any = thunkApi.getState();
+    const token = state.user?.accessToken || state.auth?.accessToken || '';
+
+    const response = await AuthService.editProfilePassword(email, password, token);
+
+    callback();
+    return response.data;
+  } catch (error) {
+    return thunkApi.rejectWithValue(errorCatch(error));
+  }
 });
 
 export const logout = createAsyncThunk('auth/logout', () => {
