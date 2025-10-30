@@ -114,7 +114,7 @@ const Register = ({ onNavigateStateComponent }: RegisterProps) => {
 					<Button
 						w={'full'}
 						bgGradient='linear(to-r, facebook.400,gray.400)'
-						color={'white'}
+						color={'gray.700'}
 						_hover={{ bgGradient: 'linear(to-r, facebook.500,gray.500)', boxShadow: 'xl' }}
 						h={14}
 						type={'submit'}

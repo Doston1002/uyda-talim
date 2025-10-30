@@ -63,7 +63,7 @@ const mockStudents = [
 	},
 	{
 		id: 3,
-		email: 'dilbarxudoyberdiyeva71@gmail.com',
+		email: 'info@uydatalim.uzedu.uz',
 		fullName: 'Admin User',
 		courses: 0,
 		enrolledDate: '2025-05-13',
