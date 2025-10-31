@@ -42,7 +42,7 @@ const InstructorManageCourse = ({
 		setFile(file);
 	};
 
-	const onSubmit = async (formValues: FormikValues) => {
+    const onSubmit = async (formValues: FormikValues) => {
 		if (!file) {
 			setErrorFile('Preview image is required');
 			return;
@@ -55,7 +55,14 @@ const InstructorManageCourse = ({
 			const response = await FileService.fileUpload(formData, 'preview-image');
 			imageUrl = response.url;
 		}
-		const data = { ...formValues, previewImage: imageUrl } as CourseType;
+        const levelMap: Record<string, string> = {
+            "Boshlang'ich": 'Beginner',
+            "O'rta": 'Intermediate',
+            Professional: 'Advanced',
+            'All levels': 'All levels',
+        };
+        const mappedLevel = levelMap[formValues.level as string] || (formValues.level as string);
+        const data = { ...formValues, level: mappedLevel, previewImage: imageUrl } as CourseType;
 		submitHandler(data);
 	};
 
