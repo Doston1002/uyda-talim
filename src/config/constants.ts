@@ -353,11 +353,11 @@ export const teachValues = [
 ];
 
 export const instructorSidebar = [
-	{
-		name: 'sidebar_students',
-		icon: FaUserGraduate,
-		route: 'students',
-	},
+	// {
+	// 	name: 'sidebar_students',
+	// 	icon: FaUserGraduate,
+	// 	route: 'students',
+	// },
 	{
 		name: 'sidebar_courses',
 		icon: FaListAlt,
@@ -373,11 +373,11 @@ export const instructorSidebar = [
 		icon: FiEdit,
 		route: 'edit-courses',
 	},
-	{
-		name: 'sidebar_draft_courses',
-		icon: FaFirstdraft,
-		route: 'draft-courses',
-	},
+	// {
+	// 	name: 'sidebar_draft_courses',
+	// 	icon: FaFirstdraft,
+	// 	route: 'draft-courses',
+	// },
 ];
 
 export const courseusers = [
