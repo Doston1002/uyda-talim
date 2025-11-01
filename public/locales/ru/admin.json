@@ -37,5 +37,14 @@
 	"confirm_delete_user": "Подтвердить удаление пользователя?",
 	"user_deleted_successfully": "Пользователь успешно удален",
 	"delete_failed": "Не удалось удалить",
-	"email_already_exists": "Такой пользователь уже существует в системе"
+	"email_already_exists": "Такой пользователь уже существует в системе",
+	"status": "Статус",
+	"active": "Активный",
+	"blocked": "Заблокирован",
+	"confirm_block_user": "Подтвердить блокировку пользователя?",
+	"confirm_unblock_user": "Подтвердить разблокировку пользователя?",
+	"user_blocked_successfully": "Пользователь успешно заблокирован",
+	"user_unblocked_successfully": "Пользователь успешно разблокирован",
+	"block_failed": "Ошибка при блокировке",
+	"unblock_failed": "Ошибка при разблокировке"
 }

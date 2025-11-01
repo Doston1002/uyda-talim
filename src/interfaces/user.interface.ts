@@ -12,6 +12,7 @@ export interface UserType {
 	birthday: string;
 	bio: string;
 	courses: string[];
+	isBlocked?: boolean;
 }
 
 export interface TransactionsType {

@@ -105,4 +105,20 @@ export const AdminService = {
 
 		return data;
 	},
+
+	async blockUser(userId: string) {
+		const { data } = await $axios.put<UserType>(`${getAdminUrl('block-user')}`, {
+			userId,
+		});
+
+		return data;
+	},
+
+	async unblockUser(userId: string) {
+		const { data } = await $axios.put<UserType>(`${getAdminUrl('unblock-user')}`, {
+			userId,
+		});
+
+		return data;
+	},
 };

@@ -38,5 +38,14 @@
 	"confirm_delete_user": "Foydalanuvchini o'chirishni tasdiqlaysizmi?",
 	"user_deleted_successfully": "Foydalanuvchi muvaffaqiyatli o'chirildi",
 	"delete_failed": "O'chirib bo'lmadi",
-	"email_already_exists": "Bunday foydalanuvchi tizimda mavjud"
+	"email_already_exists": "Bunday foydalanuvchi tizimda mavjud",
+	"status": "Holat",
+	"active": "Faol",
+	"blocked": "Bloklangan",
+	"confirm_block_user": "Foydalanuvchini bloklashni tasdiqlaysizmi?",
+	"confirm_unblock_user": "Foydalanuvchining blokini olib tashlashni tasdiqlaysizmi?",
+	"user_blocked_successfully": "Foydalanuvchi muvaffaqiyatli bloklandi",
+	"user_unblocked_successfully": "Foydalanuvchi bloki muvaffaqiyatli olib tashlandi",
+	"block_failed": "Bloklashda xatolik yuz berdi",
+	"unblock_failed": "Blokni olib tashlashda xatolik yuz berdi"
 }

@@ -25,7 +25,7 @@ import Cookies from 'js-cookie';
 import { useState } from 'react';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import { AiOutlineDelete, AiOutlineEdit, AiOutlineFieldNumber, AiOutlinePlus, AiOutlineReload } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineEdit, AiOutlineFieldNumber, AiOutlinePlus, AiOutlineReload, AiOutlineLock, AiOutlineUnlock } from 'react-icons/ai';
 import { ErrorAlert, UserModal } from 'src/components';
 import SectionTitle from 'src/components/section-title/section-title';
 import { courseusers } from 'src/config/constants';
@@ -39,6 +39,7 @@ const UserPageComponent = () => {
 	const [limit, setLimit] = useState<number>(15);
 	const [query, setQuery] = useState<string>('');
 	const [changingRole, setChangingRole] = useState<string | null>(null);
+	const [blockingUser, setBlockingUser] = useState<string | null>(null);
 	const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const toast = useToast();
@@ -133,6 +134,62 @@ const UserPageComponent = () => {
 		}
 	};
 
+	const handleBlockUser = async (userId: string, userEmail: string) => {
+		if (!window.confirm(`${t('confirm_block_user', { ns: 'admin' })} "${userEmail}"?`)) {
+			return;
+		}
+
+		try {
+			setBlockingUser(userId);
+			await AdminService.blockUser(userId);
+			toast({
+				title: t('user_blocked_successfully', { ns: 'admin' }),
+				status: 'success',
+				duration: 3000,
+				isClosable: true,
+				position: 'top-right',
+			});
+			refreshUsers();
+		} catch (error: any) {
+			toast({
+				title: error?.response?.data?.message || t('block_failed', { ns: 'admin' }),
+				status: 'error',
+				duration: 3000,
+				isClosable: true,
+			});
+		} finally {
+			setBlockingUser(null);
+		}
+	};
+
+	const handleUnblockUser = async (userId: string, userEmail: string) => {
+		if (!window.confirm(`${t('confirm_unblock_user', { ns: 'admin' })} "${userEmail}"?`)) {
+			return;
+		}
+
+		try {
+			setBlockingUser(userId);
+			await AdminService.unblockUser(userId);
+			toast({
+				title: t('user_unblocked_successfully', { ns: 'admin' }),
+				status: 'success',
+				duration: 3000,
+				isClosable: true,
+				position: 'top-right',
+			});
+			refreshUsers();
+		} catch (error: any) {
+			toast({
+				title: error?.response?.data?.message || t('unblock_failed', { ns: 'admin' }),
+				status: 'error',
+				duration: 3000,
+				isClosable: true,
+			});
+		} finally {
+			setBlockingUser(null);
+		}
+	};
+
 	const handleModalClose = () => {
 		setSelectedUser(null);
 		onClose();
@@ -215,6 +272,7 @@ const UserPageComponent = () => {
 								</Th>
 								<Th>{t('email', { ns: 'instructor' })}</Th>
 								<Th>{t('full_name', { ns: 'instructor' })}</Th>
+								<Th>{t('status', { ns: 'admin' })}</Th>
 								<Th>{t('role', { ns: 'admin' })}</Th>
 								<Th>{t('change_role', { ns: 'admin' })}</Th>
 								<Th>{t('enrolled_date', { ns: 'instructor' })}</Th>
@@ -223,10 +281,24 @@ const UserPageComponent = () => {
 						</Thead>
 						<Tbody>
 							{users.map((user, idx) => (
-								<Tr key={idx}>
+								<Tr key={idx} opacity={user.isBlocked ? 0.6 : 1}>
 									<Td>{idx + 1}</Td>
 									<Td>{user.email}</Td>
 									<Td>{user.fullName || t('not_found', { ns: 'admin' })}</Td>
+									<Td>
+										<Box
+											px={2}
+											py={1}
+											bg={user.isBlocked ? 'red.200' : 'green.200'}
+											color={user.isBlocked ? 'red.900' : 'green.900'}
+											borderRadius="md"
+											fontSize="sm"
+											fontWeight="bold"
+											textAlign="center"
+										>
+											{user.isBlocked ? t('blocked', { ns: 'admin' }) : t('active', { ns: 'admin' })}
+										</Box>
+									</Td>
 									<Td>
 										<Box
 											px={2}
@@ -276,6 +348,25 @@ const UserPageComponent = () => {
 												colorScheme="blue"
 												onClick={() => handleEditUser(user)}
 											/>
+											{user.isBlocked ? (
+												<IconButton
+													aria-label="Unblock user"
+													icon={<AiOutlineUnlock />}
+													size="sm"
+													colorScheme="green"
+													isLoading={blockingUser === user.id}
+													onClick={() => handleUnblockUser(user.id, user.email || '')}
+												/>
+											) : (
+												<IconButton
+													aria-label="Block user"
+													icon={<AiOutlineLock />}
+													size="sm"
+													colorScheme="orange"
+													isLoading={blockingUser === user.id}
+													onClick={() => handleBlockUser(user.id, user.email || '')}
+												/>
+											)}
 											<IconButton
 												aria-label="Delete user"
 												icon={<AiOutlineDelete />}

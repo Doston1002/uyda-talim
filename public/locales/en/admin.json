@@ -38,5 +38,14 @@
 	"confirm_delete_user": "Confirm user deletion?",
 	"user_deleted_successfully": "User successfully deleted",
 	"delete_failed": "Failed to delete",
-	"email_already_exists": "This user already exists in the system"
+	"email_already_exists": "This user already exists in the system",
+	"status": "Status",
+	"active": "Active",
+	"blocked": "Blocked",
+	"confirm_block_user": "Confirm blocking user?",
+	"confirm_unblock_user": "Confirm unblocking user?",
+	"user_blocked_successfully": "User successfully blocked",
+	"user_unblocked_successfully": "User successfully unblocked",
+	"block_failed": "Failed to block",
+	"unblock_failed": "Failed to unblock"
 }
