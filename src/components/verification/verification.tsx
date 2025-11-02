@@ -20,7 +20,7 @@ import ErrorAlert from '../error-alert/error-alert';
 const Verification = () => {
 	const { t } = useTranslation();
 	const { verifyVerificationCode, register, clearError } = useActions();
-	const { error, isLoading, user } = useTypedSelector(state => state.user);
+	const { error, isLoading, user, recaptchaToken } = useTypedSelector(state => state.user);
 	const router = useRouter();
 	const toast = useToast();
 
@@ -30,9 +30,20 @@ const Verification = () => {
 			email,
 			otpVerification: formData.otp,
 			callback: () => {
+				if (!recaptchaToken) {
+					toast({
+						title: 'reCAPTCHA token topilmadi',
+						status: 'error',
+						position: 'top-right',
+						isClosable: true,
+					});
+					return;
+				}
+				
 				register({
 					email: user?.email as string,
 					password: user?.password as string,
+					recaptchaToken,
 					callback: () => {
 						router.push('/');
 						toast({

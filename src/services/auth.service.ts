@@ -14,12 +14,13 @@ import {
 import { AuthUserResponse } from 'src/store/user/user.interface';
 
 export const AuthService = {
-	async register(email: string, password: string) {
+	async register(email: string, password: string, recaptchaToken: string) {
 		const response = await axios.post<AuthUserResponse>(
 			`${API_URL}${getAuthUrl('register')}`,
 			{
 				email,
 				password,
+				recaptchaToken,
 			}
 		);
 
@@ -30,12 +31,13 @@ export const AuthService = {
 		return response;
 	},
 
-	async login(email: string, password: string) {
+	async login(email: string, password: string, recaptchaToken: string) {
 		const response = await axios.post<AuthUserResponse>(
 			`${API_URL}${getAuthUrl('login')}`,
 			{
 				email,
 				password,
+				recaptchaToken,
 			}
 		);
 
@@ -59,12 +61,13 @@ export const AuthService = {
 		return response;
 	},
 
-	async sendOtp(email: string, isUser: boolean) {
+	async sendOtp(email: string, isUser: boolean, recaptchaToken?: string) {
 		const response = await axios.post<'Success'>(
 			`${API_URL}${getMailUrl('send-otp')}`,
 			{
 				email,
 				isUser,
+				recaptchaToken,
 			}
 		);
 

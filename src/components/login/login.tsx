@@ -13,8 +13,9 @@ import {
 } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
@@ -26,6 +27,8 @@ import { LoginProps } from './login.props';
 
 const Login = ({ onNavigateStateComponent }: LoginProps) => {
 	const [show, setShow] = useState<boolean>(false);
+	const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+	const recaptchaRef = useRef<ReCAPTCHA>(null);
 
 	const { t } = useTranslation();
 	const { login, clearError } = useActions();
@@ -35,10 +38,25 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 
 	const toggleShow = () => setShow(prev => !prev);
 
+	const handleRecaptchaChange = (token: string | null) => {
+		setRecaptchaToken(token);
+	};
+
 	const onSubmit = (formData: InterfaceEmailAndPassword) => {
+		if (!recaptchaToken) {
+			toast({
+				title: t('recaptcha_required', { ns: 'global' }) || 'Iltimos, reCAPTCHA ni to\'ldiring',
+				status: 'error',
+				isClosable: true,
+				position: 'top-right',
+			});
+			return;
+		}
+
 		login({
 			email: formData.email,
 			password: formData.password,
+			recaptchaToken,
 			callback: () => {
 				router.push('/');
 				toast({
@@ -47,6 +65,11 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 					isClosable: true,
 					position: 'top-right',
 				});
+				// reCAPTCHA ni reset qilish
+				if (recaptchaRef.current) {
+					recaptchaRef.current.reset();
+					setRecaptchaToken(null);
+				}
 			},
 		});
 	};
@@ -116,6 +139,13 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 							{t('auth_forgot_password', { ns: 'global' })}
 						</Box>
 					</HStack>
+					<Box my={4}>
+						<ReCAPTCHA
+							ref={recaptchaRef}
+							sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }
+							onChange={handleRecaptchaChange}
+						/>
+					</Box>
 					<Button
 						w={'full'}
 						bgGradient='linear(to-r, facebook.400,gray.400)'
@@ -124,6 +154,7 @@ const Login = ({ onNavigateStateComponent }: LoginProps) => {
 						type={'submit'}
 						isLoading={isLoading}
 						loadingText={`${t('loading', { ns: 'global' })}`}
+						disabled={!recaptchaToken}
 					>
 						{t('login_btn', { ns: 'global' })}
 					</Button>

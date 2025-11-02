@@ -4,6 +4,7 @@ export interface UserIntialStateType {
 	user: UserType | null;
 	isLoading: boolean;
 	error: string | null | unknown;
+	recaptchaToken?: string | null;
 }
 
 export interface AuthTokens {
@@ -18,6 +19,7 @@ export interface AuthUserResponse extends AuthTokens {
 export interface InterfaceEmailAndPassword {
 	password: string;
 	email: string;
+	recaptchaToken?: string;
 }
 
 export interface InterfaceEmailAndOtp {

@@ -10,9 +10,12 @@ import {
 	Stack,
 	Text,
 	useColorModeValue,
+	useToast,
 } from '@chakra-ui/react';
 import { Form, Formik } from 'formik';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { useActions } from 'src/hooks/useActions';
 import { useShowPassword } from 'src/hooks/useShowPassword';
@@ -25,18 +28,41 @@ import { RegisterProps } from './register.props';
 
 const Register = ({ onNavigateStateComponent }: RegisterProps) => {
 	const { show, toggleShow, showConfirm, toggleShowConfirm } = useShowPassword();
+	const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+	const recaptchaRef = useRef<ReCAPTCHA>(null);
 	const { t } = useTranslation();
 	const { pendingRegister, sendVerificationCode, clearError } = useActions();
 	const { error, isLoading } = useTypedSelector(state => state.user);
+	const toast = useToast();
+
+	const handleRecaptchaChange = (token: string | null) => {
+		setRecaptchaToken(token);
+	};
 
 	const onSubmit = async (formData: InterfaceEmailAndPassword) => {
+		if (!recaptchaToken) {
+			toast({
+				title: t('recaptcha_required', { ns: 'global' }) || 'Iltimos, reCAPTCHA ni to\'ldiring',
+				status: 'error',
+				isClosable: true,
+				position: 'top-right',
+			});
+			return;
+		}
+
 		const { email, password } = formData;
 		sendVerificationCode({
 			email,
 			isUser: false,
+			recaptchaToken,
 			callback: () => {
-				pendingRegister({ email, password });
+				pendingRegister({ email, password, recaptchaToken: recaptchaToken || undefined });
 				onNavigateStateComponent('verification');
+				// reCAPTCHA ni reset qilish
+				if (recaptchaRef.current) {
+					recaptchaRef.current.reset();
+					setRecaptchaToken(null);
+				}
 			},
 		});
 	};
@@ -111,6 +137,13 @@ const Register = ({ onNavigateStateComponent }: RegisterProps) => {
 							{t('auth_forgot_password', { ns: 'global' })}
 						</Box>
 					</HStack>
+					<Box my={4}>
+						<ReCAPTCHA
+							ref={recaptchaRef}
+							sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+							onChange={handleRecaptchaChange}
+						/>
+					</Box>
 					<Button
 						w={'full'}
 						bgGradient='linear(to-r, facebook.400,gray.400)'
@@ -120,6 +153,7 @@ const Register = ({ onNavigateStateComponent }: RegisterProps) => {
 						type={'submit'}
 						isLoading={isLoading}
 						loadingText={`${t('loading', { ns: 'global' })}`}
+						disabled={!recaptchaToken}
 					>
 						{t('register_btn', { ns: 'global' })}
 					</Button>

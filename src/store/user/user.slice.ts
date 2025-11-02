@@ -14,6 +14,7 @@ const initialState: UserIntialStateType = {
 	user: null,
 	isLoading: false,
 	error: null,
+	recaptchaToken: null,
 };
 
 export const userSlice = createSlice({
@@ -21,15 +22,16 @@ export const userSlice = createSlice({
 	initialState,
 	reducers: {
 		pendingRegister: (state, action: PayloadAction<InterfaceEmailAndPassword>) => {
-  state.user = {
-    id: '', // yoki null agar ruxsat berilgan bo‘lsa
-    email: action.payload.email,
-    password: action.payload.password,
-    birthday: '', // yoki default qiymat
-    bio: '',
-    courses: [],
-  };
-},
+			state.user = {
+				id: '', // yoki null agar ruxsat berilgan bo'lsa
+				email: action.payload.email,
+				password: action.payload.password,
+				birthday: '', // yoki default qiymat
+				bio: '',
+				courses: [],
+			};
+			state.recaptchaToken = action.payload.recaptchaToken || null;
+		},
 		clearError: state => {
 			state.error = null;
 		},
@@ -44,6 +46,7 @@ export const userSlice = createSlice({
 				state.isLoading = false;
 				state.user = payload.user;
 				state.error = null;
+				state.recaptchaToken = null; // Register muvaffaqiyatli bo'lgandan keyin tozalash
 			})
 			.addCase(register.rejected, (state, { payload }) => {
 				state.isLoading = false;
@@ -103,6 +106,7 @@ export const userSlice = createSlice({
 			.addCase(logout.fulfilled, state => {
 				state.isLoading = false;
 				state.user = null;
+				state.recaptchaToken = null; // Logout bo'lganda tozalash
 			})
 			.addCase(checkAuth.fulfilled, (state, { payload }) => {
 				state.user = payload.user;

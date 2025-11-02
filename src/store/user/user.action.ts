@@ -5,10 +5,10 @@ import { AuthUserResponse } from './user.interface';
 
 export const register = createAsyncThunk<
 	AuthUserResponse,
-	{ password: string; email: string; callback: () => void }
->('auth/register', async ({ email, password, callback }, thunkApi) => {
+	{ password: string; email: string; recaptchaToken: string; callback: () => void }
+>('auth/register', async ({ email, password, recaptchaToken, callback }, thunkApi) => {
 	try {
-		const response = await AuthService.register(email, password);
+		const response = await AuthService.register(email, password, recaptchaToken);
 		callback();
 		return response.data;
 	} catch (error) {
@@ -18,10 +18,10 @@ export const register = createAsyncThunk<
 
 export const login = createAsyncThunk<
 	AuthUserResponse,
-	{ password: string; email: string; callback: () => void }
->('auth/login', async ({ email, password, callback }, thunkApi) => {
+	{ password: string; email: string; recaptchaToken: string; callback: () => void }
+>('auth/login', async ({ email, password, recaptchaToken, callback }, thunkApi) => {
 	try {
-		const response = await AuthService.login(email, password);
+		const response = await AuthService.login(email, password, recaptchaToken);
 		callback();
 		return response.data;
 	} catch (error) {
@@ -45,10 +45,10 @@ export const oneIdLogin = createAsyncThunk<
 
 export const sendVerificationCode = createAsyncThunk<
 	'Success',
-	{ email: string; isUser: boolean; callback: () => void }
->('auth/verification-code', async ({ email, isUser, callback }, thunkApi) => {
+	{ email: string; isUser: boolean; recaptchaToken?: string; callback: () => void }
+>('auth/verification-code', async ({ email, isUser, recaptchaToken, callback }, thunkApi) => {
 	try {
-		const response = await AuthService.sendOtp(email, isUser);
+		const response = await AuthService.sendOtp(email, isUser, recaptchaToken);
 		callback();
 		return response.data;
 	} catch (error) {
