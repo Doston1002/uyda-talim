@@ -257,13 +257,13 @@ const AttendanceMessagesComponent = () => {
 												<option value="replied">Replied</option>
 												<option value="closed">Closed</option>
 											</Select>
-											<Button
+											{/* <Button
 												size="sm"
 												colorScheme="red"
 												onClick={() => handleDelete(message.id)}
 											>
 												Delete
-											</Button>
+											</Button> */}
 										</HStack>
 									</Td>
 								</Tr>

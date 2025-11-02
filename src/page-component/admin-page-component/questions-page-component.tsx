@@ -346,13 +346,13 @@ const QuestionsPageComponent = () => {
 												<option value="answered">Javob berildi</option>
 												<option value="closed">Yopildi</option>
 											</Select>
-											<Button
+											{/* <Button
 												size="sm"
 												colorScheme="red"
 												onClick={() => handleDelete(question.id)}
 											>
 												O'chirish
-											</Button>
+											</Button> */}
 										</HStack>
 									</Td>
 								</Tr>
