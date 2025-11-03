@@ -13,5 +13,12 @@ export interface SectionBodyType {
 	sectionId?: string;
 	sections?: string[];
 	lessons?: string[];
+    // optional initial lesson fields for combined create
+    name?: string;
+    embedVideo?: string;
+    hour?: number;
+    minute?: number;
+    second?: number;
+    material?: string;
 	callback: () => void;
 }

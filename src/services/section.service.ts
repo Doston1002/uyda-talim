@@ -4,9 +4,19 @@ import { SectionBodyType } from 'src/store/section/section.interface';
 
 export const SectionService = {
 	async createSection(body: SectionBodyType) {
-		const response = await $axios.post(`${getSectionUrl('create')}/${body.courseId}`, {
-			title: body.title,
-		});
+        const response = await $axios.post(`${getSectionUrl('create')}/${body.courseId}`, {
+            title: body.title,
+            initialLesson: body.name
+                ? {
+                        name: body.name,
+                        embedVideo: body.embedVideo,
+                        hour: body.hour,
+                        minute: body.minute,
+                        second: body.second,
+                        material: body.material,
+                  }
+                : undefined,
+        });
 
 		return response.data;
 	},
