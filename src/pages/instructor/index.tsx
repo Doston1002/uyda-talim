@@ -10,7 +10,7 @@ export default withInstructorLayout(InstructorPage);
 export const getServerSideProps: GetServerSideProps = async () => {
 	return {
 		redirect: {
-			destination: '/instructor/students',
+            destination: '/instructor/courses',
 			permanent: false,
 		},
 	};
