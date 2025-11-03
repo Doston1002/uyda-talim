@@ -123,11 +123,11 @@ const AuthPageComponent = () => {
 						</Stack>
 					</Stack>
 					<Stack
-						bg={useColorModeValue('gray.50', 'gray.900')}
-						rounded={'xl'}
-						p={{ base: 4, sm: 6, md: 8 }}
-						spacing={{ base: 8 }}
-						maxW={{ lg: 'lg' }}
+						// bg={useColorModeValue('gray.50', 'gray.900')}
+						// rounded={'xl'}
+						// p={{ base: 4, sm: 6, md: 8 }}
+						// spacing={{ base: 8 }}
+						// maxW={{ lg: 'lg' }}
 					>
 						{renderStateComponent()}
 						<SocialMedia />
