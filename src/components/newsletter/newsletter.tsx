@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardBody, Input, Stack, Text, useToast } from '@chakra-ui/react';
+import { Box, Button, Card, CardBody, Input, Stack, Text, useColorModeValue, useToast } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ONEID_URL } from 'src/config/api.config';
@@ -88,8 +88,8 @@ const Newsletter = () => {
             <Input
               h={14}
               w={'full'}
-              bg={'white'}
-              color={'gray.900'}
+              bg={useColorModeValue('white','gray.900')}
+              color={useColorModeValue('gray.900', 'white')}
               placeholder={t('newsletter_placeholder', { ns: 'home' }) || ''}
               _placeholder={{ color: 'gray.500' }}
               value={email}
