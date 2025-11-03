@@ -1,4 +1,4 @@
-import { Box, Button, Flex, useColorModeValue, useToast } from '@chakra-ui/react';
+import { Box, Button, Flex, useToast } from '@chakra-ui/react';
 import { Form, Formik, FormikValues } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,9 +15,17 @@ import { editLessonModules } from 'src/config/editor.config';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const SectionForm = ({ onClose, values }: SectionFormProps) => {
-	const [initialValues, setInitialValues] = useState<{ title: string }>({ title: '' });
+    const [initialValues, setInitialValues] = useState<any>({
+        title: '',
+        name: '',
+        embedVideo: '',
+        hour: 0,
+        minute: 0,
+        second: 0,
+        material: '',
+    });
 
-	const { createSection, clearSectionError, editSection } = useActions();
+    const { createSection, clearSectionError, editSection, editLesson } = useActions();
 	const { error, isLoading } = useTypedSelector(state => state.section);
 	const { course } = useTypedSelector(state => state.instructor);
 	const { t } = useTranslation();
@@ -25,18 +33,40 @@ const SectionForm = ({ onClose, values }: SectionFormProps) => {
 
 	const onSubmit = (formValues: FormikValues) => {
     if (values) {
-			editSection({
-				sectionId: values.id,
-				title: formValues.title,
-				callback: () => {
-					toast({
-						title: t('successfully_edited', { ns: 'instructor' }),
-						position: 'top-right',
-						isClosable: true,
-					});
-					onClose();
-				},
-			});
+        // 1) Bo'lim sarlovhasini yangilash
+        editSection({
+            sectionId: values.id,
+            title: formValues.title,
+            callback: () => {
+                // 2) Birinchi dars bo'lsa, uni ham yangilaymiz
+                if (values.firstLesson?._id) {
+                    editLesson({
+                        lessonId: values.firstLesson._id,
+                        name: formValues.name,
+                        embedVideo: formValues.embedVideo,
+                        hour: Number(formValues.hour || 0),
+                        minute: Number(formValues.minute || 0),
+                        second: Number(formValues.second || 0),
+                        material: formValues.material,
+                        callback: () => {
+                            toast({
+                                title: t('successfully_edited', { ns: 'instructor' }),
+                                position: 'top-right',
+                                isClosable: true,
+                            });
+                            onClose();
+                        },
+                    });
+                } else {
+                    toast({
+                        title: t('successfully_edited', { ns: 'instructor' }),
+                        position: 'top-right',
+                        isClosable: true,
+                    });
+                    onClose();
+                }
+            },
+        });
     } else {
 			createSection({
         title: formValues.title,
@@ -59,15 +89,35 @@ const SectionForm = ({ onClose, values }: SectionFormProps) => {
 		}
 	};
 
-	useEffect(() => {
-		setInitialValues({ title: values?.title as string });
-	}, [values]);
+    useEffect(() => {
+        if (values) {
+            setInitialValues({
+                title: values.title || '',
+                name: values.firstLesson?.name || '',
+                embedVideo: values.firstLesson?.embedVideo || '',
+                hour: values.firstLesson?.hour || 0,
+                minute: values.firstLesson?.minute || 0,
+                second: values.firstLesson?.second || 0,
+                material: values.firstLesson?.material || '',
+            });
+        } else {
+            setInitialValues({
+                title: '',
+                name: '',
+                embedVideo: '',
+                hour: 0,
+                minute: 0,
+                second: 0,
+                material: '',
+            });
+        }
+    }, [values]);
 
 	return (
     <Formik
       onSubmit={onSubmit}
       initialValues={initialValues as any}
-      validationSchema={values ? CourseValidation.section() : CourseValidation.lesson()}
+      validationSchema={CourseValidation.lesson()}
       enableReinitialize
     >
       {formik => (

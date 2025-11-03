@@ -11,4 +11,11 @@ export interface LessonBodyType {
 	courseId?: string;
 	sectionId?: string;
 	lessonId?: string;
+    // lesson payload fields
+    name?: string;
+    material?: string;
+    embedVideo?: string;
+    hour?: number;
+    minute?: number;
+    second?: number;
 }

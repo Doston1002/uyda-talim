@@ -27,10 +27,15 @@ import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 
 const CurriculumPageComponent = () => {
-	const [sectionTitle, setSectionTitle] = useState<{ title: string; id: string } | null>({
-		title: '',
-		id: '',
-	});
+    const [sectionTitle, setSectionTitle] = useState<{
+        title: string;
+        id: string;
+        firstLesson?: any | null;
+    } | null>({
+        title: '',
+        id: '',
+        firstLesson: null,
+    });
 
 	const { course } = useTypedSelector(state => state.instructor);
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -100,10 +105,10 @@ const CurriculumPageComponent = () => {
 				</CardBody>
 			</Card>
 
-			<Modal isOpen={isOpen} onClose={onClose} isCentered>
+            <Modal isOpen={isOpen} onClose={onClose} isCentered>
 				<ModalOverlay />
-				<ModalContent>
-					<ModalHeader>{t('create_section', { ns: 'instructor' })}</ModalHeader>
+                <ModalContent maxW={'4xl'} w={'90vw'}>
+                    <ModalHeader>{t('create_section', { ns: 'instructor' })}</ModalHeader>
 					<ModalCloseButton />
 					<Divider />
 					<ModalBody pb={5}>

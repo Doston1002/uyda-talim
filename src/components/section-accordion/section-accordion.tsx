@@ -1,7 +1,6 @@
 import {
-	AccordionButton,
-	AccordionIcon,
-	AccordionItem,
+    AccordionButton,
+    AccordionItem,
 	AccordionPanel,
 	Button,
 	Center,
@@ -54,10 +53,14 @@ const SectionAccordion = ({
 		}
 	};
 
-	const onEditSection = () => {
-		onOpen();
-		setSectionTitle({ title: section.title, id: section._id });
-	};
+const onEditSection = () => {
+    onOpen();
+    setSectionTitle({
+        title: section.title,
+        id: section._id,
+        firstLesson: (section as any).lessons && (section as any).lessons.length ? (section as any).lessons[0] : null,
+    });
+};
 
 	const onDragStartSection = (e: DragEvent<HTMLButtonElement>) => {
 		e.dataTransfer.setData('sectionIdx', String(sectionIdx));
@@ -95,10 +98,9 @@ const SectionAccordion = ({
 						<Icon as={AiOutlineMenu} w={5} h={5} />
 						{section.title}
 					</Flex>
-					<Flex fontSize={'15px'} align={'center'} gap={3}>
+                    <Flex fontSize={'15px'} align={'center'} gap={3}>
 						<Icon as={MdEdit} w={5} h={5} onClick={onEditSection} />
 						<Icon as={MdDelete} w={5} h={5} onClick={onDelete} />
-						<AccordionIcon />
 					</Flex>
 				</Flex>
 			</AccordionButton>
