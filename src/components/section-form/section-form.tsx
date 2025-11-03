@@ -126,28 +126,26 @@ const SectionForm = ({ onClose, values }: SectionFormProps) => {
           {/* Sarlovha */}
           <TextFiled name='title' label={t('title', { ns: 'instructor' })} />
 
-          {/* Faqat yaratishda: Ism, Video, Vaqt, Material */}
-          {!values && (
-            <>
-              <TextFiled name='name' label={t('name', { ns: 'instructor' })} />
-              <TextAreaField
-                name='embedVideo'
-                label={t('embed_video', { ns: 'instructor' }) || 'Embed video'}
+          {/* Ism, Video, Vaqt, Material (yaratish va tahrirlashda ham ko'rsatiladi) */}
+          <>
+            <TextFiled name='name' label={t('name', { ns: 'instructor' })} />
+            <TextAreaField
+              name='embedVideo'
+              label={t('embed_video', { ns: 'instructor' }) || 'Embed video'}
+            />
+            <Flex gap={3}>
+              <TextFiled name='hour' label={t('hour', { ns: 'instructor' })} type='number' />
+              <TextFiled name='minute' label={t('minute', { ns: 'instructor' })} type='number' />
+              <TextFiled name='second' label={t('second', { ns: 'instructor' })} type='number' />
+            </Flex>
+            <Box>
+              <ReactQuill
+                modules={editLessonModules}
+                onChange={data => formik.setFieldValue('material', data)}
+                value={(formik.values as any)?.material}
               />
-              <Flex gap={3}>
-                <TextFiled name='hour' label={t('hour', { ns: 'instructor' })} type='number' />
-                <TextFiled name='minute' label={t('minute', { ns: 'instructor' })} type='number' />
-                <TextFiled name='second' label={t('second', { ns: 'instructor' })} type='number' />
-              </Flex>
-              <Box>
-                <ReactQuill
-                  modules={editLessonModules}
-                  onChange={data => formik.setFieldValue('material', data)}
-                  value={(formik.values as any)?.material}
-                />
-              </Box>
-            </>
-          )}
+            </Box>
+          </>
 
           <Button
             h={14}
