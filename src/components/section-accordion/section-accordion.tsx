@@ -84,14 +84,18 @@ const onEditSection = () => {
 		<AccordionItem>
 			<>{error && <ErrorAlert title={error as string} clearHandler={clearSectionError} />}</>
 
-			<AccordionButton
+            <AccordionButton
 				h={14}
 				p={2}
 				fontWeight={'bold'}
 				cursor={isLoading ? 'progress' : 'pointer'}
 				draggable
 				onDragStart={onDragStartSection}
-				onDrop={onDropSection}
+                onDrop={onDropSection}
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }}
 			>
 				<Flex w={'100%'} align={'center'} justify={'space-between'}>
 					<Flex align={'center'} gap={2}>
@@ -103,34 +107,7 @@ const onEditSection = () => {
 						<Icon as={MdDelete} w={5} h={5} onClick={onDelete} />
 					</Flex>
 				</Flex>
-			</AccordionButton>
-			<AccordionPanel pb={4}>
-				<List onDragOver={e => e.preventDefault()}>
-					{section.lessons.map((lesson, idx) => (
-						<LessonAccordionItem
-							key={lesson._id}
-							lessonIdx={idx}
-							lesson={lesson}
-							sectionId={section._id}
-						/>
-					))}
-				</List>
-				<Center>
-					<Button
-						variant={'unstyled'}
-						color={'facebook.200'}
-						_hover={{ textDecoration: 'underline' }}
-						onClick={onToggle}
-					>
-						{isOpen
-							? t('close_form', { ns: 'instructor' })
-							: t('create_lesson', { ns: 'instructor' })}
-					</Button>
-				</Center>
-				<Collapse in={isOpen} animateOpacity>
-					<LessonForm sectionId={section._id} onToggle={onToggle} />
-				</Collapse>
-			</AccordionPanel>
+            </AccordionButton>
 		</AccordionItem>
 	);
 };
