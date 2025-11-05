@@ -204,15 +204,17 @@ export const coursesFilter = [
 	// 		{ name: 'fitler_rating_item_4', id: '3' },
 	// 	],
 	// },
-	{
-		title: 'filter_language_title',
-		id: 'language',
-		categoryList: [
-			{ name: 'filter_language_item_1', id: 'uz' },
-			{ name: 'filter_language_item_2', id: 'ru' },
-			{ name: 'filter_language_item_3', id: 'en' },
-		],
-	},
+
+	// --------------------------------------------------------------
+	// {
+	// 	title: 'filter_language_title',
+	// 	id: 'language',
+	// 	categoryList: [
+	// 		{ name: 'filter_language_item_1', id: 'uz' },
+	// 		{ name: 'filter_language_item_2', id: 'ru' },
+	// 		{ name: 'filter_language_item_3', id: 'en' },
+	// 	],
+	// },
 ];
 
 
