@@ -6,6 +6,7 @@ import {
 	Icon,
 	Text,
 } from '@chakra-ui/react';
+import DOMPurify from 'dompurify';
 import { useTranslation } from 'react-i18next';
 import { BsCheck } from 'react-icons/bs';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
@@ -20,7 +21,7 @@ const Overview = () => {
 			<Box
 				mt={3}
 				dangerouslySetInnerHTML={{
-					__html: course?.description as string,
+					__html:  DOMPurify.sanitize(course?.description as string),
 				}}
 			/>
 			<Heading mt={10}>

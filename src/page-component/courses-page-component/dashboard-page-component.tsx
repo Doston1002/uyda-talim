@@ -74,6 +74,7 @@ import {
 	Divider,
 	Heading,
 } from '@chakra-ui/react';
+import DOMPurify from 'dompurify';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 import Header from './header';
 import Sidebar from './sidebar';
@@ -102,7 +103,7 @@ const DashboardPageComponent = () => {
 						<CardBody>
 							<Box
 								dangerouslySetInnerHTML={{
-									__html: lesson?.embedVideo,
+									__html:  DOMPurify.sanitize(lesson?.embedVideo as string),
 								}}
 							/>
 						</CardBody>
@@ -119,7 +120,7 @@ const DashboardPageComponent = () => {
 							li: { listStyle: 'none' },
 						}}
 						dangerouslySetInnerHTML={{
-							__html: lesson?.material,
+							__html:  DOMPurify.sanitize(lesson?.material as string),
 						}}
 					/>
 					<Sidebar
