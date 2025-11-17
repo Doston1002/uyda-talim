@@ -82,6 +82,14 @@ import Sidebar from './sidebar';
 const DashboardPageComponent = () => {
 	const { lesson } = useTypedSelector(state => state.lesson);
 
+	// YouTube embed URL xavfsizligini tekshiramiz
+	const rawEmbed = (lesson?.embedVideo || '').toString();
+	const safeEmbed =
+		rawEmbed.includes('https://www.youtube.com/embed/') ||
+		rawEmbed.includes('https://www.youtube-nocookie.com/embed/')
+			? rawEmbed
+			: '';
+
 	return (
 		<>
 			<Header />
@@ -103,7 +111,19 @@ const DashboardPageComponent = () => {
 						<CardBody>
 							<Box
 								dangerouslySetInnerHTML={{
-									__html:  DOMPurify.sanitize(lesson?.embedVideo as string),
+									__html: DOMPurify.sanitize(safeEmbed, {
+										ADD_TAGS: ['iframe'],
+										ADD_ATTR: [
+											'allow',
+											'allowfullscreen',
+											'frameborder',
+											'referrerpolicy',
+											'width',
+											'height',
+											'src',
+											'title',
+										],
+									}),
 								}}
 							/>
 						</CardBody>
@@ -120,7 +140,7 @@ const DashboardPageComponent = () => {
 							li: { listStyle: 'none' },
 						}}
 						dangerouslySetInnerHTML={{
-							__html:  DOMPurify.sanitize(lesson?.material as string),
+							__html: DOMPurify.sanitize((lesson?.material || '').toString()),
 						}}
 					/>
 					<Sidebar
