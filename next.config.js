@@ -24,10 +24,41 @@ const nextConfig = {
       {
         protocol: 'http',
         hostname: 'localhost', 
-        port: '', // 8000 o‘rniga bo‘sh qoldiring
+        port: '', // 8000 o'rniga bo'sh qoldiring
         pathname: '/uploads/**',
       },
     ],
+  },
+  // ✅ SECURITY FIX: Clickjacking protection - barcha response'larga security headerlar qo'shish
+  async headers() {
+    return [
+      {
+        // Barcha route'larga security headerlar qo'shish
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-Frame-Options',
+            value: 'DENY',
+          },
+          {
+            key: 'Content-Security-Policy',
+            value: "frame-ancestors 'none'; default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://uydatalim.uzedu.uz https://api.uydatalim.uzedu.uz;",
+          },
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+          {
+            key: 'X-XSS-Protection',
+            value: '1; mode=block',
+          },
+          {
+            key: 'Referrer-Policy',
+            value: 'strict-origin-when-cross-origin',
+          },
+        ],
+      },
+    ];
   },
 };
 
