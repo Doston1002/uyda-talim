@@ -20,10 +20,12 @@ export function middleware(request: NextRequest) {
 	// X-Frame-Options header - clickjacking hujumlaridan himoya qilish
 	response.headers.set('X-Frame-Options', 'DENY');
 	
-	// Content Security Policy - frame-ancestors direktivasi
+	// Content Security Policy:
+	//  - frame-ancestors 'none'  -> bizning saytni boshqa saytlar iframe ichiga qo'ya olmaydi
+	//  - frame-src youtube       -> biz o'zimiz YouTube videolarini iframe orqali qo'ya olamiz
 	response.headers.set(
 		'Content-Security-Policy',
-		"frame-ancestors 'none'; default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://uydatalim.uzedu.uz https://api.uydatalim.uzedu.uz;"
+		"frame-ancestors 'none'; frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://uydatalim.uzedu.uz https://api.uydatalim.uzedu.uz;"
 	);
 	
 	// X-Content-Type-Options - MIME type sniffing'ni oldini olish
