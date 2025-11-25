@@ -45,20 +45,15 @@ const BooksPageComponent = () => {
 							return books.filter(c => c.category == '10-sinf');
 						case '11-sinf':
 							return books.filter(c => c.category == '11-sinf');
+						case 'fiction-books':
+							return books.filter(c => c.category == 'fiction-books');
 						default:
-						return books;
-		}
-	}, [filter, books]);
-
+							return books;
+					}
+				}, [filter, books]);
 
 	return (
 		<Box mb={2}>
-			<SectionTitle
-				title={t('title', { ns: 'books' })}
-				subtitle={t('description', { ns: 'books' })}
-				textAlign={'center'}
-				pt={1}
-			/>
 			<Flex justify={'center'} mt={5} flexWrap={'wrap'}>
 				{booksCategory.map((item, idx) => (
 					<Button

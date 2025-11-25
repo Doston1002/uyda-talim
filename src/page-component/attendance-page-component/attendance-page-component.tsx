@@ -177,7 +177,8 @@ const AttendancePageComponent = () => {
     { id: 8, name: "8-sinf" },
     { id: 9, name: "9-sinf" },
     { id: 10, name: "10-sinf" },
-    { id: 11, name: "11-sinf" }
+    { id: 11, name: "11-sinf" },
+    { id: 12, name: "Badiiy kitoblar" }
   ];
 
   // Subjects data by class

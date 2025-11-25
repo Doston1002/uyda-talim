@@ -230,6 +230,7 @@ export const createBooksCategory = [
 	'9-sinf',
 	'10-sinf',
 	'11-sinf',
+	'Badiiy kitoblar',
 ];
 
 export const booksCategory = [
@@ -280,6 +281,10 @@ export const booksCategory = [
 	{
 		label: '11-sinf',
 		id: '11-sinf',
+	},
+	{
+		label: 'Badiiy kitoblar',
+		id: 'fiction-books',
 	},
 	
 ];
