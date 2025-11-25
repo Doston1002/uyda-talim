@@ -46,7 +46,7 @@ const BooksPageComponent = () => {
 						case '11-sinf':
 							return books.filter(c => c.category == '11-sinf');
 						case 'fiction-books':
-							return books.filter(c => c.category == 'fiction-books');
+							return books.filter(c => c.category == 'Badiiy kitoblar');
 						default:
 							return books;
 					}

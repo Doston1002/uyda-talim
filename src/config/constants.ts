@@ -230,7 +230,7 @@ export const createBooksCategory = [
 	'9-sinf',
 	'10-sinf',
 	'11-sinf',
-	'Badiiy kitoblar',
+	'fiction-books',
 ];
 
 export const booksCategory = [
