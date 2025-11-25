@@ -283,7 +283,7 @@ export const booksCategory = [
 		id: '11-sinf',
 	},
 	{
-		label: 'Badiiy kitoblar',
+		label: 'fiction-books',
 		id: 'fiction-books',
 	},
 	
