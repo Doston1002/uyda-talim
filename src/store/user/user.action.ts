@@ -88,8 +88,8 @@ export const editProfilePassword = createAsyncThunk<
   }
 });
 
-export const logout = createAsyncThunk('auth/logout', () => {
-	AuthService.logout();
+export const logout = createAsyncThunk('auth/logout', async () => {
+	await AuthService.logout();
 });
 
 export const checkAuth = createAsyncThunk<AuthUserResponse>(

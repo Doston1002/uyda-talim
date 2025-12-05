@@ -49,13 +49,18 @@ export const AuthService = {
 	},
 
 	async oneIdLogin(code: string) {
-		const response = await axios.post<AuthUserResponse>(
+		const response = await axios.post<AuthUserResponse & { oneIdAccessToken?: string }>(
 			`${API_URL}${getAuthUrl('oneid/callback')}`,
 			{ code }
 		);
 
 		if (response.data.accessToken) {
 			saveTokensCookie(response.data);
+		}
+
+		// OneID access_token ni localStorage ga saqlash (logout uchun)
+		if (response.data.oneIdAccessToken) {
+			localStorage.setItem('oneIdAccessToken', response.data.oneIdAccessToken);
 		}
 
 		return response;
@@ -108,7 +113,27 @@ export const AuthService = {
 		return respone.data;
 	},
 
-	logout() {
+	async logout() {
+		// OneID access_token ni localStorage dan olish
+		const oneIdAccessToken = localStorage.getItem('oneIdAccessToken');
+
+		// Agar OneID access_token bor bo'lsa, OneID logout endpointini chaqirish
+		if (oneIdAccessToken) {
+			try {
+				await axios.post(
+					`${API_URL}${getAuthUrl('oneid/logout')}`,
+					{ access_token: oneIdAccessToken }
+				);
+			} catch (error) {
+				// Xatolik bo'lsa ham davom etish (cookie larni tozalash kerak)
+				console.error('OneID logout xatolik:', error);
+			} finally {
+				// OneID access_token ni localStorage dan o'chirish
+				localStorage.removeItem('oneIdAccessToken');
+			}
+		}
+
+		// Cookie larni tozalash
 		removeTokensCookie();
 	},
 
