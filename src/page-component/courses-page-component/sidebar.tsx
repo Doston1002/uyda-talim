@@ -189,7 +189,7 @@ const Sidebar: FC<CourseDashboardProps> = ({ ...props }) => {
 												align={'center'}
 												p={4}
 											>
-												{/* <Flex align={'center'} w={'8%'}>
+												<Flex align={'center'} w={'8%'}>
 													{user ? (
 														<Checkbox
 															colorScheme={'green'}
@@ -204,7 +204,7 @@ const Sidebar: FC<CourseDashboardProps> = ({ ...props }) => {
 															}
 														/>
 													) : null}
-												</Flex> */}
+												</Flex>
 												<Flex w={'92%'} justify={'space-between'}>
 													<Text>{lesson.name}</Text>
 													<Text textDecoration={'underline'} ml={1}>
