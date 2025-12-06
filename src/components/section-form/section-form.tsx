@@ -1,4 +1,4 @@
-import { Box, Button, Flex, useToast } from '@chakra-ui/react';
+import { Button, useToast } from '@chakra-ui/react';
 import { Form, Formik, FormikValues } from 'formik';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -7,76 +7,35 @@ import { useTypedSelector } from 'src/hooks/useTypedSelector';
 import { CourseValidation } from 'src/validations/course.validation';
 import ErrorAlert from '../error-alert/error-alert';
 import TextFiled from '../text-filed/text-filed';
-import TextAreaField from '../text-area-field/text-area-field';
 import { SectionFormProps } from './section-form.props';
-import dynamic from 'next/dynamic';
-import { editLessonModules } from 'src/config/editor.config';
-
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const SectionForm = ({ onClose, values }: SectionFormProps) => {
-    const [initialValues, setInitialValues] = useState<any>({
-        title: '',
-        name: '',
-        embedVideo: '',
-        hour: 0,
-        minute: 0,
-        second: 0,
-        material: '',
-    });
+	const [initialValues, setInitialValues] = useState<{ title: string }>({ title: '' });
 
-    const { createSection, clearSectionError, editSection, editLesson } = useActions();
+	const { createSection, clearSectionError, editSection } = useActions();
 	const { error, isLoading } = useTypedSelector(state => state.section);
 	const { course } = useTypedSelector(state => state.instructor);
 	const { t } = useTranslation();
 	const toast = useToast();
 
 	const onSubmit = (formValues: FormikValues) => {
-    if (values) {
-        // 1) Bo'lim sarlovhasini yangilash
-        editSection({
-            sectionId: values.id,
-            title: formValues.title,
-            callback: () => {
-                // 2) Birinchi dars bo'lsa, uni ham yangilaymiz
-                if (values.firstLesson?._id) {
-                    editLesson({
-                        lessonId: values.firstLesson._id,
-                        name: formValues.name,
-                        embedVideo: formValues.embedVideo,
-                        hour: Number(formValues.hour || 0),
-                        minute: Number(formValues.minute || 0),
-                        second: Number(formValues.second || 0),
-                        material: formValues.material,
-                        callback: () => {
-                            toast({
-                                title: t('successfully_edited', { ns: 'instructor' }),
-                                position: 'top-right',
-                                isClosable: true,
-                            });
-                            onClose();
-                        },
-                    });
-                } else {
-                    toast({
-                        title: t('successfully_edited', { ns: 'instructor' }),
-                        position: 'top-right',
-                        isClosable: true,
-                    });
-                    onClose();
-                }
-            },
-        });
-    } else {
+		if (values) {
+			editSection({
+				sectionId: values.id,
+				title: formValues.title,
+				callback: () => {
+					toast({
+						title: t('successfully_edited', { ns: 'instructor' }),
+						position: 'top-right',
+						isClosable: true,
+					});
+					onClose();
+				},
+			});
+		} else {
 			createSection({
-        title: formValues.title,
+				title: formValues.title,
 				courseId: course?._id as string,
-        name: formValues.name,
-        embedVideo: formValues.embedVideo,
-        hour: Number(formValues.hour || 0),
-        minute: Number(formValues.minute || 0),
-        second: Number(formValues.second || 0),
-        material: formValues.material,
 				callback: () => {
 					toast({
 						title: t('successfully_created_course', { ns: 'instructor' }),
@@ -89,77 +48,32 @@ const SectionForm = ({ onClose, values }: SectionFormProps) => {
 		}
 	};
 
-    useEffect(() => {
-        if (values) {
-            setInitialValues({
-                title: values.title || '',
-                name: values.firstLesson?.name || '',
-                embedVideo: values.firstLesson?.embedVideo || '',
-                hour: values.firstLesson?.hour || 0,
-                minute: values.firstLesson?.minute || 0,
-                second: values.firstLesson?.second || 0,
-                material: values.firstLesson?.material || '',
-            });
-        } else {
-            setInitialValues({
-                title: '',
-                name: '',
-                embedVideo: '',
-                hour: 0,
-                minute: 0,
-                second: 0,
-                material: '',
-            });
-        }
-    }, [values]);
+	useEffect(() => {
+		setInitialValues({ title: values?.title as string });
+	}, [values]);
 
 	return (
-    <Formik
-      onSubmit={onSubmit}
-      initialValues={initialValues as any}
-      validationSchema={CourseValidation.lesson()}
-      enableReinitialize
-    >
-      {formik => (
-        <Form>
-          <>{error && <ErrorAlert title={error as string} clearHandler={clearSectionError} />}</>
-          {/* Sarlovha */}
-          <TextFiled name='title' label={t('title', { ns: 'instructor' })} />
-
-          {/* Ism, Video, Vaqt, Material (yaratish va tahrirlashda ham ko'rsatiladi) */}
-          <>
-            <TextFiled name='name' label={t('name', { ns: 'instructor' })} />
-            <TextAreaField
-              name='embedVideo'
-              label={t('embed_video', { ns: 'instructor' }) || 'Embed video'}
-            />
-            <Flex gap={3}>
-              <TextFiled name='hour' label={t('hour', { ns: 'instructor' })} type='number' />
-              <TextFiled name='minute' label={t('minute', { ns: 'instructor' })} type='number' />
-              <TextFiled name='second' label={t('second', { ns: 'instructor' })} type='number' />
-            </Flex>
-            <Box>
-              <ReactQuill
-                modules={editLessonModules}
-                onChange={data => formik.setFieldValue('material', data)}
-                value={(formik.values as any)?.material}
-              />
-            </Box>
-          </>
-
-          <Button
-            h={14}
-            mt={4}
-            w={'full'}
-            type={'submit'}
-            isLoading={isLoading}
-            loadingText={`${t('loading', { ns: 'global' })}`}
-          >
-            {t('search_input_btn', { ns: 'courses' })}
-          </Button>
-        </Form>
-      )}
-    </Formik>
+		<Formik
+			onSubmit={onSubmit}
+			initialValues={initialValues}
+			validationSchema={CourseValidation.section}
+			enableReinitialize
+		>
+			<Form>
+				<>{error && <ErrorAlert title={error as string} clearHandler={clearSectionError} />}</>
+				<TextFiled name='title' label={t('title', { ns: 'instructor' })} />
+				<Button
+					h={14}
+					mt={4}
+					w={'full'}
+					type={'submit'}
+					isLoading={isLoading}
+					loadingText={`${t('loading', { ns: 'global' })}`}
+				>
+					{t('search_input_btn', { ns: 'courses' })}
+				</Button>
+			</Form>
+		</Formik>
 	);
 };
 
