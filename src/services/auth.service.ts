@@ -114,27 +114,42 @@ export const AuthService = {
 	},
 
 	async logout() {
-		// OneID access_token ni localStorage dan olish
-		const oneIdAccessToken = localStorage.getItem('oneIdAccessToken');
-
-		// Agar OneID access_token bor bo'lsa, OneID logout endpointini chaqirish
-		if (oneIdAccessToken) {
-			try {
-				await axios.post(
-					`${API_URL}${getAuthUrl('oneid/logout')}`,
-					{ access_token: oneIdAccessToken }
-				);
-			} catch (error) {
-				// Xatolik bo'lsa ham davom etish (cookie larni tozalash kerak)
-				console.error('OneID logout xatolik:', error);
-			} finally {
-				// OneID access_token ni localStorage dan o'chirish
-				localStorage.removeItem('oneIdAccessToken');
+		try {
+			// Backend logout endpointini chaqirish - token ni blacklist ga qo'shish
+			const accessToken = Cookies.get('access');
+			if (accessToken) {
+				try {
+					await $axios.post(`${getAuthUrl('logout')}`);
+				} catch (error) {
+					// Xatolik bo'lsa ham davom etish (cookie larni tozalash kerak)
+					console.error('Backend logout xatolik:', error);
+				}
 			}
-		}
 
-		// Cookie larni tozalash
-		removeTokensCookie();
+			// OneID access_token ni localStorage dan olish
+			const oneIdAccessToken = localStorage.getItem('oneIdAccessToken');
+
+			// Agar OneID access_token bor bo'lsa, OneID logout endpointini chaqirish
+			if (oneIdAccessToken) {
+				try {
+					await axios.post(
+						`${API_URL}${getAuthUrl('oneid/logout')}`,
+						{ access_token: oneIdAccessToken }
+					);
+				} catch (error) {
+					// Xatolik bo'lsa ham davom etish (cookie larni tozalash kerak)
+					console.error('OneID logout xatolik:', error);
+				} finally {
+					// OneID access_token ni localStorage dan o'chirish
+					localStorage.removeItem('oneIdAccessToken');
+				}
+			}
+		} catch (error) {
+			console.error('Logout xatolik:', error);
+		} finally {
+			// Cookie larni tozalash (har doim)
+			removeTokensCookie();
+		}
 	},
 
 	async getNewTokens() {

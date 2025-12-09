@@ -21,11 +21,14 @@ export const AppService = {
 	},
 
 	async getCourses(language?: string, limit: string = '20') {
-		const { data: courses } = await axios.get(
+		const { data: courses, headers } = await axios.get(
 			`${API_URL}${getCourseUrl(
 				'all'
 			)}?language=${language}&limit=${limit}`
 		);
+
+		console.log(courses, "OKA1")
+		console.log(headers, "OKA")
 
 		return courses;
 	},
