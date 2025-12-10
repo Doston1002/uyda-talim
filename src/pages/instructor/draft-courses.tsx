@@ -5,19 +5,21 @@ import { InstructorDraftCourseComponent } from 'src/page-component';
 import { InstructorService } from 'src/services/instructor.service';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useTypedSelector } from 'src/hooks/useTypedSelector';
+import { getRoleFromToken } from 'src/helpers/token.helper';
 
 const DraftCourses: NextPage = () => {
 	const router = useRouter();
-	const { user } = useTypedSelector(state => state.user);
+	
+	// ✅ SECURITY FIX: Role ni token dan o'qish (har safar backend dan)
+	const userRole = getRoleFromToken();
 
 	useEffect(() => {
-		if (user && user.role !== 'INSTRUCTOR') {
+		if (userRole !== 'INSTRUCTOR' && userRole !== 'ADMIN') {
 			router.push('/');
 		}
-	}, [user, router]);
+	}, [userRole, router]);
 
-	if (user && user.role !== 'INSTRUCTOR') {
+	if (userRole !== 'INSTRUCTOR' && userRole !== 'ADMIN') {
 		return null;
 	}
 

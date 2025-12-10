@@ -2,19 +2,21 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { withAdminLayout } from 'src/layouts/admin';
 import QuestionsPageComponent from 'src/page-component/admin-page-component/questions-page-component';
-import { useTypedSelector } from 'src/hooks/useTypedSelector';
+import { getRoleFromToken } from 'src/helpers/token.helper';
 
 const QuestionsPage = () => {
 	const router = useRouter();
-	const { user } = useTypedSelector(state => state.user);
+	
+	// ✅ SECURITY FIX: Role ni token dan o'qish (har safar backend dan)
+	const userRole = getRoleFromToken();
 
 	useEffect(() => {
-		if (user && user.role !== 'ADMIN') {
+		if (userRole !== 'ADMIN') {
 			router.push('/');
 		}
-	}, [user, router]);
+	}, [userRole, router]);
 
-	if (user && user.role !== 'ADMIN') {
+	if (userRole !== 'ADMIN') {
 		return null;
 	}
 
