@@ -30,6 +30,7 @@ import { useActions } from 'src/hooks/useActions';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 import ErrorAlert from 'src/components/error-alert/error-alert';
 import { courseusers } from 'src/config/constants';
+import { getRoleFromToken } from 'src/helpers/token.helper';
 
 Chart.register(CategoryScale);
 
@@ -140,9 +141,12 @@ const StudentsPageComponent = () => {
 
 	const { t } = useTranslation();
 	const { user } = useTypedSelector(state => state.user);
+	
+	// ✅ SECURITY FIX: Role ni token dan o'qish (har safar backend dan)
+	const userRole = getRoleFromToken();
 
 	// Role tekshiruvi
-	if (user?.role !== 'INSTRUCTOR' && user?.role !== 'ADMIN') {
+	if (userRole !== 'INSTRUCTOR' && userRole !== 'ADMIN') {
 		return (
 			<Box p={8} textAlign="center">
 				<Text fontSize="xl" color="red.500">

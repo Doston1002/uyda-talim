@@ -1,8 +1,44 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+/**
+ * Server-side JWT Token dan role ni decode qilish (middleware uchun)
+ */
+const getRoleFromTokenServer = (token: string): 'ADMIN' | 'INSTRUCTOR' | 'USER' | null => {
+	try {
+		if (!token) {
+			return null;
+		}
+
+		// JWT token 3 qismdan iborat: header.payload.signature
+		const parts = token.split('.');
+		
+		if (parts.length !== 3) {
+			return null;
+		}
+
+		// Payload ni decode qilish (base64)
+		const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString('utf-8'));
+		
+		// Role ni olish
+		const role = payload.role || null;
+		
+		// Valid role tekshirish
+		const validRoles = ['ADMIN', 'INSTRUCTOR', 'USER'];
+		if (role && validRoles.includes(role)) {
+			return role as 'ADMIN' | 'INSTRUCTOR' | 'USER';
+		}
+
+		return null;
+	} catch (error) {
+		console.error('Token decode xatolik:', error);
+		return null;
+	}
+};
+
 export function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl;
+	const accessToken = request.cookies.get('access')?.value;
 	const refreshToken = request.cookies.get('refresh')?.value;
 
 	// Dashboard va boshqa himoyalangan routelar
@@ -12,6 +48,21 @@ export function middleware(request: NextRequest) {
 	if (isProtectedRoute && !refreshToken) {
 		// Agar token yo'q bo'lsa, login sahifasiga yo'naltirish
 		return NextResponse.redirect(new URL('/', request.url));
+	}
+
+	// ✅ SECURITY FIX: Role tekshirish - token dan role ni o'qib, route ga qarab tekshirish
+	if (isProtectedRoute && accessToken) {
+		const userRole = getRoleFromTokenServer(accessToken);
+		
+		// Admin route uchun ADMIN role talab qilinadi
+		if (pathname.startsWith('/admin') && userRole !== 'ADMIN') {
+			return NextResponse.redirect(new URL('/', request.url));
+		}
+		
+		// Instructor route uchun INSTRUCTOR yoki ADMIN role talab qilinadi
+		if (pathname.startsWith('/instructor') && userRole !== 'INSTRUCTOR' && userRole !== 'ADMIN') {
+			return NextResponse.redirect(new URL('/', request.url));
+		}
 	}
 
 	// ✅ SECURITY FIX: Clickjacking protection - barcha response'larga security headerlar qo'shish

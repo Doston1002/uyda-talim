@@ -28,6 +28,7 @@ import { RiAdminFill } from 'react-icons/ri';
 import { TbWorld } from 'react-icons/tb';
 import { language } from 'src/config/constants';
 import { loadImage } from 'src/helpers/image.helper';
+import { getRoleFromToken } from 'src/helpers/token.helper';
 import { useActions } from 'src/hooks/useActions';
 import { useAuth } from 'src/hooks/useAuth';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
@@ -41,6 +42,9 @@ const Header = ({ onToggle }: HeaderProps) => {
 	const { user } = useAuth();
 	const { logout } = useActions();
 	const { courses, books } = useTypedSelector(state => state.cart);
+	
+	// ✅ SECURITY FIX: Role ni token dan o'qish (har safar backend dan)
+	const userRole = getRoleFromToken();
 
 	const onLanguage = (lng: string) => {
 		router.replace(router.asPath);
@@ -168,7 +172,7 @@ const Header = ({ onToggle }: HeaderProps) => {
 								/>
 							</MenuButton>
 							<MenuList p={0} m={0}>
-								{user.role === 'INSTRUCTOR' && (
+								{userRole === 'INSTRUCTOR' && (
 									<MenuItem
 										h={14}
 										onClick={() => router.push('/instructor')}
@@ -178,7 +182,7 @@ const Header = ({ onToggle }: HeaderProps) => {
 										{t('instructor_admin', { ns: 'instructor' })}
 									</MenuItem>
 								)}
-								   {user.role === 'ADMIN' && (
+								   {userRole === 'ADMIN' && (
                                     <MenuItem
                                         h={14}
                                         onClick={() => router.push('/admin/users')}
@@ -187,7 +191,7 @@ const Header = ({ onToggle }: HeaderProps) => {
                                     >
                                         {t('instructor_admin', { ns: 'admin' })}
                                     </MenuItem>
-                                )}
+								)}
 								<MenuItem
 									h={14}
 									onClick={() => router.push('/dashboard')}
