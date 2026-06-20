@@ -2,6 +2,8 @@ import '@fontsource/roboto';
 import 'nprogress/nprogress.css';
 import 'react-multi-carousel/lib/styles.css';
 import '../styles/globals.css';
+import '../styles/tailwind.css';
+import '../styles/theme.css';
 
 import { ChakraProvider } from '@chakra-ui/react';
 import { SessionProvider } from 'next-auth/react';

@@ -1,3 +1,8 @@
+const connectSrc =
+  process.env.NODE_ENV === 'development'
+    ? "connect-src 'self' http://localhost:8000 https://uydatalim.uzedu.uz https://api.uydatalim.uzedu.uz"
+    : "connect-src 'self' https://uydatalim.uzedu.uz https://api.uydatalim.uzedu.uz";
+
 const securityHeaders = [
   {
     key: 'X-Frame-Options',
@@ -13,7 +18,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: https:",
       "font-src 'self' data:",
-      "connect-src 'self' https://uydatalim.uzedu.uz https://api.uydatalim.uzedu.uz",
+      connectSrc,
     ].join('; '),
   },
   {

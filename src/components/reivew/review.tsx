@@ -11,7 +11,9 @@ import {
 	useColorModeValue,
 } from '@chakra-ui/react';
 import { formatDistance } from 'date-fns';
-import { enUS, ru, uz } from 'date-fns/locale';
+import enUS from 'date-fns/locale/en-US/index.js';
+import ru from 'date-fns/locale/ru/index.js';
+import uz from 'date-fns/locale/uz/index.js';
 import Cookies from 'js-cookie';
 import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
