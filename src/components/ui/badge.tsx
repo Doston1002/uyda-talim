@@ -30,9 +30,9 @@ function Badge({
   variant,
   asChild = false,
   ...props
-}: React.ComponentProps<"span"> &
+}: React.HTMLAttributes<HTMLSpanElement> &
   VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot : "span";
+  const Comp: any = asChild ? Slot : "span";
 
   return (
     <Comp
