@@ -43,7 +43,13 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (user && user.role === 'admin') {
       fetch(`${API_URL}/direktors?role=admin`)
-        .then(r => r.json())
+        .then(async r => {
+          if (!r.ok) {
+            const err = await r.json().catch(() => ({}));
+            throw new Error(err.message || `Server xatosi (${r.status})`);
+          }
+          return r.json();
+        })
         .then(data => {
           if (!Array.isArray(data)) return setDirektorlar([]);
           const normalized = data.map((d: Direktor & { _id?: string }) => ({
@@ -52,7 +58,10 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
           }));
           setDirektorlar(normalized as Direktor[]);
         })
-        .catch(() => setDirektorlar([]));
+        .catch((e: Error) => {
+          setDirektorlar([]);
+          toast.error(e.message || 'Direktorlarni yuklashda xatolik');
+        });
     } else {
       setDirektorlar([]);
     }
@@ -91,7 +100,8 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
 
   const addDirektor = async (direktor: Direktor) => {
     try {
-      const { id: _skip, ...payload } = direktor as Direktor & { id?: string };
+      const payload = { ...direktor, role: 'direktor' as const };
+      delete (payload as { id?: string }).id;
       const res = await fetch(`${API_URL}/direktors`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -106,6 +116,7 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
       const created = await res.json();
       const norm = { ...created, id: created.id || created._id };
       setDirektorlar(prev => [...prev, norm]);
+      toast.success("Direktor muvaffaqiyatli qo'shildi!");
     } catch (e) {
       console.error('Network error creating direktor', e);
       toast.error('Tarmoq xatosi — direktor yaratilmadi');
@@ -114,7 +125,8 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
 
   const updateDirektor = async (id: string, updatedDirektor: Direktor) => {
     try {
-      const { id: _skip, ...payload } = updatedDirektor as Direktor & { id?: string };
+      const payload = { ...updatedDirektor, role: 'direktor' as const };
+      delete (payload as { id?: string }).id;
       const res = await fetch(`${API_URL}/direktors/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -129,6 +141,7 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
       const data = await res.json();
       const norm = { ...data, id: data.id || data._id };
       setDirektorlar(prev => prev.map(d => (d.id === id ? norm : d)));
+      toast.success('Direktor ma\'lumotlari yangilandi!');
     } catch (e) {
       console.error('Network error updating direktor', e);
       toast.error('Tarmoq xatosi — direktor yangilanmadi');

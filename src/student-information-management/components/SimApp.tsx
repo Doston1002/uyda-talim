@@ -39,7 +39,13 @@ export function SimApp() {
     fetch(
       `${API_URL}/students?createdBy=${encodeURIComponent(createdBy)}&role=${encodeURIComponent(role)}`
     )
-      .then(r => r.json())
+      .then(async r => {
+        if (!r.ok) {
+          const err = await r.json().catch(() => ({}));
+          throw new Error(err.message || `Server xatosi (${r.status})`);
+        }
+        return r.json();
+      })
       .then(data => {
         if (Array.isArray(data)) {
           const normalized = data.map((s: Student & { _id?: string }) => ({
@@ -51,9 +57,9 @@ export function SimApp() {
           setStudents([]);
         }
       })
-      .catch(() => {
+      .catch((e: Error) => {
         setStudents([]);
-        toast.error("O'quvchilar ma'lumotlarini yuklashda xatolik");
+        toast.error(e.message || "O'quvchilar ma'lumotlarini yuklashda xatolik");
       })
       .finally(() => setIsLoading(false));
   }, [user, API_URL, router]);

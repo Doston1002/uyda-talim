@@ -15,7 +15,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
 				clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET as string,
 			}),
 		],
-		secret: process.env.NEXT_PUBLIC_SECRET_AUTH,
+		secret: process.env.NEXTAUTH_SECRET || process.env.NEXT_PUBLIC_SECRET_AUTH,
 		callbacks: {
 			async signIn({ user }) {
 				if (user) {

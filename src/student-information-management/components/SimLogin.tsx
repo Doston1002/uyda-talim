@@ -4,11 +4,6 @@ import { LogIn, AlertCircle, Loader2 } from 'lucide-react';
 import { useSimAuth } from '../contexts/SimAuthContext';
 import { simInput, simLabel, simBtnPrimary } from '../sim-ui';
 
-const TEST_ACCOUNTS = {
-  admin: { email: 'polatovdoston1002@gmail.com', password: 'Doston1002!' },
-  direktor: { email: 'polatov@gmail.com', password: 'polatov' },
-};
-
 export function SimLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,12 +30,6 @@ export function SimLogin() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const fillCredentials = (role: 'admin' | 'direktor') => {
-    setEmail(TEST_ACCOUNTS[role].email);
-    setPassword(TEST_ACCOUNTS[role].password);
-    setError('');
   };
 
   return (

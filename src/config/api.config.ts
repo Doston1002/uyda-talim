@@ -1,4 +1,7 @@
-const BASE_API_URL = process.env.NEXT_PUBLIC_API_SERVICE || 'https://api.uydatalim.uzedu.uz';
+const BASE_API_URL =
+  process.env.NEXT_PUBLIC_API_SERVICE ||
+  process.env.NEXT_PUBLIC_API_URL?.replace(/\/api\/?$/, '') ||
+  'https://api.uydatalim.uzedu.uz';
 
 export const API_URL = `${BASE_API_URL}/api`;
 export const ONEID_URL = `${BASE_API_URL}/`;

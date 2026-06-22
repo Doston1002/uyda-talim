@@ -74,10 +74,19 @@ export function middleware(request: NextRequest) {
 	// Content Security Policy:
 	//  - frame-ancestors 'none'  -> bizning saytni boshqa saytlar iframe ichiga qo'ya olmaydi
 	//  - frame-src youtube       -> biz o'zimiz YouTube videolarini iframe orqali qo'ya olamiz
-	const connectSrc =
-		process.env.NODE_ENV === 'development'
-			? "connect-src 'self' http://localhost:8000 https://uydatalim.uzedu.uz https://api.uydatalim.uzedu.uz"
-			: "connect-src 'self' https://uydatalim.uzedu.uz https://api.uydatalim.uzedu.uz";
+	const apiBase =
+		process.env.NEXT_PUBLIC_API_SERVICE ||
+		process.env.NEXT_PUBLIC_API_URL?.replace(/\/api\/?$/, '') ||
+		'';
+
+	const allowLocalApi =
+		process.env.NODE_ENV === 'development' ||
+		apiBase.includes('localhost') ||
+		apiBase.includes('127.0.0.1');
+
+	const connectSrc = allowLocalApi
+		? "connect-src 'self' http://localhost:8000 http://127.0.0.1:8000 https://uydatalim.uzedu.uz https://api.uydatalim.uzedu.uz"
+		: "connect-src 'self' https://uydatalim.uzedu.uz https://api.uydatalim.uzedu.uz";
 
 	response.headers.set(
 		'Content-Security-Policy',

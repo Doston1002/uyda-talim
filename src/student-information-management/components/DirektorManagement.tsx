@@ -8,7 +8,7 @@ import { SimEmptyState } from './SimEmptyState';
 import { SimModal } from './SimModal';
 import { SimFormField, simBaseInputClass } from './SimFormField';
 import { simSelect, simBtnPrimary, simBtnSecondary } from '../sim-ui';
-import { UserPlus, Edit2, Trash2, CheckCircle, UserCog, Eye, EyeOff } from 'lucide-react';
+import { UserPlus, Edit2, Trash2, UserCog, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
 
 export function DirektorManagement() {
@@ -48,29 +48,26 @@ export function DirektorManagement() {
     setShowForm(false);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (editingId) {
       const existingDirektor = direktorlar.find(d => d.id === editingId);
-      updateDirektor(editingId, {
+      await updateDirektor(editingId, {
         ...formData,
         id: editingId,
         createdAt: existingDirektor?.createdAt || new Date().toISOString(),
       });
-      toast.success('Direktor ma\'lumotlari yangilandi!');
-    } else {
-      const newDirektor: Direktor = {
-        id: Date.now().toString(),
-        ...formData,
-        createdAt: new Date().toISOString(),
-      };
-      addDirektor(newDirektor);
-      toast.success('Direktor muvaffaqiyatli qo\'shildi!', {
-        icon: <CheckCircle className="w-5 h-5 text-green-600" />,
-      });
+      resetForm();
+      return;
     }
 
+    const newDirektor: Direktor = {
+      id: Date.now().toString(),
+      ...formData,
+      createdAt: new Date().toISOString(),
+    };
+    await addDirektor(newDirektor);
     resetForm();
   };
 
