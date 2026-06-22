@@ -4,11 +4,16 @@ import {
 	Divider,
 	Stack,
 	Text,
+	useColorModeValue,
 } from '@chakra-ui/react';
 import { SimAuthProvider, SimLogin } from 'src/student-information-management';
 import { LoginProps } from './login.props';
 
 const Login = (_props: LoginProps) => {
+	const cardBg = useColorModeValue('white', 'gray.800');
+	const borderColor = useColorModeValue('gray.200', 'gray.600');
+	const dividerBg = useColorModeValue('white', 'gray.800');
+
 	const handleOneIdLogin = () => {
 		const authUrl = new URL(process.env.NEXT_PUBLIC_ONEID_BASE_URL!);
 
@@ -22,39 +27,70 @@ const Login = (_props: LoginProps) => {
 	};
 
 	return (
-		<Stack spacing={5} w="full" maxW="md" mx="auto">
-			<Button
-				w="full"
-				h={12}
-				colorScheme="teal"
-				variant="outline"
-				fontWeight="medium"
-				onClick={handleOneIdLogin}
-			>
-				OneID orqali kirish
-			</Button>
+		<Box
+			w="full"
+			maxW="md"
+			mx="auto"
+			bg={cardBg}
+			rounded="2xl"
+			shadow="xl"
+			borderWidth="1px"
+			borderColor={borderColor}
+			p={{ base: 6, sm: 8 }}
+		>
+			<Stack spacing={6}>
+				<Box textAlign="center">
+					<Text
+						fontSize={{ base: 'xl', sm: '2xl' }}
+						fontWeight="bold"
+						lineHeight="short"
+						color={useColorModeValue('gray.800', 'gray.100')}
+					>
+						Tizimga kirish
+					</Text>
+					<Text fontSize="sm" color={useColorModeValue('gray.500', 'gray.400')} mt={1}>
+						OneID yoki Inklyuziv Ta&apos;lim hisobi orqali
+					</Text>
+				</Box>
 
-			<Box position="relative" py={1}>
-				<Divider borderColor="gray.200" />
-				<Text
-					position="absolute"
-					top="50%"
-					left="50%"
-					transform="translate(-50%, -50%)"
-					bg="white"
-					px={4}
-					color="gray.400"
-					fontSize="xs"
-					fontWeight="medium"
+				<Button
+					w="full"
+					h={12}
+					colorScheme="teal"
+					variant="outline"
+					fontWeight="semibold"
+					fontSize="md"
+					borderRadius="lg"
+					onClick={handleOneIdLogin}
 				>
-					yoki
-				</Text>
-			</Box>
+					OneID orqali kirish
+				</Button>
 
-			<SimAuthProvider>
-				<SimLogin />
-			</SimAuthProvider>
-		</Stack>
+				<Box position="relative" py={1}>
+					<Divider borderColor={borderColor} />
+					<Text
+						position="absolute"
+						top="50%"
+						left="50%"
+						transform="translate(-50%, -50%)"
+						bg={dividerBg}
+						px={4}
+						color={useColorModeValue('gray.400', 'gray.500')}
+						fontSize="xs"
+						fontWeight="medium"
+						textTransform="uppercase"
+						letterSpacing="wider"
+					>
+						yoki
+					</Text>
+				</Box>
+
+				<SimAuthProvider>
+					<SimLogin variant="auth" />
+				</SimAuthProvider>
+			</Stack>
+		</Box>
 	);
 };
+
 export default Login;
