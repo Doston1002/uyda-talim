@@ -187,7 +187,9 @@ export const AuthService = {
 		} catch (error: any) {
 			// On failure to refresh tokens, clear stored tokens and provide clearer error
 			console.error('Failed to refresh tokens', error?.response?.status, error?.response?.data || error.message);
-			try { removeTokensCookie(); } catch (e) {}
+			try { removeTokensCookie(); } catch (e) {
+				console.error(e);
+			}
 			throw new Error('Failed to refresh authentication tokens');
 		}
 	},
