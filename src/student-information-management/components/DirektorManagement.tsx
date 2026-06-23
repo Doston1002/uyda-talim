@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useSimAuth } from '../contexts/SimAuthContext';
 import { Direktor } from '../types/direktor';
 import { regions, districtsData } from '../data/uzbekistan-regions';
@@ -8,8 +8,10 @@ import { SimEmptyState } from './SimEmptyState';
 import { SimModal } from './SimModal';
 import { SimFormField, simBaseInputClass } from './SimFormField';
 import { simSelect, simBtnPrimary, simBtnSecondary } from '../sim-ui';
-import { UserPlus, Edit2, Trash2, UserCog, Eye, EyeOff } from 'lucide-react';
+import { UserPlus, Edit2, Trash2, UserCog, Eye, EyeOff, Download } from 'lucide-react';
 import { toast } from 'sonner';
+import { buildDirektorEmail, generatePassword } from '../utils/direktor-credentials';
+import * as XLSX from 'xlsx';
 
 export function DirektorManagement() {
   const { direktorlar, addDirektor, updateDirektor, deleteDirektor } = useSimAuth();
@@ -32,6 +34,36 @@ export function DirektorManagement() {
     if (!selectedRegionId) return [];
     return districtsData[selectedRegionId] || [];
   }, [selectedRegionId]);
+
+  useEffect(() => {
+    if (editingId) return;
+
+    const email = buildDirektorEmail(
+      formData.region,
+      formData.districtOrCity,
+      formData.schoolName,
+    );
+
+    setFormData(prev => {
+      if (prev.email === email) return prev;
+      return { ...prev, email };
+    });
+  }, [formData.region, formData.districtOrCity, formData.schoolName, editingId]);
+
+  const openAddForm = () => {
+    setEditingId(null);
+    setSelectedRegionId(null);
+    setFormData({
+      fullName: '',
+      email: '',
+      password: generatePassword(),
+      schoolName: '',
+      phone: '',
+      region: '',
+      districtOrCity: '',
+    });
+    setShowForm(true);
+  };
 
   const resetForm = () => {
     setFormData({
@@ -110,6 +142,28 @@ export function DirektorManagement() {
     }));
   };
 
+  const exportToExcel = () => {
+    if (direktorlar.length === 0) {
+      toast.error("Eksport qilish uchun direktorlar mavjud emas");
+      return;
+    }
+
+    const data = direktorlar.map((direktor) => ({
+      'Viloyat': direktor.region,
+      'Tuman/Shahar': direktor.districtOrCity,
+      'Maktab raqami': direktor.schoolName,
+      'F.I.Sh': direktor.fullName,
+      'Email': direktor.email,
+      'Parol': direktor.password,
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Direktorlar');
+    XLSX.writeFile(wb, 'direktorlar.xlsx');
+    toast.success('Excel fayl yuklab olindi');
+  };
+
   return (
     <div className="space-y-6">
       <SimPageHeader
@@ -119,13 +173,22 @@ export function DirektorManagement() {
         count={direktorlar.length}
         countLabel="ta direktor"
         actions={
-          <button
-            onClick={() => setShowForm(true)}
-            className={`${simBtnPrimary} bg-gradient-to-r ${theme.gradient} ${theme.gradientHover} shadow-md min-w-[220px] justify-center`}
-          >
-            <UserPlus className="w-5 h-5" />
-            Direktor qo&apos;shish
-          </button>
+          <>
+            <button
+              onClick={exportToExcel}
+              className={`${simBtnPrimary} bg-green-600 hover:bg-green-700 shadow-sm min-w-[220px] justify-center`}
+            >
+              <Download className="w-5 h-5" />
+              Excel yuklab olish
+            </button>
+            <button
+              onClick={openAddForm}
+              className={`${simBtnPrimary} bg-gradient-to-r ${theme.gradient} ${theme.gradientHover} shadow-md min-w-[220px] justify-center`}
+            >
+              <UserPlus className="w-5 h-5" />
+              Direktor qo&apos;shish
+            </button>
+          </>
         }
       />
 
@@ -198,13 +261,15 @@ export function DirektorManagement() {
                 </select>
               </SimFormField>
 
-              <SimFormField label="Maktab nomi" required>
+              <SimFormField label="Maktab raqami" required>
                 <input
                   name="schoolName"
                   type="text"
+                  inputMode="numeric"
                   value={formData.schoolName}
                   onChange={handleChange}
                   className={simBaseInputClass}
+                  placeholder="Masalan: 12"
                   required
                 />
               </SimFormField>
@@ -221,26 +286,36 @@ export function DirektorManagement() {
                 />
               </SimFormField>
 
-              <SimFormField label="Email" required>
+              <SimFormField
+                label="Email"
+                required
+                hint={!editingId ? "Viloyat, tuman va maktab raqamidan avtomatik yaratiladi" : undefined}
+              >
                 <input
                   name="email"
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={simBaseInputClass}
-                  placeholder="email@example.com"
+                  className={`${simBaseInputClass} ${!editingId ? 'bg-gray-50 text-gray-600' : ''}`}
+                  placeholder="email@gmail.com"
+                  readOnly={!editingId}
                   required
                 />
               </SimFormField>
 
-              <SimFormField label="Parol" required>
+              <SimFormField
+                label="Parol"
+                required
+                hint={!editingId ? "Avtomatik yaratilgan parol" : undefined}
+              >
                 <div className="relative">
                   <input
                     name="password"
                     type={showPassword ? 'text' : 'password'}
                     value={formData.password}
                     onChange={handleChange}
-                    className={`${simBaseInputClass} pr-12`}
+                    className={`${simBaseInputClass} pr-12 ${!editingId ? 'bg-gray-50 text-gray-600' : ''}`}
+                    readOnly={!editingId}
                     required
                   />
                   <button
