@@ -1,10 +1,11 @@
 import { useMemo } from 'react';
 import { Student } from '../types/student';
-import { Users, Home, GraduationCap, TrendingUp, BarChart3 } from 'lucide-react';
+import { Users, Home, GraduationCap, TrendingUp, BarChart3, MapPinned } from 'lucide-react';
 import { useSimAuth } from '../contexts/SimAuthContext';
 import { getSimRoleTheme } from '../theme';
 import { SimPageHeader } from './SimPageHeader';
 import { SimEmptyState } from './SimEmptyState';
+import { regions } from '../data/uzbekistan-regions';
 
 interface DashboardProps {
   students: Student[];
@@ -57,12 +58,32 @@ export function Dashboard({ students }: DashboardProps) {
     },
   ];
 
+  const isAdmin = user?.role === 'admin';
+
   const academicYears = ['2024-2025', '2025-2026', '2026-2027'];
-  const yearGradients = [
+  const chartGradients = [
     'from-blue-500 to-cyan-500',
     'from-purple-500 to-pink-500',
     'from-green-500 to-emerald-500',
+    'from-orange-500 to-amber-500',
+    'from-red-500 to-rose-500',
+    'from-indigo-500 to-violet-500',
+    'from-teal-500 to-green-500',
+    'from-yellow-500 to-orange-500',
+    'from-cyan-500 to-blue-500',
+    'from-pink-500 to-purple-500',
+    'from-emerald-500 to-teal-500',
+    'from-amber-500 to-yellow-500',
+    'from-rose-500 to-red-500',
+    'from-violet-500 to-indigo-500',
   ];
+
+  const regionStats = useMemo(() => {
+    return regions.map(region => ({
+      name: region.name,
+      count: students.filter(s => s.region === region.name).length,
+    }));
+  }, [students]);
 
   return (
     <div className="space-y-6">
@@ -112,45 +133,81 @@ export function Dashboard({ students }: DashboardProps) {
         <div className="px-6 py-5 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white">
           <h2 className="flex items-center gap-3 text-lg font-bold text-gray-800">
             <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${theme.iconBg} flex items-center justify-center shadow-sm`}>
-              <BarChart3 className="w-5 h-5 text-white" />
+              {isAdmin ? (
+                <MapPinned className="w-5 h-5 text-white" />
+              ) : (
+                <BarChart3 className="w-5 h-5 text-white" />
+              )}
             </div>
-            Yillar bo&apos;yicha taqsimot
+            {isAdmin ? "14 ta hudud bo'yicha o'quvchilar statistikasi" : "Yillar bo'yicha taqsimot"}
           </h2>
           <p className="text-sm text-gray-500 mt-1 ml-[52px]">
-            O&apos;quv yillari kesimida o&apos;quvchilar soni
+            {isAdmin
+              ? "Viloyat va shahar kesimida o'quvchilar soni"
+              : "O'quv yillari kesimida o'quvchilar soni"}
           </p>
         </div>
 
         <div className="p-6 sm:p-8">
           {students.length === 0 ? (
             <SimEmptyState
-              icon={BarChart3}
+              icon={isAdmin ? MapPinned : BarChart3}
               title="Ma'lumot yo'q"
               description={
-                user?.role === 'admin'
+                isAdmin
                   ? "Hozircha o'quvchilar mavjud emas. Direktorlar qo'shilgandan so'ng ma'lumotlar shu yerda ko'rinadi."
                   : "Hozircha o'quvchilar mavjud emas. \"Qo'shish\" bo'limidan yangi o'quvchi qo'shing."
               }
             />
+          ) : isAdmin ? (
+            <div className="space-y-5">
+              {regionStats.map((region, index) => {
+                const percentage = students.length > 0 ? (region.count / students.length) * 100 : 0;
+                const gradient = chartGradients[index % chartGradients.length];
+
+                return (
+                  <div key={region.name} className="group">
+                    <div className="flex items-center justify-between mb-2 gap-4">
+                      <span className="font-semibold text-gray-800 text-sm sm:text-base">{region.name}</span>
+                      <span
+                        className={`text-sm font-semibold px-3 py-1 rounded-full bg-gradient-to-r ${gradient} text-white shadow-sm shrink-0`}
+                      >
+                        {region.count} ta
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
+                      <div
+                        className={`bg-gradient-to-r ${gradient} h-2.5 rounded-full transition-all duration-700 group-hover:opacity-90`}
+                        style={{ width: `${Math.max(percentage, region.count > 0 ? 6 : 0)}%` }}
+                      />
+                    </div>
+                    <p className="text-xs text-gray-400 mt-1">
+                      Jami foiz: {percentage.toFixed(1)}%
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
           ) : (
             <div className="space-y-6">
               {academicYears.map((year, index) => {
                 const count = students.filter(s => s.academicYear === year).length;
                 const percentage = students.length > 0 ? (count / students.length) * 100 : 0;
+                const gradient = chartGradients[index % chartGradients.length];
 
                 return (
                   <div key={year} className="group">
                     <div className="flex items-center justify-between mb-3 gap-4">
                       <span className="font-semibold text-gray-800 text-base">{year}</span>
                       <span
-                        className={`text-sm font-semibold px-4 py-1.5 rounded-full bg-gradient-to-r ${yearGradients[index]} text-white shadow-sm`}
+                        className={`text-sm font-semibold px-4 py-1.5 rounded-full bg-gradient-to-r ${gradient} text-white shadow-sm`}
                       >
                         {count} ta
                       </span>
                     </div>
                     <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
                       <div
-                        className={`bg-gradient-to-r ${yearGradients[index]} h-3 rounded-full transition-all duration-700 group-hover:opacity-90`}
+                        className={`bg-gradient-to-r ${gradient} h-3 rounded-full transition-all duration-700 group-hover:opacity-90`}
                         style={{ width: `${Math.max(percentage, count > 0 ? 6 : 0)}%` }}
                       />
                     </div>
