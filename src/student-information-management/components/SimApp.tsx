@@ -78,8 +78,18 @@ export function SimApp() {
         return;
       }
       setStudents(prev => prev.filter(s => s.id !== id));
+      toast.success("O'quvchi o'chirildi");
     } catch {
       toast.error("Tarmoq xatosi. Iltimos, qaytadan urinib ko'ring");
+    }
+  };
+
+  const handleUpdateStudent = (updated: Student) => {
+    setStudents(prev =>
+      prev.map(s => (s.id === updated.id ? { ...s, ...updated } : s)),
+    );
+    if (selectedStudent?.id === updated.id) {
+      setSelectedStudent(updated);
     }
   };
 
@@ -105,6 +115,7 @@ export function SimApp() {
             students={students}
             onViewStudent={setSelectedStudent}
             onDeleteStudent={handleDeleteStudent}
+            onUpdateStudent={handleUpdateStudent}
           />
         )}
         {currentPage === 'add' && <AddStudent onAddStudent={handleAddStudent} />}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Student } from '../types/student';
 import { useSimAuth } from '../contexts/SimAuthContext';
 import { getSimRoleTheme } from '../theme';
@@ -6,9 +6,10 @@ import { SimPageHeader } from './SimPageHeader';
 import { SimFormField } from './SimFormField';
 import { getSimApiUrl } from '../api';
 import { simInput, simSelect, simTextarea, simFileUpload, simBtnPrimary } from '../sim-ui';
-import { UserPlus, CheckCircle, FileText } from 'lucide-react';
+import { UserPlus, CheckCircle, FileText, CalendarClock } from 'lucide-react';
 import { toast } from 'sonner';
-// regions/districts removed from this form — kept in direktor account
+import { ILLNESS_TYPES, type IllnessTypeOption } from '../data/illness-types';
+import { calculateIllnessPeriod, formatIllnessPeriodDisplay } from '../utils/illness-duration';// regions/districts removed from this form — kept in direktor account
 
 interface AddStudentProps {
   onAddStudent: (student: Student) => void;
@@ -35,6 +36,20 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
   }));
 
 
+  const illnessPeriod = useMemo(() => {
+    if (!formData.illnessType || !formData.conclusionDate) return null;
+    return calculateIllnessPeriod(
+      formData.illnessType,
+      formData.conclusionDate,
+      formData.academicYear,
+    );
+  }, [formData.illnessType, formData.conclusionDate, formData.academicYear]);
+
+  const selectedIllness = useMemo(
+    () => ILLNESS_TYPES.find(item => item.id === formData.illnessType),
+    [formData.illnessType],
+  );
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // submit via FormData so file can be uploaded
@@ -50,9 +65,13 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
     fd.append('educationType', formData.educationType);
     fd.append('teacherName', formData.teacherName || '');
     fd.append('teacherPhone', formData.teacherPhone || '');
-    fd.append('illnessType', (formData as any).illnessType || '');
-    fd.append('conclusionDate', (formData as any).conclusionDate || '');
-    if ((formData as any).conclusionFile) fd.append('file', (formData as any).conclusionFile as File);
+    fd.append('illnessType', formData.illnessType || '');
+    fd.append('conclusionDate', formData.conclusionDate || '');
+    if (illnessPeriod) {
+      fd.append('illnessEndDate', illnessPeriod.endDate);
+      if (illnessPeriod.endDateMax) fd.append('illnessEndDateMax', illnessPeriod.endDateMax);
+    }
+    if (formData.conclusionFile) fd.append('file', formData.conclusionFile);
 
     // include createdBy so backend can infer direktor
     fd.append('createdBy', user?.email || '');
@@ -137,41 +156,46 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
               <select
                 id="illnessType"
                 name="illnessType"
-                value={(formData as any).illnessType}
+                value={formData.illnessType}
                 onChange={handleChange}
                 className={simSelect}
               >
                 <option value="">Tanlang</option>
-                <optgroup label="1. Somatik kasalliklar">
-                  <option value="somatik:biriktiruvchi_toqima">Biriktiruvchi toʻqima tizimli shikastlanishi</option>
-                  <option value="somatik:yurak_kasalligi">Yurak va qon aylanish tizimi tugʻma nuqsonlari</option>
-                  <option value="somatik:tetrada_fallo">Ogʻir darajadagi tetrada Fallo</option>
-                  <option value="somatik:opka_bronx">Oʻpka-bronx kasalliklari (II-III)</option>
-                  <option value="somatik:asma">Astmaning ogʻir darajasi</option>
-                  <option value="somatik:glom">Surunkali glomerulonefrit</option>
-                  <option value="somatik:piyelonefrit">Surunkali piyelonefrit</option>
-                  <option value="somatik:leykoz">Oʻtkir leykoz va kamqonliklar</option>
-                  <option value="somatik:onkologiya">Turli organlar xavfli oʻsmalari</option>
-                  <option value="somatik:mukovissidoz">Mukovissedoz (ogʻir)</option>
-                </optgroup>
-                <optgroup label="2. Psixonevrologik kasalliklar">
-                  <option value="psix:ruhiy">Ruhiy holati buzilganligi (shizofreniya, psixoz)</option>
-                  <option value="psix:epilepsiya">Epilepsiya (zoʻraygan davr)</option>
-                  <option value="psix:avtizm">Bolalar autizmi</option>
-                  <option value="psix:miopatiya">Miopatiya / Miastenia</option>
-                </optgroup>
-                <optgroup label="3. Xirurgik kasalliklar">
-                  <option value="xir:orqa_miya">Orqa miya churrasi</option>
-                  <option value="xir:siydik">Siydik pufagi ekstrofiyasi / incontinens</option>
-                  <option value="xir:oyoqlar">Oyoqlarning falaji</option>
-                </optgroup>
-                <optgroup label="4. Teri kasalliklari">
-                  <option value="teri:epidermoliz">Tugʻma bullezepidermoliz</option>
-                  <option value="teri:ihtioz">Tugʻma ixtioz (zoʻraygan davr)</option>
-                  <option value="teri:psoriaz">Psoriaz eritrodermiya / artropatik psoriaz</option>
-                </optgroup>
+                {ILLNESS_TYPES.reduce<{ category: string; items: IllnessTypeOption[] }[]>((groups, item) => {
+                  const last = groups[groups.length - 1];
+                  if (!last || last.category !== item.category) {
+                    groups.push({ category: item.category, items: [item] });
+                  } else {
+                    last.items.push(item);
+                  }
+                  return groups;
+                }, []).map((group, groupIndex) => (
+                  <optgroup key={group.category} label={`${groupIndex + 1}. ${group.category}`}>
+                    {group.items.map(item => (
+                      <option key={item.id} value={item.id}>
+                        {item.label} ({item.durationLabel})
+                      </option>
+                    ))}
+                  </optgroup>
+                ))}
               </select>
             </SimFormField>
+          )}
+
+          {(user?.role === 'direktor' || user?.role === 'admin') && selectedIllness && (
+            <div className="md:col-span-2 rounded-xl border border-indigo-100 bg-indigo-50/60 p-4">
+              <p className="text-xs font-semibold uppercase tracking-wide text-indigo-600 mb-1">
+                Uyda yakka tartibda taʼlim muddati
+              </p>
+              <p className="text-sm text-gray-700">
+                <span className="font-medium">{selectedIllness.label}</span>
+                {' — '}
+                <span className="font-semibold text-indigo-700">{selectedIllness.durationLabel}</span>
+                {selectedIllness.duration === 'academic_year' && (
+                  <span className="text-gray-500"> (2-sentabrdan 25-maygacha)</span>
+                )}
+              </p>
+            </div>
           )}
 
           {(user?.role === 'direktor' || user?.role === 'admin') && (
@@ -181,18 +205,36 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
                   id="conclusionDate"
                   name="conclusionDate"
                   type="date"
-                  value={(formData as any).conclusionDate}
+                  value={formData.conclusionDate}
                   onChange={handleChange}
                   className={simInput}
                 />
               </SimFormField>
 
-              <SimFormField label="Xulosa (PDF)">
+              {illnessPeriod && (
+                <SimFormField label="Ta'lim muddati tugash sanasi">
+                  <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+                    <CalendarClock className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                    <div className="min-w-0">
+                      <p className="text-sm font-semibold text-emerald-800">
+                        {illnessPeriod.isRange && illnessPeriod.endDateMax
+                          ? `${illnessPeriod.endDate} — ${illnessPeriod.endDateMax}`
+                          : illnessPeriod.endDate}
+                      </p>
+                      <p className="text-xs text-emerald-700 mt-0.5">
+                        {formatIllnessPeriodDisplay(illnessPeriod)}
+                      </p>
+                    </div>
+                  </div>
+                </SimFormField>
+              )}
+
+              <SimFormField label="Xulosa (PDF)" className={illnessPeriod ? '' : 'md:col-span-1'}>
                 <label htmlFor="conclusionFile" className={simFileUpload}>
                   <FileText className="w-5 h-5 shrink-0" />
                   <span className="truncate">
-                    {(formData as any).conclusionFile
-                      ? (formData as any).conclusionFile.name
+                    {formData.conclusionFile
+                      ? formData.conclusionFile.name
                       : 'PDF fayl tanlang'}
                   </span>
                 </label>

@@ -17,6 +17,8 @@ import { useSimAuth } from '../contexts/SimAuthContext';
 import { getSimRoleTheme } from '../theme';
 import { getSimApiUrl } from '../api';
 import { getDisplayFileName } from '../utils';
+import { getIllnessLabel } from '../data/illness-types';
+import { calculateIllnessPeriod } from '../utils/illness-duration';
 
 interface StudentDetailProps {
   student: Student;
@@ -58,6 +60,26 @@ function SectionTitle({ children }: { children: ReactNode }) {
 export function StudentDetail({ student, onClose }: StudentDetailProps) {
   const { user } = useSimAuth();
   const theme = getSimRoleTheme(user?.role);
+
+  const illnessEndDisplay = (() => {
+    if (student.illnessEndDate && student.illnessEndDateMax) {
+      return `${student.illnessEndDate} — ${student.illnessEndDateMax}`;
+    }
+    if (student.illnessEndDate) return student.illnessEndDate;
+    if (student.illnessType && student.conclusionDate) {
+      const period = calculateIllnessPeriod(
+        student.illnessType,
+        student.conclusionDate,
+        student.academicYear,
+      );
+      if (!period) return null;
+      if (period.isRange && period.endDateMax) {
+        return `${period.endDate} — ${period.endDateMax}`;
+      }
+      return period.endDate;
+    }
+    return null;
+  })();
 
   return (
     <div
@@ -139,8 +161,13 @@ export function StudentDetail({ student, onClose }: StudentDetailProps) {
             <div>
               <SectionTitle>Tibbiy ma&apos;lumotlar</SectionTitle>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
-                <InfoItem icon={Stethoscope} label="Kasallik turi" value={student.illnessType} />
+                <InfoItem
+                  icon={Stethoscope}
+                  label="Kasallik turi"
+                  value={student.illnessType ? getIllnessLabel(student.illnessType) : undefined}
+                />
                 <InfoItem icon={Calendar} label="Xulosa berilgan sana" value={student.conclusionDate} />
+                <InfoItem icon={Calendar} label="Ta'lim muddati tugash sanasi" value={illnessEndDisplay} />
               </div>
               {student.uploadedFiles && student.uploadedFiles.length > 0 && (
                 <div className="space-y-2">

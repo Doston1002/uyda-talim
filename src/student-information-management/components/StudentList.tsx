@@ -1,24 +1,32 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Student } from '../types/student';
 import { useSimAuth } from '../contexts/SimAuthContext';
 import { SimPageHeader } from './SimPageHeader';
 import { SimEmptyState } from './SimEmptyState';
-import { Search, Download, FileText, Eye, Trash2, Users, X } from 'lucide-react';
+import { Search, Download, FileText, Eye, Trash2, Users, X, ChevronLeft, ChevronRight, Pencil } from 'lucide-react';
 import { simInput, simSelect, simLabelSm, simBtnPrimary } from '../sim-ui';
-import { toast } from 'sonner';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
+import { getIllnessLabel } from '../data/illness-types';
+import { calculateIllnessPeriod, isStudentPeriodExpiringSoon, getStudentPeriodDaysRemaining } from '../utils/illness-duration';
+import { EditStudent } from './EditStudent';
 
 interface StudentListProps {
   students: Student[];
   onViewStudent: (student: Student) => void;
   onDeleteStudent: (id: string) => void;
+  onUpdateStudent: (student: Student) => void;
 }
 
-export function StudentList({ students, onViewStudent, onDeleteStudent }: StudentListProps) {
+const PAGE_SIZE = 10;
+
+export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdateStudent }: StudentListProps) {
   const { user } = useSimAuth();
   const isAdmin = user?.role === 'admin';
+  const canSeeExpiryHighlight = user?.role === 'admin' || user?.role === 'direktor';
+  const canManageStudents = canSeeExpiryHighlight;
+  const canPaginate = canSeeExpiryHighlight;
   const [searchTerm, setSearchTerm] = useState('');
   const [yearFilter, setYearFilter] = useState('all');
   const [classFilter, setClassFilter] = useState('all');
@@ -26,11 +34,32 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
   const [regionFilter, setRegionFilter] = useState('all');
   const [districtFilter, setDistrictFilter] = useState('all');
   const [illnessFilter, setIllnessFilter] = useState('all');
+  const [page, setPage] = useState(1);
+  const [editingStudent, setEditingStudent] = useState<Student | null>(null);
+
+  const getIllnessEndDisplay = (student: Student): string => {
+    if (student.illnessEndDate && student.illnessEndDateMax) {
+      return `${student.illnessEndDate} — ${student.illnessEndDateMax}`;
+    }
+    if (student.illnessEndDate) return student.illnessEndDate;
+    if (student.illnessType && student.conclusionDate) {
+      const period = calculateIllnessPeriod(
+        student.illnessType,
+        student.conclusionDate,
+        student.academicYear,
+      );
+      if (!period) return '';
+      if (period.isRange && period.endDateMax) {
+        return `${period.endDate} — ${period.endDateMax}`;
+      }
+      return period.endDate;
+    }
+    return '';
+  };
 
   const handleDelete = (id: string) => {
     if (confirm('O\'quvchini o\'chirishni xohlaysizmi?')) {
       onDeleteStudent(id);
-      toast.success('O\'quvchi o\'chirildi');
     }
   };
 
@@ -56,6 +85,35 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
     });
   }, [students, searchTerm, yearFilter, classFilter, schoolFilter, regionFilter, districtFilter, illnessFilter]);
 
+  const totalPages = canPaginate ? Math.max(1, Math.ceil(filteredStudents.length / PAGE_SIZE)) : 1;
+
+  useEffect(() => {
+    setPage(1);
+  }, [searchTerm, yearFilter, classFilter, schoolFilter, regionFilter, districtFilter, illnessFilter]);
+
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
+
+  const displayedStudents = useMemo(() => {
+    if (!canPaginate) return filteredStudents;
+    const start = (page - 1) * PAGE_SIZE;
+    return filteredStudents.slice(start, start + PAGE_SIZE);
+  }, [canPaginate, filteredStudents, page]);
+
+  const pageNumbers = useMemo(() => {
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+
+    const pages = new Set<number>([1, totalPages, page, page - 1, page + 1]);
+    return Array.from(pages)
+      .filter(p => p >= 1 && p <= totalPages)
+      .sort((a, b) => a - b);
+  }, [page, totalPages]);
+
   const uniqueYears = useMemo(() => {
     return Array.from(new Set(students.map(s => s.academicYear))).sort();
   }, [students]);
@@ -79,7 +137,9 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
   }, [students, regionFilter]);
 
   const uniqueIllnesses = useMemo(() => {
-    return Array.from(new Set(students.map(s => s.illnessType).filter(Boolean))).sort();
+    return Array.from(
+      new Set(students.map(s => s.illnessType).filter((v): v is string => Boolean(v))),
+    ).sort();
   }, [students]);
 
   
@@ -111,8 +171,9 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
       }
 
       // include medical fields for both roles
-      base['Kasallik turi'] = student.illnessType || '';
+      base['Kasallik turi'] = student.illnessType ? getIllnessLabel(student.illnessType) : '';
       base['Xulosa sanasi'] = student.conclusionDate || '';
+      base['Muddat tugash sanasi'] = getIllnessEndDisplay(student);
 
       return base;
     });
@@ -143,7 +204,7 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
       headers.push('Viloyat', 'Tuman/Shahar');
     }
     // medical fields appended for both roles
-    headers.push('Kasallik turi', 'Xulosa sanasi');
+    headers.push('Kasallik turi', 'Xulosa sanasi', 'Muddat tugash sanasi');
 
     const tableData = filteredStudents.map((student) => {
       const row: any[] = [
@@ -163,7 +224,11 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
       }
 
       // medical
-      row.push(student.illnessType || '', student.conclusionDate || '');
+      row.push(
+        student.illnessType ? getIllnessLabel(student.illnessType) : '',
+        student.conclusionDate || '',
+        getIllnessEndDisplay(student),
+      );
 
       return row;
     });
@@ -194,11 +259,22 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
     setRegionFilter('all');
     setDistrictFilter('all');
     setIllnessFilter('all');
+    setPage(1);
   };
 
 
   return (
     <div className="space-y-5">
+      {editingStudent && (
+        <EditStudent
+          student={editingStudent}
+          onClose={() => setEditingStudent(null)}
+          onUpdateStudent={updated => {
+            onUpdateStudent(updated);
+            setEditingStudent(null);
+          }}
+        />
+      )}
       <SimPageHeader
         title="O'quvchilar ro'yxati"
         subtitle={isAdmin ? "Barcha maktablar bo'yicha" : "Maktabingiz bo'yicha"}
@@ -316,7 +392,7 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
                   <select value={illnessFilter} onChange={e => setIllnessFilter(e.target.value)} className={simSelect}>
                     <option value="all">Barcha kasalliklar</option>
                     {uniqueIllnesses.map((ill, i) => (
-                      <option key={`${ill}-${i}`} value={ill}>{ill}</option>
+                      <option key={`${ill}-${i}`} value={ill}>{getIllnessLabel(ill)}</option>
                     ))}
                   </select>
                 </div>
@@ -326,6 +402,12 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
         </div>
 
         {/* Table */}
+        {canSeeExpiryHighlight && filteredStudents.some(s => isStudentPeriodExpiringSoon(s)) && (
+          <div className="mx-5 sm:mx-6 mt-4 flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm text-red-700">
+            <span className="inline-block w-3 h-3 rounded-sm bg-red-200 border border-red-400 shrink-0" />
+            Qizil rang bilan belgilangan qatorlar — amal qilish muddati tugashiga 1 oydan kam vaqt qolgan yoki muddati o&apos;tgan.
+          </div>
+        )}
         <div className="overflow-x-auto">
           <table className="w-full min-w-[900px]">
             <thead>
@@ -350,12 +432,25 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
                   </td>
                 </tr>
               ) : (
-                filteredStudents.map(student => (
+                displayedStudents.map(student => {
+                  const isExpiringSoon = canSeeExpiryHighlight && isStudentPeriodExpiringSoon(student);
+                  const daysRemaining = isExpiringSoon ? getStudentPeriodDaysRemaining(student) : null;
+
+                  return (
                   <tr
                     key={student.id}
-                    className={`border-b border-gray-100 transition-all ${
-                      user?.role === 'admin' ? 'hover:bg-indigo-50/50' : 'hover:bg-emerald-50/50'
+                    className={`border-b transition-all ${
+                      isExpiringSoon
+                        ? 'bg-red-50 border-red-200 ring-1 ring-inset ring-red-200'
+                        : `border-gray-100 ${user?.role === 'admin' ? 'hover:bg-indigo-50/50' : 'hover:bg-emerald-50/50'}`
                     }`}
+                    title={
+                      isExpiringSoon && daysRemaining !== null
+                        ? daysRemaining > 0
+                          ? `Amal qilish muddati tugashiga ${daysRemaining} kun qoldi`
+                          : 'Amal qilish muddati tugagan'
+                        : undefined
+                    }
                   >
                     <td className="py-4 px-6 font-semibold text-gray-900 text-base">{student.fullName}</td>
                     <td className="py-4 px-6 text-gray-700 text-base">{student.class}</td>
@@ -373,7 +468,12 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
                     </td>
                     <td className="py-4 px-6 text-gray-700 text-base">{student.academicYear}</td>
                     <td className="py-4 px-6">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {isExpiringSoon && daysRemaining !== null && (
+                          <span className="inline-flex px-2 py-1 rounded-lg text-xs font-bold bg-red-100 text-red-700 border border-red-200 whitespace-nowrap">
+                            {daysRemaining > 0 ? `${daysRemaining} kun` : 'Muddati tugagan'}
+                          </span>
+                        )}
                         <button
                           onClick={() => onViewStudent(student)}
                           className={`inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-xl text-base font-semibold transition-all ${
@@ -385,23 +485,108 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
                           <Eye className="w-5 h-5" />
                           Ko&apos;rish
                         </button>
-                        {isAdmin && (
-                          <button
-                            onClick={() => handleDelete(student.id)}
-                            className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl text-red-600 hover:bg-red-50 border border-red-100 transition-all"
-                            aria-label="O'chirish"
-                          >
-                            <Trash2 className="w-5 h-5" />
-                          </button>
+                        {canManageStudents && (
+                          <>
+                            <button
+                              onClick={() => setEditingStudent(student)}
+                              className={`inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-xl text-base font-semibold transition-all ${
+                                isAdmin
+                                  ? 'text-amber-600 hover:bg-amber-50 border border-amber-100'
+                                  : 'text-amber-600 hover:bg-amber-50 border border-amber-100'
+                              }`}
+                            >
+                              <Pencil className="w-5 h-5" />
+                              Tahrirlash
+                            </button>
+                            <button
+                              onClick={() => handleDelete(student.id)}
+                              className="inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-xl text-base font-semibold text-red-600 hover:bg-red-50 border border-red-100 transition-all"
+                            >
+                              <Trash2 className="w-5 h-5" />
+                              O&apos;chirish
+                            </button>
+                          </>
                         )}
                       </div>
                     </td>
                   </tr>
-                ))
+                  );
+                })
               )}
             </tbody>
           </table>
         </div>
+
+        {canPaginate && filteredStudents.length > PAGE_SIZE && (
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-5 sm:px-6 py-4 border-t border-gray-200 bg-gray-50">
+            <p className="text-sm text-gray-600">
+              <span className="font-semibold text-gray-800">
+                {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, filteredStudents.length)}
+              </span>
+              {' '}/ {filteredStudents.length} ta o&apos;quvchi
+            </p>
+
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setPage(p => Math.max(1, p - 1))}
+                disabled={page === 1}
+                className={`inline-flex items-center gap-1.5 min-h-[40px] px-3 py-2 rounded-xl text-sm font-semibold border transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
+                  isAdmin
+                    ? 'text-indigo-600 border-indigo-100 hover:bg-indigo-50'
+                    : 'text-emerald-600 border-emerald-100 hover:bg-emerald-50'
+                }`}
+              >
+                <ChevronLeft className="w-4 h-4" />
+                Oldingi
+              </button>
+
+              <div className="flex items-center gap-1">
+                {pageNumbers.map((pageNum, index) => {
+                  const prev = pageNumbers[index - 1];
+                  const showEllipsis = prev !== undefined && pageNum - prev > 1;
+
+                  return (
+                    <span key={pageNum} className="flex items-center gap-1">
+                      {showEllipsis && (
+                        <span className="px-1 text-gray-400 text-sm">…</span>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => setPage(pageNum)}
+                        className={`min-w-[40px] min-h-[40px] px-3 py-2 rounded-xl text-sm font-semibold border transition-colors ${
+                          pageNum === page
+                            ? isAdmin
+                              ? 'bg-indigo-600 text-white border-indigo-600'
+                              : 'bg-emerald-600 text-white border-emerald-600'
+                            : isAdmin
+                              ? 'text-indigo-600 border-indigo-100 hover:bg-indigo-50'
+                              : 'text-emerald-600 border-emerald-100 hover:bg-emerald-50'
+                        }`}
+                      >
+                        {pageNum}
+                      </button>
+                    </span>
+                  );
+                })}
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                disabled={page === totalPages}
+                className={`inline-flex items-center gap-1.5 min-h-[40px] px-3 py-2 rounded-xl text-sm font-semibold border transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
+                  isAdmin
+                    ? 'text-indigo-600 border-indigo-100 hover:bg-indigo-50'
+                    : 'text-emerald-600 border-emerald-100 hover:bg-emerald-50'
+                }`}
+              >
+                Keyingi
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

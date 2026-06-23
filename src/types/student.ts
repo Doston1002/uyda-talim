@@ -16,6 +16,8 @@ export interface Student {
   teacherPhone?: string;
   illnessType?: string;
   conclusionDate?: string;
+  illnessEndDate?: string;
+  illnessEndDateMax?: string;
   uploadedFiles?: Array<{ originalname?: string; filename: string; path?: string; url?: string; mimetype?: string; size?: number }>;
   createdBy: string;
   createdAt: string;

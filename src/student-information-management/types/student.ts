@@ -16,6 +16,9 @@ export interface Student {
   teacherPhone?: string;
   illnessType?: string;
   conclusionDate?: string;
+  illnessEndDate?: string;
+  illnessEndDateMax?: string;
+  telegramExpiryNotifiedAt?: string;
   uploadedFiles?: Array<{
     originalname?: string;
     filename: string;

@@ -85,6 +85,7 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
       }
       return true;
     } catch {
+      toast.error('Serverga ulanib bo\'lmadi. Backend (localhost:8000) ishlayotganini tekshiring.');
       return false;
     }
   };
