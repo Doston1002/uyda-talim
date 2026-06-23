@@ -44,8 +44,12 @@ export function SimLogin({ variant = 'standalone' }: SimLoginProps) {
 		setIsLoading(true);
 
 		try {
-			const ok = await login(email, password);
-			if (!ok) {
+			const result = await login(email, password);
+			if (result === 'network') {
+				setError("Serverga ulanib bo'lmadi. API (api.uydatalim.uzedu.uz) ishlayotganini tekshiring.");
+				return;
+			}
+			if (result === 'invalid') {
 				setError("Email yoki parol noto'g'ri");
 				return;
 			}

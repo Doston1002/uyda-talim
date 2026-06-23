@@ -16,7 +16,7 @@ export interface SimUser {
 interface SimAuthContextType {
   user: SimUser | null;
   direktorlar: Direktor[];
-  login: (email: string, password: string) => Promise<boolean>;
+  login: (email: string, password: string) => Promise<'ok' | 'invalid' | 'network'>;
   logout: () => void;
   addDirektor: (direktor: Direktor) => Promise<void>;
   updateDirektor: (id: string, direktor: Direktor) => Promise<void>;
@@ -67,7 +67,7 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
     }
   }, [user, API_URL]);
 
-  const login = async (email: string, password: string): Promise<boolean> => {
+  const login = async (email: string, password: string): Promise<'ok' | 'invalid' | 'network'> => {
     try {
       const res = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
@@ -75,7 +75,7 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
         body: JSON.stringify({ email, password }),
       });
 
-      if (!res.ok) return false;
+      if (!res.ok) return 'invalid';
       const data = await res.json();
       setUser(data);
       try {
@@ -83,10 +83,9 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
       } catch {
         /* localStorage unavailable */
       }
-      return true;
+      return 'ok';
     } catch {
-      toast.error('Serverga ulanib bo\'lmadi. Backend (localhost:8000) ishlayotganini tekshiring.');
-      return false;
+      return 'network';
     }
   };
 
