@@ -54,7 +54,7 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
 
       return matchesSearch && matchesYear && matchesClass && matchesSchool && matchesRegion && matchesDistrict && matchesIllness;
     });
-  }, [students, searchTerm, yearFilter, classFilter, schoolFilter]);
+  }, [students, searchTerm, yearFilter, classFilter, schoolFilter, regionFilter, districtFilter, illnessFilter]);
 
   const uniqueYears = useMemo(() => {
     return Array.from(new Set(students.map(s => s.academicYear))).sort();
@@ -209,14 +209,14 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
           <>
             <button
               onClick={exportToExcel}
-              className={`${simBtnPrimary} bg-green-600 hover:bg-green-700 px-5`}
+              className={`${simBtnPrimary} bg-green-600 hover:bg-green-700 shadow-sm min-w-[200px] justify-center`}
             >
               <Download className="w-5 h-5" />
               Excel yuklab olish
             </button>
             <button
               onClick={exportToPDF}
-              className={`${simBtnPrimary} bg-red-500 hover:bg-red-600 px-5`}
+              className={`${simBtnPrimary} bg-red-500 hover:bg-red-600 shadow-sm min-w-[200px] justify-center`}
             >
               <FileText className="w-5 h-5" />
               PDF yuklab olish
@@ -225,15 +225,14 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
         }
       />
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        {/* Filter toolbar */}
-        <div className="p-5 sm:p-6 border-b border-gray-100 bg-gray-50">
-          <div className="flex items-center justify-between mb-4">
-            <p className="text-base font-semibold text-gray-700">Qidiruv va filtrlar</p>
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="p-5 sm:p-6 border-b border-gray-200">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
+            <p className="text-lg font-bold text-gray-800">Qidiruv va filtrlar</p>
             {hasActiveFilters && (
               <button
                 onClick={clearFilters}
-                className="inline-flex items-center gap-2 min-h-[40px] px-4 py-2 rounded-xl text-base font-medium text-gray-600 hover:text-red-600 hover:bg-red-50 transition-colors"
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2 rounded-xl text-base font-semibold text-red-600 bg-red-50 border border-red-100 hover:bg-red-100 transition-colors w-full sm:w-auto"
               >
                 <X className="w-5 h-5" />
                 Filtrlarni tozalash
@@ -241,8 +240,8 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
             )}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            <div className="sm:col-span-2 lg:col-span-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+            <div className="md:col-span-2 xl:col-span-3">
               <label className={simLabelSm}>Qidirish</label>
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
@@ -327,16 +326,16 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
         </div>
 
         {/* Table */}
-        <div className="overflow-x-auto p-1">
-          <table className="w-full">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[900px]">
             <thead>
               <tr className="border-b-2 border-gray-200 bg-gray-50">
-                <th className="text-left py-4 px-5 font-bold text-gray-800 text-base">F.I.Sh</th>
-                <th className="text-left py-4 px-5 font-bold text-gray-800 text-base">Sinf</th>
-                <th className="text-left py-4 px-5 font-bold text-gray-800 text-base">Maktab</th>
-                <th className="text-left py-4 px-5 font-bold text-gray-800 text-base">Ta&apos;lim turi</th>
-                <th className="text-left py-4 px-5 font-bold text-gray-800 text-base">O&apos;quv yili</th>
-                <th className="text-left py-4 px-5 font-bold text-gray-800 text-base">Amallar</th>
+                <th className="text-left py-4 px-6 font-bold text-gray-800 text-base whitespace-nowrap">F.I.Sh</th>
+                <th className="text-left py-4 px-6 font-bold text-gray-800 text-base whitespace-nowrap">Sinf</th>
+                <th className="text-left py-4 px-6 font-bold text-gray-800 text-base whitespace-nowrap">Maktab</th>
+                <th className="text-left py-4 px-6 font-bold text-gray-800 text-base whitespace-nowrap">Ta&apos;lim turi</th>
+                <th className="text-left py-4 px-6 font-bold text-gray-800 text-base whitespace-nowrap">O&apos;quv yili</th>
+                <th className="text-left py-4 px-6 font-bold text-gray-800 text-base whitespace-nowrap">Amallar</th>
               </tr>
             </thead>
             <tbody>
@@ -351,36 +350,36 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
                   </td>
                 </tr>
               ) : (
-                filteredStudents.map((student) => (
+                filteredStudents.map(student => (
                   <tr
                     key={student.id}
                     className={`border-b border-gray-100 transition-all ${
-                      user?.role === 'admin'
-                        ? 'hover:bg-indigo-50/50'
-                        : 'hover:bg-emerald-50/50'
+                      user?.role === 'admin' ? 'hover:bg-indigo-50/50' : 'hover:bg-emerald-50/50'
                     }`}
                   >
-                    <td className="py-4 px-5 font-medium text-gray-900 text-base">{student.fullName}</td>
-                    <td className="py-4 px-5 text-gray-700 text-base">{student.class}</td>
-                    <td className="py-4 px-5 text-gray-700 text-base">{student.schoolName}</td>
-                    <td className="py-4 px-5">
-                      <span className={`inline-flex px-3 py-1.5 rounded-xl font-semibold text-sm ${
-                        student.educationType === 'inklyuziv'
-                          ? 'bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700'
-                          : 'bg-gradient-to-r from-green-100 to-emerald-100 text-green-700'
-                      }`}>
+                    <td className="py-4 px-6 font-semibold text-gray-900 text-base">{student.fullName}</td>
+                    <td className="py-4 px-6 text-gray-700 text-base">{student.class}</td>
+                    <td className="py-4 px-6 text-gray-700 text-base">{student.schoolName}</td>
+                    <td className="py-4 px-6">
+                      <span
+                        className={`inline-flex px-3 py-1.5 rounded-xl font-semibold text-sm ${
+                          student.educationType === 'inklyuziv'
+                            ? 'bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700'
+                            : 'bg-gradient-to-r from-green-100 to-emerald-100 text-green-700'
+                        }`}
+                      >
                         {student.educationType === 'inklyuziv' ? 'Inklyuziv' : 'Uyda'}
                       </span>
                     </td>
-                    <td className="py-4 px-5 text-gray-700 text-base">{student.academicYear}</td>
-                    <td className="py-4 px-5">
+                    <td className="py-4 px-6 text-gray-700 text-base">{student.academicYear}</td>
+                    <td className="py-4 px-6">
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => onViewStudent(student)}
-                          className={`inline-flex items-center gap-2 min-h-[40px] px-4 py-2 rounded-xl text-base font-medium transition-all ${
+                          className={`inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-xl text-base font-semibold transition-all ${
                             isAdmin
-                              ? 'text-indigo-600 hover:bg-indigo-50'
-                              : 'text-emerald-600 hover:bg-emerald-50'
+                              ? 'text-indigo-600 hover:bg-indigo-50 border border-indigo-100'
+                              : 'text-emerald-600 hover:bg-emerald-50 border border-emerald-100'
                           }`}
                         >
                           <Eye className="w-5 h-5" />
@@ -389,7 +388,8 @@ export function StudentList({ students, onViewStudent, onDeleteStudent }: Studen
                         {isAdmin && (
                           <button
                             onClick={() => handleDelete(student.id)}
-                            className="inline-flex items-center justify-center min-h-[40px] min-w-[40px] rounded-xl text-red-600 hover:bg-red-50 transition-all"
+                            className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl text-red-600 hover:bg-red-50 border border-red-100 transition-all"
+                            aria-label="O'chirish"
                           >
                             <Trash2 className="w-5 h-5" />
                           </button>

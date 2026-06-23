@@ -121,7 +121,7 @@ export function DirektorManagement() {
         actions={
           <button
             onClick={() => setShowForm(true)}
-            className={`${simBtnPrimary} bg-gradient-to-r ${theme.gradient} ${theme.gradientHover}`}
+            className={`${simBtnPrimary} bg-gradient-to-r ${theme.gradient} ${theme.gradientHover} shadow-md min-w-[220px] justify-center`}
           >
             <UserPlus className="w-5 h-5" />
             Direktor qo&apos;shish
@@ -257,18 +257,23 @@ export function DirektorManagement() {
         </SimModal>
       )}
 
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-indigo-50/50 to-white">
+          <p className="text-sm font-semibold text-gray-600">
+            Ro&apos;yxatdagi barcha direktorlar va ularning maktab ma&apos;lumotlari
+          </p>
+        </div>
         <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50">
-              <tr className="border-b-2 border-gray-200">
-                <th className="text-left py-4 px-5 font-bold text-gray-800 text-base">F.I.Sh</th>
-                <th className="text-left py-4 px-5 font-bold text-gray-800 text-base">Email</th>
-                <th className="text-left py-4 px-5 font-bold text-gray-800 text-base">Maktab</th>
-                <th className="text-left py-4 px-5 font-bold text-gray-800 text-base">Viloyat</th>
-                <th className="text-left py-4 px-5 font-bold text-gray-800 text-base">Tuman/Shahar</th>
-                <th className="text-left py-4 px-5 font-bold text-gray-800 text-base">Telefon</th>
-                <th className="text-left py-4 px-5 font-bold text-gray-800 text-base">Amallar</th>
+          <table className="w-full min-w-[1000px]">
+            <thead>
+              <tr className="border-b-2 border-gray-200 bg-gray-50">
+                <th className="text-left py-4 px-6 font-bold text-gray-800 text-base whitespace-nowrap">F.I.Sh</th>
+                <th className="text-left py-4 px-6 font-bold text-gray-800 text-base whitespace-nowrap">Email</th>
+                <th className="text-left py-4 px-6 font-bold text-gray-800 text-base whitespace-nowrap">Maktab</th>
+                <th className="text-left py-4 px-6 font-bold text-gray-800 text-base whitespace-nowrap">Viloyat</th>
+                <th className="text-left py-4 px-6 font-bold text-gray-800 text-base whitespace-nowrap">Tuman/Shahar</th>
+                <th className="text-left py-4 px-6 font-bold text-gray-800 text-base whitespace-nowrap">Telefon</th>
+                <th className="text-left py-4 px-6 font-bold text-gray-800 text-base whitespace-nowrap">Amallar</th>
               </tr>
             </thead>
             <tbody>
@@ -284,24 +289,29 @@ export function DirektorManagement() {
                 </tr>
               ) : (
                 direktorlar.map((direktor, i) => (
-                  <tr key={direktor.id || direktor.email || `direktor-${i}`} className="border-b border-gray-100 hover:bg-indigo-50/50 transition-all">
-                    <td className="py-4 px-5 font-medium text-gray-900 text-base">{direktor.fullName}</td>
-                    <td className="py-4 px-5 text-gray-700 text-base">{direktor.email}</td>
-                    <td className="py-4 px-5 text-gray-700 text-base">{direktor.schoolName}</td>
-                    <td className="py-4 px-5 text-gray-700 text-base">{direktor.region}</td>
-                    <td className="py-4 px-5 text-gray-700 text-base">{direktor.districtOrCity}</td>
-                    <td className="py-4 px-5 text-gray-700 text-base">{direktor.phone}</td>
-                    <td className="py-4 px-5">
+                  <tr
+                    key={direktor.id || direktor.email || `direktor-${i}`}
+                    className="border-b border-gray-100 hover:bg-indigo-50/40 transition-all"
+                  >
+                    <td className="py-4 px-6 font-semibold text-gray-900 text-base">{direktor.fullName}</td>
+                    <td className="py-4 px-6 text-gray-700 text-base">{direktor.email}</td>
+                    <td className="py-4 px-6 text-gray-700 text-base">{direktor.schoolName}</td>
+                    <td className="py-4 px-6 text-gray-700 text-base">{direktor.region}</td>
+                    <td className="py-4 px-6 text-gray-700 text-base">{direktor.districtOrCity}</td>
+                    <td className="py-4 px-6 text-gray-700 text-base whitespace-nowrap">{direktor.phone}</td>
+                    <td className="py-4 px-6">
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleEdit(direktor)}
-                          className="inline-flex items-center justify-center min-h-[40px] min-w-[40px] rounded-xl text-blue-600 hover:bg-blue-50 transition-all"
+                          className="inline-flex items-center gap-2 min-h-[44px] px-4 rounded-xl text-base font-semibold text-indigo-600 hover:bg-indigo-50 border border-indigo-100 transition-all"
                         >
                           <Edit2 className="w-5 h-5" />
+                          Tahrirlash
                         </button>
                         <button
                           onClick={() => handleDelete(direktor.id)}
-                          className="inline-flex items-center justify-center min-h-[40px] min-w-[40px] rounded-xl text-red-600 hover:bg-red-50 transition-all"
+                          className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl text-red-600 hover:bg-red-50 border border-red-100 transition-all"
+                          aria-label="O'chirish"
                         >
                           <Trash2 className="w-5 h-5" />
                         </button>
