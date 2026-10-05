@@ -164,8 +164,14 @@ export function StudentDetail({ student, onClose }: StudentDetailProps) {
                   label="Kasallik turi"
                   value={student.illnessType ? getIllnessLabel(student.illnessType) : undefined}
                 />
-                <InfoItem icon={Calendar} label="Xulosa berilgan sana" value={student.conclusionDate} />
-                <InfoItem icon={Calendar} label="Ta'lim muddati tugash sanasi" value={illnessEndDisplay} />
+                {student.educationType === 'uyda' ? (
+                  <InfoItem icon={Calendar} label="Amal qilish muddati" value={student.illnessEndDate} />
+                ) : (
+                  <>
+                    <InfoItem icon={Calendar} label="Xulosa berilgan sana" value={student.conclusionDate} />
+                    <InfoItem icon={Calendar} label="Ta'lim muddati tugash sanasi" value={illnessEndDisplay} />
+                  </>
+                )}
               </div>
               {student.uploadedFiles && student.uploadedFiles.length > 0 && (
                 <div className="space-y-2">

@@ -5,11 +5,12 @@ import { getSimRoleTheme } from '../theme';
 import { SimPageHeader } from './SimPageHeader';
 import { SimFormField } from './SimFormField';
 import { getSimApiUrl } from '../api';
-import { simInput, simSelect, simTextarea, simFileUpload, simBtnPrimary } from '../sim-ui';
-import { UserPlus, CheckCircle, FileText, CalendarClock } from 'lucide-react';
+import { simInput, simSelect, simBtnPrimary } from '../sim-ui';
+import { UserPlus, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
-import { ILLNESS_TYPES, type IllnessTypeOption } from '../data/illness-types';
-import { calculateIllnessPeriod, formatIllnessPeriodDisplay } from '../utils/illness-duration';// regions/districts removed from this form — kept in direktor account
+import { calculateIllnessPeriod } from '../utils/illness-duration';
+import { SimEducationMedicalFields, type EducationTypeValue } from './SimEducationMedicalFields';
+import { regions, districtsData } from '../data/uzbekistan-regions';
 
 interface AddStudentProps {
   onAddStudent: (student: Student) => void;
@@ -24,31 +25,34 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
     class: '',
     illnessType: '',
     conclusionDate: '',
+    validityPeriod: '',
     conclusionFile: null as File | null,
     phone: '',
     address: '',
     academicYear: '2025-2026',
     notes: '',
     accommodations: '',
-    educationType: 'inklyuziv' as 'inklyuziv' | 'uyda',
+    educationType: '' as EducationTypeValue,
     teacherName: '',
     teacherPhone: '',
+    region: '',
+    districtOrCity: '',
   }));
+  const [selectedRegionId, setSelectedRegionId] = useState<number | null>(null);
 
+  const availableDistricts = useMemo(() => {
+    if (!selectedRegionId) return [];
+    return districtsData[selectedRegionId] || [];
+  }, [selectedRegionId]);
 
   const illnessPeriod = useMemo(() => {
-    if (!formData.illnessType || !formData.conclusionDate) return null;
+    if (formData.educationType !== 'inklyuziv' || !formData.illnessType || !formData.conclusionDate) return null;
     return calculateIllnessPeriod(
       formData.illnessType,
       formData.conclusionDate,
       formData.academicYear,
     );
-  }, [formData.illnessType, formData.conclusionDate, formData.academicYear]);
-
-  const selectedIllness = useMemo(
-    () => ILLNESS_TYPES.find(item => item.id === formData.illnessType),
-    [formData.illnessType],
-  );
+  }, [formData.educationType, formData.illnessType, formData.conclusionDate, formData.academicYear]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,11 +69,19 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
     fd.append('educationType', formData.educationType);
     fd.append('teacherName', formData.teacherName || '');
     fd.append('teacherPhone', formData.teacherPhone || '');
+    fd.append('region', formData.region || '');
+    fd.append('districtOrCity', formData.districtOrCity || '');
     fd.append('illnessType', formData.illnessType || '');
-    fd.append('conclusionDate', formData.conclusionDate || '');
-    if (illnessPeriod) {
-      fd.append('illnessEndDate', illnessPeriod.endDate);
-      if (illnessPeriod.endDateMax) fd.append('illnessEndDateMax', illnessPeriod.endDateMax);
+    if (formData.educationType === 'uyda') {
+      fd.append('conclusionDate', '');
+      fd.append('illnessEndDate', formData.validityPeriod || '');
+      fd.append('illnessEndDateMax', '');
+    } else {
+      fd.append('conclusionDate', formData.conclusionDate || '');
+      if (illnessPeriod) {
+        fd.append('illnessEndDate', illnessPeriod.endDate);
+        if (illnessPeriod.endDateMax) fd.append('illnessEndDateMax', illnessPeriod.endDateMax);
+      }
     }
     if (formData.conclusionFile) fd.append('file', formData.conclusionFile);
 
@@ -100,16 +112,20 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
           class: '',
           illnessType: '',
           conclusionDate: '',
+          validityPeriod: '',
           conclusionFile: null,
           phone: '',
           address: '',
           academicYear: '2025-2026',
           notes: '',
           accommodations: '',
-          educationType: 'inklyuziv',
+          educationType: '',
           teacherName: '',
           teacherPhone: '',
+          region: '',
+          districtOrCity: '',
         });
+        setSelectedRegionId(null);
       })
       .catch(() => {
         toast.error('Tarmoq xatosi. Iltimos, qaytadan urinib ko\'ring');
@@ -118,7 +134,29 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    if (name === 'educationType') {
+      setFormData(prev => ({
+        ...prev,
+        educationType: value as EducationTypeValue,
+        illnessType: '',
+        conclusionDate: '',
+        validityPeriod: '',
+        conclusionFile: null,
+      }));
+      return;
+    }
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleRegionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const regionId = parseInt(e.target.value, 10);
+    const region = regions.find(r => r.id === regionId);
+    setSelectedRegionId(Number.isNaN(regionId) ? null : regionId);
+    setFormData(prev => ({
+      ...prev,
+      region: region?.name || '',
+      districtOrCity: '',
+    }));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -159,108 +197,25 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
               className={`${simSelect} !pl-4`}
               required
             >
+              <option value="">Tanlang</option>
               <option value="inklyuziv">Inklyuziv ta'lim</option>
               <option value="uyda">Uyda ta'lim</option>
             </select>
           </SimFormField>
 
           {(user?.role === 'direktor' || user?.role === 'admin') && (
-            <SimFormField label="Kasallik turi" className="md:col-span-2">
-              <select
-                id="illnessType"
-                name="illnessType"
-                value={formData.illnessType}
-                onChange={handleChange}
-                className={`${simSelect} !pl-4`}
-              >
-                <option value="">Tanlang</option>
-                {ILLNESS_TYPES.reduce<{ category: string; items: IllnessTypeOption[] }[]>((groups, item) => {
-                  const last = groups[groups.length - 1];
-                  if (!last || last.category !== item.category) {
-                    groups.push({ category: item.category, items: [item] });
-                  } else {
-                    last.items.push(item);
-                  }
-                  return groups;
-                }, []).map((group, groupIndex) => (
-                  <optgroup key={group.category} label={`${groupIndex + 1}. ${group.category}`}>
-                    {group.items.map(item => (
-                      <option key={item.id} value={item.id}>
-                        {item.label} ({item.durationLabel})
-                      </option>
-                    ))}
-                  </optgroup>
-                ))}
-              </select>
-            </SimFormField>
-          )}
-
-          {(user?.role === 'direktor' || user?.role === 'admin') && selectedIllness && (
-            <div className="md:col-span-2 rounded-xl border border-indigo-100 bg-indigo-50/60 p-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-indigo-600 mb-1">
-                Uyda yakka tartibda taʼlim muddati
-              </p>
-              <p className="text-sm text-gray-700">
-                <span className="font-medium">{selectedIllness.label}</span>
-                {' — '}
-                <span className="font-semibold text-indigo-700">{selectedIllness.durationLabel}</span>
-                {selectedIllness.duration === 'academic_year' && (
-                  <span className="text-gray-500"> (2-sentabrdan 25-maygacha)</span>
-                )}
-              </p>
-            </div>
-          )}
-
-          {(user?.role === 'direktor' || user?.role === 'admin') && (
-            <>
-              <SimFormField label="Xulosa berilgan sana">
-                <input
-                  id="conclusionDate"
-                  name="conclusionDate"
-                  type="date"
-                  value={formData.conclusionDate}
-                  onChange={handleChange}
-                  className={`${simInput} !pl-4`}
-                />
-              </SimFormField>
-
-              {illnessPeriod && (
-                <SimFormField label="Ta'lim muddati tugash sanasi">
-                  <div className="flex items-start gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3">
-                    <CalendarClock className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                    <div className="min-w-0">
-                      <p className="text-sm font-semibold text-emerald-800">
-                        {illnessPeriod.isRange && illnessPeriod.endDateMax
-                          ? `${illnessPeriod.endDate} — ${illnessPeriod.endDateMax}`
-                          : illnessPeriod.endDate}
-                      </p>
-                      <p className="text-xs text-emerald-700 mt-0.5">
-                        {formatIllnessPeriodDisplay(illnessPeriod)}
-                      </p>
-                    </div>
-                  </div>
-                </SimFormField>
-              )}
-
-              <SimFormField label="Xulosa (PDF)" className={illnessPeriod ? '' : 'md:col-span-1'}>
-                <label htmlFor="conclusionFile" className={simFileUpload}>
-                  <FileText className="w-5 h-5 shrink-0" />
-                  <span className="truncate">
-                    {formData.conclusionFile
-                      ? formData.conclusionFile.name
-                      : 'PDF fayl tanlang'}
-                  </span>
-                </label>
-                <input
-                  id="conclusionFile"
-                  name="conclusionFile"
-                  type="file"
-                  accept="application/pdf"
-                  onChange={handleFileChange}
-                  className="sr-only"
-                />
-              </SimFormField>
-            </>
+            <SimEducationMedicalFields
+              educationType={formData.educationType}
+              illnessType={formData.illnessType}
+              conclusionDate={formData.conclusionDate}
+              validityPeriod={formData.validityPeriod}
+              conclusionFile={formData.conclusionFile}
+              academicYear={formData.academicYear}
+              onChange={handleChange}
+              onFileChange={handleFileChange}
+              fileInputId="conclusionFile"
+              filePlaceholder="PDF fayl tanlang"
+            />
           )}
 
           <SimFormField label="Tug'ilgan sana" required>
@@ -334,6 +289,42 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
 
         
 
+          {user?.role === 'direktor' && (
+            <>
+              <SimFormField label="Viloyat" required className="md:col-start-1">
+                <select
+                  value={selectedRegionId || ''}
+                  onChange={handleRegionChange}
+                  className={`${simSelect} !pl-4`}
+                  required
+                >
+                  <option value="">Viloyatni tanlang</option>
+                  {regions.map(region => (
+                    <option key={region.id} value={region.id}>{region.name}</option>
+                  ))}
+                </select>
+              </SimFormField>
+
+              <SimFormField label="Tuman/Shahar" required>
+                <select
+                  name="districtOrCity"
+                  value={formData.districtOrCity}
+                  onChange={handleChange}
+                  className={`${simSelect} !pl-4`}
+                  required
+                  disabled={!selectedRegionId}
+                >
+                  <option value="">
+                    {selectedRegionId ? 'Tuman/Shaharni tanlang' : 'Avval viloyatni tanlang'}
+                  </option>
+                  {availableDistricts.map((district, i) => (
+                    <option key={`${district}-${i}`} value={district}>{district}</option>
+                  ))}
+                </select>
+              </SimFormField>
+            </>
+          )}
+
           <SimFormField label="Manzil" required className="md:col-span-2">
             <input
               id="address"
@@ -358,19 +349,6 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
             >
               <option value="2026-2027">2026-2027</option>
             </select>
-          </SimFormField>
-
-    
-
-          <SimFormField label="Izoh" className="md:col-span-2">
-            <textarea
-              id="notes"
-              name="notes"
-              value={formData.notes}
-              onChange={handleChange}
-              className={`${simTextarea} !p-4 !placeholder-gray-600`}
-              placeholder="Qo'shimcha ma'lumotlar"
-            />
           </SimFormField>
         </div>
 

@@ -157,7 +157,6 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
         "O'qituvchi": student.teacherName || '',
         "O'qituvchi telefoni": student.teacherPhone || '',
         'Manzil': student.address,
-        'Izoh': student.notes,
       };
 
       // include school/region/district only for admin
@@ -172,8 +171,8 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
 
       // include medical fields for both roles
       base['Kasallik turi'] = student.illnessType ? getIllnessLabel(student.illnessType) : '';
-      base['Xulosa sanasi'] = student.conclusionDate || '';
-      base['Muddat tugash sanasi'] = getIllnessEndDisplay(student);
+      base['Xulosa sanasi'] = student.educationType === 'uyda' ? '' : (student.conclusionDate || '');
+      base['Amal qilish muddati'] = getIllnessEndDisplay(student);
 
       return base;
     });
@@ -204,7 +203,7 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
       headers.push('Viloyat', 'Tuman/Shahar');
     }
     // medical fields appended for both roles
-    headers.push('Kasallik turi', 'Xulosa sanasi', 'Muddat tugash sanasi');
+    headers.push('Kasallik turi', 'Xulosa sanasi', 'Amal qilish muddati');
 
     const tableData = filteredStudents.map((student) => {
       const row: any[] = [
@@ -226,7 +225,7 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
       // medical
       row.push(
         student.illnessType ? getIllnessLabel(student.illnessType) : '',
-        student.conclusionDate || '',
+        student.educationType === 'uyda' ? '' : (student.conclusionDate || ''),
         getIllnessEndDisplay(student),
       );
 
@@ -388,7 +387,7 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
                 </div>
 
                 <div>
-                  <label className={simLabelSm}>Kasallik turi</label>
+                  <label className={`${simLabelSm} !text-gray-600`}>Kasallik turi</label>
                   <select value={illnessFilter} onChange={e => setIllnessFilter(e.target.value)} className={simSelect}>
                     <option value="all">Barcha kasalliklar</option>
                     {uniqueIllnesses.map((ill, i) => (

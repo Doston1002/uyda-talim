@@ -317,6 +317,8 @@ export const ILLNESS_TYPES: IllnessTypeOption[] = [
   },
 ];
 
+import { getUydaIllnessById, getUydaIllnessLabel } from './uyda-illness-types';
+
 const illnessById = new Map(ILLNESS_TYPES.map(item => [item.id, item]));
 
 export function getIllnessById(id: string): IllnessTypeOption | undefined {
@@ -324,5 +326,21 @@ export function getIllnessById(id: string): IllnessTypeOption | undefined {
 }
 
 export function getIllnessLabel(id: string): string {
-  return illnessById.get(id)?.label ?? id;
+  const inklyuziv = illnessById.get(id);
+  if (inklyuziv) return inklyuziv.label;
+  const uyda = getUydaIllnessById(id);
+  if (uyda) return getUydaIllnessLabel(id);
+  return id;
+}
+
+export function groupByCategory<T extends { category: string }>(items: T[]) {
+  return items.reduce<{ category: string; items: T[] }[]>((groups, item) => {
+    const last = groups[groups.length - 1];
+    if (!last || last.category !== item.category) {
+      groups.push({ category: item.category, items: [item] });
+    } else {
+      last.items.push(item);
+    }
+    return groups;
+  }, []);
 }
