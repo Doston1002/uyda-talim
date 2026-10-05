@@ -60,7 +60,7 @@ export function Dashboard({ students }: DashboardProps) {
 
   const isAdmin = user?.role === 'admin';
 
-  const academicYears = ['2024-2025', '2025-2026', '2026-2027'];
+  const academicYears = [ '2026-2027'];
   const chartGradients = [
     'from-blue-500 to-cyan-500',
     'from-purple-500 to-pink-500',

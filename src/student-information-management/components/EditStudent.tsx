@@ -304,7 +304,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
           </>
         )}
 
-        <SimFormField label="Telefon" required>
+        <SimFormField label="Ota-ona yoki oʻrnini bosuvchi shaxs telefon raqami" required>
           <input
             name="phone"
             type="tel"
@@ -347,21 +347,11 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
             className={`${simSelect} !pl-4 !text-gray-600 !placeholder-gray-600`}
             required
           >
-            <option value="2024-2025">2024-2025</option>
-            <option value="2025-2026">2025-2026</option>
             <option value="2026-2027">2026-2027</option>
           </select>
         </SimFormField>
 
-        <SimFormField label="Qo'shimcha qulayliklar">
-          <input
-            name="accommodations"
-            type="text"
-            value={formData.accommodations}
-            onChange={handleChange}
-            className={`${simInput} !pl-4 !text-gray-600 !placeholder-gray-600`}
-          />
-        </SimFormField>
+    
 
         <SimFormField label="Izoh" className="md:col-span-2">
           <textarea

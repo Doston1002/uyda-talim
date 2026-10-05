@@ -138,7 +138,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
 
       <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sm:p-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 !text-gray-600">
-          <SimFormField label="F.I.Sh" required className="md:col-span-2 !text-gray-600">
+          <SimFormField label="F.I.Sh" required className=" !text-gray-600">
             <input
               id="fullName"
               name="fullName"
@@ -149,6 +149,19 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
               placeholder="To'liq ism sharifingizni kiriting"
               required
             />
+          </SimFormField>
+          <SimFormField label="Ta'lim turi" required>
+            <select
+              id="educationType"
+              name="educationType"
+              value={formData.educationType}
+              onChange={handleChange}
+              className={`${simSelect} !pl-4`}
+              required
+            >
+              <option value="inklyuziv">Inklyuziv ta'lim</option>
+              <option value="uyda">Uyda ta'lim</option>
+            </select>
           </SimFormField>
 
           {(user?.role === 'direktor' || user?.role === 'admin') && (
@@ -306,7 +319,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
             </>
           )}
 
-          <SimFormField label="Telefon" required>
+          <SimFormField label="Ota-ona yoki oʻrnini bosuvchi shaxs telefon raqami" required>
             <input
               id="phone"
               name="phone"
@@ -319,19 +332,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
             />
           </SimFormField>
 
-          <SimFormField label="Ta'lim turi" required>
-            <select
-              id="educationType"
-              name="educationType"
-              value={formData.educationType}
-              onChange={handleChange}
-              className={`${simSelect} !pl-4`}
-              required
-            >
-              <option value="inklyuziv">Inklyuziv ta'lim</option>
-              <option value="uyda">Uyda ta'lim</option>
-            </select>
-          </SimFormField>
+        
 
           <SimFormField label="Manzil" required className="md:col-span-2">
             <input
@@ -355,23 +356,11 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
               className={`${simSelect} !pl-4`}
               required
             >
-              <option value="2024-2025">2024-2025</option>
-              <option value="2025-2026">2025-2026</option>
               <option value="2026-2027">2026-2027</option>
             </select>
           </SimFormField>
 
-          <SimFormField label="Qo'shimcha qulayliklar">
-            <input
-              id="accommodations"
-              name="accommodations"
-              type="text"
-              value={formData.accommodations}
-              onChange={handleChange}
-              className={`${simInput} !pl-4`}
-              placeholder="Kerakli qulayliklar"
-            />
-          </SimFormField>
+    
 
           <SimFormField label="Izoh" className="md:col-span-2">
             <textarea

@@ -131,9 +131,7 @@ export function StudentDetail({ student, onClose }: StudentDetailProps) {
               <InfoItem icon={Calendar} label="O'quv yili" value={student.academicYear} />
               <InfoItem icon={Phone} label="Telefon" value={student.phone} />
               <InfoItem icon={MapPin} label="Manzil" value={student.address} />
-              {student.accommodations && (
-                <InfoItem icon={Award} label="Qo'shimcha qulayliklar" value={student.accommodations} />
-              )}
+           
             </div>
           </div>
 
