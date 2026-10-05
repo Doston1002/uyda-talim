@@ -1,3 +1,4 @@
+import { useColorMode } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import { useRouter } from 'next/router';
 import { useSimAuth } from '../contexts/SimAuthContext';
@@ -34,6 +35,8 @@ function getUserInitial(email?: string) {
 export function Layout({ children, currentPage, onNavigate }: LayoutProps) {
   const { user, logout } = useSimAuth();
   const router = useRouter();
+  const { colorMode } = useColorMode();
+  const isDark = colorMode === 'dark';
   const theme = getSimRoleTheme(user?.role);
 
   const handleLogout = () => {
@@ -67,14 +70,16 @@ export function Layout({ children, currentPage, onNavigate }: LayoutProps) {
             flex-1 flex flex-col items-center justify-center gap-1.5 min-h-[72px] px-3 py-3 rounded-xl font-semibold text-xs sm:text-sm transition-all duration-200
             ${
               isActive
-                ? `bg-gradient-to-r ${theme.gradient} text-white shadow-md`
-                : 'text-gray-600 bg-white hover:bg-gray-50'
+                ? `bg-gradient-to-r ${theme.gradient} text-xs text-gray-500 shadow-md`
+                : isDark
+                  ? 'text-xs text-gray-500 bg-gray-800 hover:bg-gray-700'
+                  : 'text-gray-600 bg-white hover:bg-gray-50'
             }
           `}
         >
           <span
             className={`flex items-center justify-center w-10 h-10 rounded-xl ${
-              isActive ? 'bg-white/20' : 'bg-gray-100'
+              isActive ? 'bg-white/20' : isDark ? 'bg-gray-700' : 'bg-gray-100'
             }`}
           >
             <Icon className="w-5 h-5" />
@@ -90,17 +95,23 @@ export function Layout({ children, currentPage, onNavigate }: LayoutProps) {
         onClick={() => onNavigate(item.id)}
         aria-current={isActive ? 'page' : undefined}
         className={`
-          group relative inline-flex items-center gap-3 px-5 py-2.5 rounded-xl font-semibold text-[15px] transition-all duration-200
+          group relative inline-flex items-center gap-4 px-5 py-2.5 rounded-xl font-semibold text-[15px] transition-all duration-200
           ${
             isActive
-              ? `bg-gradient-to-r ${theme.gradient} text-white shadow-lg`
-              : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+              ? ` ${theme.gradient} `
+              : isDark
+                ? ''
+                : ''
           }
         `}
       >
         <span
-          className={`flex items-center justify-center w-9 h-9 rounded-lg transition-colors ${
-            isActive ? 'bg-white/25' : 'bg-gray-100 group-hover:bg-gray-200/70'
+          className={`flex items-center justify-center w-9 h-9${
+            isActive
+              ? 'bg-gray-100'
+              : isDark
+                ? ' '
+                : ' '
           }`}
         >
           <Icon className="w-[18px] h-[18px]" />
@@ -142,7 +153,7 @@ export function Layout({ children, currentPage, onNavigate }: LayoutProps) {
                   </h1>
                   <div className="flex items-center gap-2 mt-1 flex-wrap">
                     <span
-                      className={`inline-flex items-center text-xs sm:text-sm font-semibold px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full border ${theme.badge}`}
+                      className={`inline-flex items-center text-xs sm:text-sm font-semibold px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full border  ${theme.badge}`}
                     >
                       {theme.label}
                     </span>
@@ -152,7 +163,7 @@ export function Layout({ children, currentPage, onNavigate }: LayoutProps) {
 
               {/* Center navigation */}
               <div className="hidden lg:flex flex-1 justify-center px-4">
-                <div className="inline-flex items-center gap-2 p-2 rounded-2xl bg-white border border-gray-200 shadow-[0_2px_12px_rgba(15,23,42,0.06)]">
+                <div className="inline-flex items-center gap-2 p-2 rounded-2xl bg-gray-100 text-gray-600 border border-gray-200 shadow-[0_2px_12px_rgba(15,23,42,0.06)]">
                   {menuItems.map(item => renderNavButton(item))}
                 </div>
               </div>
@@ -173,10 +184,10 @@ export function Layout({ children, currentPage, onNavigate }: LayoutProps) {
 
                 <button
                   onClick={handleLogout}
-                  className="inline-flex items-center gap-2 min-h-[46px] px-4 rounded-xl text-sm font-semibold text-red-600 bg-red-50 border border-red-100 hover:bg-red-100 hover:border-red-200 hover:shadow-sm transition-all"
+                  className="inline-flex items-center gap-2 min-h-[50px] !px-2 rounded-xl !bg-gray-100 text-sm font-semibold text-red-600 bg-red-50 border border-red-100 hover:border-red-200 hover:shadow-sm transition-all"
                 >
-                  <LogOut className="w-[18px] h-[18px]" />
-                  <span>Chiqish</span>
+                  <LogOut className="text-gray-600 w-[18px] h-[18px]" />
+                  <span className="text-gray-600">Chiqish</span>
                 </button>
               </div>
 

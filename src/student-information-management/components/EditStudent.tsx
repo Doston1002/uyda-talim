@@ -145,14 +145,14 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
       maxWidth="max-w-3xl"
       footer={
         <>
-          <button type="button" onClick={onClose} className={simBtnSecondary} disabled={isSaving}>
+          <button type="button" onClick={onClose} className={`${simBtnSecondary} !text-gray-600 !p-3`} disabled={isSaving}>
             Bekor qilish
           </button>
           <button
             type="submit"
             form="edit-student-form"
             disabled={isSaving}
-            className={`${simBtnPrimary} bg-gradient-to-r ${theme.gradient} ${theme.gradientHover}`}
+            className={`${simBtnPrimary} bg-gradient-to-r !text-gray-600 !p-3 ${theme.gradient} ${theme.gradientHover}`}
           >
             <Save className="w-5 h-5" />
             {isSaving ? 'Saqlanmoqda...' : 'Saqlash'}
@@ -161,23 +161,24 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
       }
     >
       <form id="edit-student-form" onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        <SimFormField label="F.I.Sh" required className="md:col-span-2">
+        <SimFormField label="F.I.Sh" required className="md:col-span-2 !text-gray-600">
           <input
             name="fullName"
             type="text"
             value={formData.fullName}
             onChange={handleChange}
-            className={simInput}
+            placeholder="To'liq ism sharifingizni kiriting"
+            className={`${simInput} !text-gray-600 !pl-4 !placeholder-gray-600`}
             required
           />
         </SimFormField>
 
-        <SimFormField label="Kasallik turi" className="md:col-span-2">
+        <SimFormField label="Kasallik turi" className="md:col-span-2 !text-gray-600">
           <select
             name="illnessType"
             value={formData.illnessType}
             onChange={handleChange}
-            className={simSelect}
+            className={`${simSelect} !pl-4`}
           >
             <option value="">Tanlang</option>
             {ILLNESS_TYPES.reduce<{ category: string; items: IllnessTypeOption[] }[]>((groups, item) => {
@@ -297,7 +298,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
                 type="tel"
                 value={formData.teacherPhone}
                 onChange={handleChange}
-                className={simInput}
+                className={`${simInput} !pl-4`}
               />
             </SimFormField>
           </>
@@ -333,7 +334,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
             type="text"
             value={formData.address}
             onChange={handleChange}
-            className={simInput}
+            className={`${simInput} !pl-4`}
             required
           />
         </SimFormField>
@@ -343,7 +344,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
             name="academicYear"
             value={formData.academicYear}
             onChange={handleChange}
-            className={simSelect}
+            className={`${simSelect} !pl-4`}
             required
           >
             <option value="2024-2025">2024-2025</option>
@@ -358,7 +359,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
             type="text"
             value={formData.accommodations}
             onChange={handleChange}
-            className={simInput}
+            className={`${simInput} !pl-4`}
           />
         </SimFormField>
 

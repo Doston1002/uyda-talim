@@ -26,6 +26,9 @@ const AuthNavbarComponent = () => {
 	const { colorMode, toggleColorMode } = useColorMode();
 	const { t, i18n } = useTranslation();
 	const linkHover = useColorModeValue('black', 'white');
+	const linkColor = useColorModeValue('gray.700', 'gray.100');
+	const headerBg = useColorModeValue('gray.50', 'gray.900');
+	const headerBorder = useColorModeValue('gray.200', 'gray.700');
 
 	const onLanguage = (lng: string) => {
 		i18n.changeLanguage(lng);
@@ -41,7 +44,15 @@ const AuthNavbarComponent = () => {
 	};
 
 	return (
-		<Box w={'full'} zIndex={999} h={'10vh'}>
+		<Box
+			w={'full'}
+			zIndex={999}
+			h={'10vh'}
+			bg={headerBg}
+			color={useColorModeValue('gray.800', 'gray.100')}
+			borderBottom={'1px'}
+			borderBottomColor={headerBorder}
+		>
 			<Container maxW={'container.lg'}>
 				<Flex align={'center'} justify={'space-between'} h={'10vh'}>
 					<HStack>
@@ -69,7 +80,8 @@ const AuthNavbarComponent = () => {
 							<Link href={nav.route}>
 								<Box
 									display={{ base: 'none', md: 'flex' }}
-									color={'facebook.300'}
+									color={linkColor}
+									fontWeight={'medium'}
 									_hover={{ textDecoration: 'underline', color: linkHover }}
 									as='a'
 								>
@@ -129,7 +141,8 @@ const AuthNavbarComponent = () => {
 					{navigation[1].links.map(nav => (
 						<Link href={nav.route}>
 							<Box
-								color={'facebook.300'}
+								color={linkColor}
+								fontWeight={'medium'}
 								_hover={{ textDecoration: 'underline', color: linkHover }}
 								as='a'
 							>

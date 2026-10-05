@@ -137,15 +137,15 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
       />
 
       <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sm:p-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <SimFormField label="F.I.Sh" required className="md:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 !text-gray-600">
+          <SimFormField label="F.I.Sh" required className="md:col-span-2 !text-gray-600">
             <input
               id="fullName"
               name="fullName"
               type="text"
               value={formData.fullName}
               onChange={handleChange}
-              className={simInput}
+              className={`${simInput} !pl-4 !text-gray-600 !placeholder-gray-600`}
               placeholder="To'liq ism sharifingizni kiriting"
               required
             />
@@ -158,7 +158,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
                 name="illnessType"
                 value={formData.illnessType}
                 onChange={handleChange}
-                className={simSelect}
+                className={`${simSelect} !pl-4`}
               >
                 <option value="">Tanlang</option>
                 {ILLNESS_TYPES.reduce<{ category: string; items: IllnessTypeOption[] }[]>((groups, item) => {
@@ -207,7 +207,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
                   type="date"
                   value={formData.conclusionDate}
                   onChange={handleChange}
-                  className={simInput}
+                  className={`${simInput} !pl-4`}
                 />
               </SimFormField>
 
@@ -257,7 +257,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
               type="date"
               value={formData.birthDate}
               onChange={handleChange}
-              className={simInput}
+              className={`${simInput} !pl-4`}
               required
             />
           </SimFormField>
@@ -268,7 +268,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
               name="class"
               value={formData.class}
               onChange={handleChange}
-              className={simSelect}
+              className={`${simSelect} !pl-4`}
               required
             >
               <option value="">Tanlang</option>
@@ -287,7 +287,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
                   type="text"
                   value={formData.teacherName}
                   onChange={handleChange}
-                  className={simInput}
+                  className={`${simInput} !pl-4 !placeholder-gray-600`}
                   placeholder="O'qituvchi ismini kiriting"
                 />
               </SimFormField>
@@ -299,7 +299,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
                   type="tel"
                   value={formData.teacherPhone}
                   onChange={handleChange}
-                  className={simInput}
+                  className={`${simInput} !pl-4 !placeholder-gray-600`}
                   placeholder="+998 90 123 45 67"
                 />
               </SimFormField>
@@ -313,7 +313,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
               type="tel"
               value={formData.phone}
               onChange={handleChange}
-              className={simInput}
+              className={`${simInput} !pl-4 !placeholder-gray-600`}
               placeholder="+998 90 123 45 67"
               required
             />
@@ -325,7 +325,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
               name="educationType"
               value={formData.educationType}
               onChange={handleChange}
-              className={simSelect}
+              className={`${simSelect} !pl-4`}
               required
             >
               <option value="inklyuziv">Inklyuziv ta'lim</option>
@@ -340,7 +340,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
               type="text"
               value={formData.address}
               onChange={handleChange}
-              className={simInput}
+              className={`${simInput} !pl-4 !placeholder-gray-600`}
               placeholder="To'liq manzilni kiriting"
               required
             />
@@ -352,7 +352,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
               name="academicYear"
               value={formData.academicYear}
               onChange={handleChange}
-              className={simSelect}
+              className={`${simSelect} !pl-4`}
               required
             >
               <option value="2024-2025">2024-2025</option>
@@ -368,7 +368,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
               type="text"
               value={formData.accommodations}
               onChange={handleChange}
-              className={simInput}
+              className={`${simInput} !pl-4`}
               placeholder="Kerakli qulayliklar"
             />
           </SimFormField>
@@ -379,7 +379,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
               name="notes"
               value={formData.notes}
               onChange={handleChange}
-              className={simTextarea}
+              className={`${simTextarea} !p-4 !placeholder-gray-600`}
               placeholder="Qo'shimcha ma'lumotlar"
             />
           </SimFormField>
@@ -388,7 +388,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
         <div className="mt-8 flex justify-end">
           <button
             type="submit"
-            className={`${simBtnPrimary} bg-gradient-to-r ${theme.gradient} ${theme.gradientHover} hover:shadow-lg`}
+            className={`${simBtnPrimary} bg-gradient-to-r ${theme.gradient} !text-gray-600 !p-4 ${theme.gradientHover} hover:shadow-lg`}
           >
             <UserPlus className="w-5 h-5" />
             O&apos;quvchi qo&apos;shish

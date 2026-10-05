@@ -176,16 +176,16 @@ export function DirektorManagement() {
           <>
             <button
               onClick={exportToExcel}
-              className={`${simBtnPrimary} bg-green-600 hover:bg-green-700 shadow-sm min-w-[220px] justify-center`}
+              className={`${simBtnPrimary}  bg-green-600 hover:bg-green-700 shadow-sm min-w-[220px] justify-center`}
             >
-              <Download className="w-5 h-5" />
+              <Download className="w-5 h-5 !text-gray-600" />
               Excel yuklab olish
             </button>
             <button
               onClick={openAddForm}
               className={`${simBtnPrimary} bg-gradient-to-r ${theme.gradient} ${theme.gradientHover} shadow-md min-w-[220px] justify-center`}
             >
-              <UserPlus className="w-5 h-5" />
+              <UserPlus className="w-5 h-5 !text-gray-600" />
               Direktor qo&apos;shish
             </button>
           </>

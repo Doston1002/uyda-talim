@@ -285,16 +285,16 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
           <>
             <button
               onClick={exportToExcel}
-              className={`${simBtnPrimary} bg-green-600 hover:bg-green-700 shadow-sm min-w-[200px] justify-center`}
+              className={`${simBtnPrimary} bg-green-600 !text-gray-600 hover:bg-green-700 shadow-sm min-w-[200px] justify-center`}
             >
-              <Download className="w-5 h-5" />
+              <Download className="w-5 h-5 !text-gray-600" />
               Excel yuklab olish
             </button>
             <button
               onClick={exportToPDF}
-              className={`${simBtnPrimary} bg-red-500 hover:bg-red-600 shadow-sm min-w-[200px] justify-center`}
+              className={`${simBtnPrimary} !text-gray-600 bg-red-500 hover:bg-red-600 shadow-sm min-w-[200px] justify-center`}
             >
-              <FileText className="w-5 h-5" />
+              <FileText className="w-5 h-5 !text-gray-600" />
               PDF yuklab olish
             </button>
           </>
@@ -302,7 +302,7 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
       />
 
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className="p-5 sm:p-6 border-b border-gray-200">
+        <div className="p-5 sm:p-6 border-b border-gray-200 !text-gray-600">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
             <p className="text-lg font-bold text-gray-800">Qidiruv va filtrlar</p>
             {hasActiveFilters && (
@@ -316,24 +316,24 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
             )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-            <div className="md:col-span-2 xl:col-span-3">
-              <label className={simLabelSm}>Qidirish</label>
-              <div className="relative">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 !text-gray-600 ">
+            <div className="md:col-span-2 xl:col-span-3 ">
+              <label className={`${simLabelSm}`}>Qidirish</label>
+              <div className="relative ">
+                <Search className="absolute left-4 !text-gray-600 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 pointer-events-none" />
                 <input
                   type="text"
                   placeholder="Ism, maktab yoki sinf bo'yicha..."
                   value={searchTerm}
                   onChange={e => setSearchTerm(e.target.value)}
-                  className={`${simInput} pl-12`}
+                  className={`${simInput} !pl-12 !text-gray-600 !placeholder-gray-600`}
                 />
               </div>
             </div>
 
             <div>
-              <label className={simLabelSm}>O&apos;quv yili</label>
-              <select value={yearFilter} onChange={e => setYearFilter(e.target.value)} className={simSelect}>
+              <label className={`${simLabelSm} pl-2`}>O&apos;quv yili</label>
+              <select value={yearFilter} onChange={e => setYearFilter(e.target.value)} className={`${simSelect} !text-gray-600 !pl-4`}>
                 <option value="all">Barcha yillar</option>
                 {uniqueYears.map((year, i) => (
                   <option key={`${year}-${i}`} value={year}>{year}</option>
@@ -342,8 +342,8 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
             </div>
 
             <div>
-              <label className={simLabelSm}>Sinf</label>
-              <select value={classFilter} onChange={e => setClassFilter(e.target.value)} className={simSelect}>
+              <label className={`${simLabelSm} pl-2`}>Sinf</label>
+              <select value={classFilter} onChange={e => setClassFilter(e.target.value)} className={`${simSelect} !text-gray-600 !pl-4`}>
                 <option value="all">Barcha sinflar</option>
                 {uniqueClasses.map((cls, i) => (
                   <option key={`${cls}-${i}`} value={cls}>{cls}</option>
@@ -352,8 +352,8 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
             </div>
 
             <div>
-              <label className={simLabelSm}>Maktab</label>
-              <select value={schoolFilter} onChange={e => setSchoolFilter(e.target.value)} className={simSelect}>
+              <label className={`${simLabelSm} pl-2`}>Maktab</label>
+              <select value={schoolFilter} onChange={e => setSchoolFilter(e.target.value)} className={`${simSelect} !text-gray-600 !pl-4`}>
                 <option value="all">Barcha maktablar</option>
                 {uniqueSchools.map((s, i) => (
                   <option key={`${s}-${i}`} value={s}>{s}</option>
@@ -476,20 +476,20 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
                         )}
                         <button
                           onClick={() => onViewStudent(student)}
-                          className={`inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-xl text-base font-semibold transition-all ${
+                          className={`inline-flex items-center !text-gray-600 gap-2 min-h-[44px] px-4 py-2 rounded-xl text-base font-semibold transition-all ${
                             isAdmin
                               ? 'text-indigo-600 hover:bg-indigo-50 border border-indigo-100'
                               : 'text-emerald-600 hover:bg-emerald-50 border border-emerald-100'
                           }`}
                         >
-                          <Eye className="w-5 h-5" />
+                          <Eye className="w-5 h-5 !text-gray-600" />
                           Ko&apos;rish
                         </button>
                         {canManageStudents && (
                           <>
                             <button
                               onClick={() => setEditingStudent(student)}
-                              className={`inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-xl text-base font-semibold transition-all ${
+                              className={`inline-flex items-center !text-gray-600 gap-2 min-h-[44px] px-4 py-2 rounded-xl text-base font-semibold transition-all ${
                                 isAdmin
                                   ? 'text-amber-600 hover:bg-amber-50 border border-amber-100'
                                   : 'text-amber-600 hover:bg-amber-50 border border-amber-100'
@@ -500,7 +500,7 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
                             </button>
                             <button
                               onClick={() => handleDelete(student.id)}
-                              className="inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-xl text-base font-semibold text-red-600 hover:bg-red-50 border border-red-100 transition-all"
+                              className="inline-flex items-center gap-2 !text-gray-600 min-h-[44px] px-4 py-2 rounded-xl text-base font-semibold text-red-600 hover:bg-red-50 border border-red-100 transition-all"
                             >
                               <Trash2 className="w-5 h-5" />
                               O&apos;chirish
