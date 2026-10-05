@@ -176,14 +176,14 @@ export function DirektorManagement() {
           <>
             <button
               onClick={exportToExcel}
-              className={`${simBtnPrimary}  bg-green-600 hover:bg-green-700 shadow-sm min-w-[220px] justify-center`}
+              className={`${simBtnPrimary} !text-gray-600 bg-green-600 hover:bg-green-700 shadow-sm min-w-[220px] justify-center`}
             >
               <Download className="w-5 h-5 !text-gray-600" />
               Excel yuklab olish
             </button>
             <button
               onClick={openAddForm}
-              className={`${simBtnPrimary} bg-gradient-to-r ${theme.gradient} ${theme.gradientHover} shadow-md min-w-[220px] justify-center`}
+              className={`${simBtnPrimary} bg-gradient-to-r !text-gray-600 ${theme.gradient} ${theme.gradientHover} shadow-md min-w-[220px] justify-center`}
             >
               <UserPlus className="w-5 h-5 !text-gray-600" />
               Direktor qo&apos;shish
@@ -202,14 +202,14 @@ export function DirektorManagement() {
               <button
                 type="button"
                 onClick={resetForm}
-                className={simBtnSecondary}
+                className={`${simBtnSecondary} !text-gray-600 !p-2`}
               >
                 Bekor qilish
               </button>
               <button
                 type="submit"
                 form="direktor-form"
-                className={`${simBtnPrimary} bg-gradient-to-r ${theme.gradient} ${theme.gradientHover}`}
+                className={`${simBtnPrimary} bg-gradient-to-r !text-gray-600 ${theme.gradient} ${theme.gradientHover} !p-2`}
               >
                 {editingId ? 'Yangilash' : "Qo'shish"}
               </button>
@@ -224,7 +224,8 @@ export function DirektorManagement() {
                   type="text"
                   value={formData.fullName}
                   onChange={handleChange}
-                  className={simBaseInputClass}
+                  className={`${simBaseInputClass} !pl-4 !text-gray-600 !placeholder-gray-600`}
+                  placeholder="Ismi, Familiya va Sharifini kiriting"
                   required
                 />
               </SimFormField>
@@ -233,12 +234,12 @@ export function DirektorManagement() {
                 <select
                   value={selectedRegionId || ''}
                   onChange={handleRegionChange}
-                  className={simSelect}
+                  className={`${simSelect} !pl-4 !text-gray-600 !placeholder-gray-600`}
                   required
                 >
                   <option value="">Viloyatni tanlang</option>
                   {regions.map(region => (
-                    <option key={region.id} value={region.id}>{region.name}</option>
+                    <option key={region.id} value={region.id} >{region.name}</option>
                   ))}
                 </select>
               </SimFormField>
@@ -248,7 +249,7 @@ export function DirektorManagement() {
                   name="districtOrCity"
                   value={formData.districtOrCity}
                   onChange={handleChange}
-                  className={simSelect}
+                  className={`${simSelect} !pl-4 !text-gray-600 !placeholder-gray-600`}
                   required
                   disabled={!selectedRegionId}
                 >
@@ -268,7 +269,7 @@ export function DirektorManagement() {
                   inputMode="numeric"
                   value={formData.schoolName}
                   onChange={handleChange}
-                  className={simBaseInputClass}
+                  className={`${simBaseInputClass} !pl-4 !text-gray-600 !placeholder-gray-600`}
                   placeholder="Masalan: 12"
                   required
                 />
@@ -280,7 +281,7 @@ export function DirektorManagement() {
                   type="tel"
                   value={formData.phone}
                   onChange={handleChange}
-                  className={simBaseInputClass}
+                  className={`${simBaseInputClass} !pl-4 !text-gray-600 !placeholder-gray-600`}
                   placeholder="+998 90 123 45 67"
                   required
                 />
@@ -296,7 +297,7 @@ export function DirektorManagement() {
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className={`${simBaseInputClass} ${!editingId ? 'bg-gray-50 text-gray-600' : ''}`}
+                  className={`${simBaseInputClass} !pl-4 !text-gray-600 !placeholder-gray-600 ${!editingId ? 'bg-gray-50 text-gray-600' : ''}`}
                   placeholder="email@gmail.com"
                   readOnly={!editingId}
                   required
@@ -314,16 +315,16 @@ export function DirektorManagement() {
                     type={showPassword ? 'text' : 'password'}
                     value={formData.password}
                     onChange={handleChange}
-                    className={`${simBaseInputClass} pr-12 ${!editingId ? 'bg-gray-50 text-gray-600' : ''}`}
+                    className={`${simBaseInputClass} !pl-4 !text-gray-600 !placeholder-gray-600 pr-12 ${!editingId ? 'bg-gray-50 text-gray-600' : ''}`}
                     readOnly={!editingId}
                     required
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(p => !p)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-1"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 !p-1"
                   >
-                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                    {showPassword ? <EyeOff className="w-5 h-5 !text-gray-600" /> : <Eye className="w-5 h-5 !text-gray-600" />}
                   </button>
                 </div>
               </SimFormField>
@@ -378,14 +379,14 @@ export function DirektorManagement() {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => handleEdit(direktor)}
-                          className="inline-flex items-center gap-2 min-h-[44px] px-4 rounded-xl text-base font-semibold text-indigo-600 hover:bg-indigo-50 border border-indigo-100 transition-all"
+                          className="inline-flex items-center gap-2 min-h-[44px] px-4 rounded-xl text-base font-semibold text-indigo-600 hover:bg-indigo-50 border border-indigo-100 transition-all !text-gray-600"
                         >
                           <Edit2 className="w-5 h-5" />
                           Tahrirlash
                         </button>
                         <button
                           onClick={() => handleDelete(direktor.id)}
-                          className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl text-red-600 hover:bg-red-50 border border-red-100 transition-all"
+                          className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] rounded-xl text-red-600 hover:bg-red-50 border border-red-100 transition-all !text-gray-600"
                           aria-label="O'chirish"
                         >
                           <Trash2 className="w-5 h-5" />

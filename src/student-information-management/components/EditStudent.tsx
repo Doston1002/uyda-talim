@@ -220,7 +220,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
             type="date"
             value={formData.conclusionDate}
             onChange={handleChange}
-            className={simInput}
+            className={`${simInput} !pl-4 !text-gray-600 !placeholder-gray-600`}
           />
         </SimFormField>
 
@@ -267,13 +267,13 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
             type="date"
             value={formData.birthDate}
             onChange={handleChange}
-            className={simInput}
+            className={`${simInput} !pl-4 !text-gray-600 !placeholder-gray-600`}
             required
           />
         </SimFormField>
 
         <SimFormField label="Sinf" required>
-          <select name="class" value={formData.class} onChange={handleChange} className={simSelect} required>
+          <select name="class" value={formData.class} onChange={handleChange} className={`${simSelect} !pl-4 !text-gray-600 !placeholder-gray-600`} required>
             <option value="">Tanlang</option>
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(num => (
               <option key={num} value={`${num}-sinf`}>{num}-sinf</option>
@@ -289,7 +289,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
                 type="text"
                 value={formData.teacherName}
                 onChange={handleChange}
-                className={simInput}
+                className={`${simInput} !pl-4 !text-gray-600 !placeholder-gray-600`}
               />
             </SimFormField>
             <SimFormField label="O'qituvchi telefoni">
@@ -298,7 +298,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
                 type="tel"
                 value={formData.teacherPhone}
                 onChange={handleChange}
-                className={`${simInput} !pl-4`}
+                className={`${simInput} !pl-4 !text-gray-600 !placeholder-gray-600`}
               />
             </SimFormField>
           </>
@@ -310,7 +310,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
             type="tel"
             value={formData.phone}
             onChange={handleChange}
-            className={simInput}
+            className={`${simInput} !pl-4 !text-gray-600 !placeholder-gray-600`}
             required
           />
         </SimFormField>
@@ -320,7 +320,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
             name="educationType"
             value={formData.educationType}
             onChange={handleChange}
-            className={simSelect}
+            className={`${simSelect} !pl-4 !text-gray-600 !placeholder-gray-600`}
             required
           >
             <option value="inklyuziv">Inklyuziv ta'lim</option>
@@ -334,7 +334,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
             type="text"
             value={formData.address}
             onChange={handleChange}
-            className={`${simInput} !pl-4`}
+            className={`${simInput} !pl-4 !text-gray-600 !placeholder-gray-600`}
             required
           />
         </SimFormField>
@@ -344,7 +344,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
             name="academicYear"
             value={formData.academicYear}
             onChange={handleChange}
-            className={`${simSelect} !pl-4`}
+            className={`${simSelect} !pl-4 !text-gray-600 !placeholder-gray-600`}
             required
           >
             <option value="2024-2025">2024-2025</option>
@@ -359,7 +359,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
             type="text"
             value={formData.accommodations}
             onChange={handleChange}
-            className={`${simInput} !pl-4`}
+            className={`${simInput} !pl-4 !text-gray-600 !placeholder-gray-600`}
           />
         </SimFormField>
 
@@ -368,7 +368,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
             name="notes"
             value={formData.notes}
             onChange={handleChange}
-            className={simTextarea}
+            className={`${simTextarea} !pl-4 !text-gray-600 !placeholder-gray-600`}
           />
         </SimFormField>
       </form>

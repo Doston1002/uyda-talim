@@ -143,7 +143,7 @@ export function SimLogin({ variant = 'standalone' }: SimLoginProps) {
 						w="full"
 						h={12}
 						bgGradient="linear(to-r, facebook.400, gray.400)"
-						color="white"
+						color={headingColor}
 						_hover={{
 							bgGradient: 'linear(to-r, facebook.500, gray.500)',
 							boxShadow: 'md',
