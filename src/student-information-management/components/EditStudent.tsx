@@ -219,8 +219,8 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
             required
           >
             <option value="">Tanlang</option>
-            <option value="inklyuziv">Inklyuziv ta'lim</option>
-            <option value="uyda">Uyda ta'lim</option>
+            <option value="inklyuziv">Uyda ta'lim</option>
+            <option value="uyda">Inklyuziv ta'lim</option>
           </select>
         </SimFormField>
 

@@ -36,14 +36,14 @@ export function Dashboard({ students }: DashboardProps) {
       ring: 'ring-blue-100',
     },
     {
-      title: "Inklyuziv ta'lim",
+      title: "Uyda ta'lim",
       value: stats.inklyuziv,
       icon: GraduationCap,
       gradient: 'from-purple-500 to-pink-500',
       ring: 'ring-purple-100',
     },
     {
-      title: "Uyda ta'lim",
+      title: "Inklyuziv ta'lim",
       value: stats.uyda,
       icon: Home,
       gradient: 'from-green-500 to-emerald-500',
