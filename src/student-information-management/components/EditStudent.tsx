@@ -271,7 +271,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
             <SimFormField label="O'qituvchi telefoni">
               <input
                 name="teacherPhone"
-                type="tel"
+                type="number"
                 value={formData.teacherPhone}
                 onChange={handleChange}
                 className={`${simInput} !pl-4 !text-gray-600 !placeholder-gray-600`}
@@ -283,7 +283,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
         <SimFormField label="Ota-ona yoki oʻrnini bosuvchi shaxs telefon raqami" required>
           <input
             name="phone"
-            type="tel"
+            type="number"
             value={formData.phone}
             onChange={handleChange}
             className={`${simInput} !pl-4 !text-gray-600 !placeholder-gray-600`}
@@ -293,7 +293,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
 
         {user?.role === 'direktor' && (
           <>
-            <SimFormField label="Viloyat" required className="md:col-start-1">
+            <SimFormField label="Yashash manzilingizni tanlang" required className="md:col-start-1">
               <select
                 value={selectedRegionId || ''}
                 onChange={handleRegionChange}

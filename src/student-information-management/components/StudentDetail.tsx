@@ -139,7 +139,7 @@ export function StudentDetail({ student, onClose }: StudentDetailProps) {
             <div>
               <SectionTitle>Joylashuv ma&apos;lumotlari</SectionTitle>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <InfoItem icon={MapPinned} label="Viloyat" value={student.region} />
+                <InfoItem icon={MapPinned} label="Yashash manzilining tanlang" value={student.region} />
                 <InfoItem icon={MapPinned} label="Tuman/Shahar" value={student.districtOrCity} />
               </div>
             </div>

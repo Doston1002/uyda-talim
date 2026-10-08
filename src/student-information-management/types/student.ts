@@ -9,7 +9,7 @@ export interface Student {
   academicYear: string;
   notes: string;
   accommodations: string;
-  educationType: 'inklyuziv' | 'uyda';
+  educationType: 'uyda' | 'inklyuziv';
   region?: string;
   districtOrCity?: string;
   teacherName?: string;

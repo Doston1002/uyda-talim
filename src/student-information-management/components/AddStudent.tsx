@@ -265,7 +265,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
                 <input
                   id="teacherPhone"
                   name="teacherPhone"
-                  type="tel"
+                  type="number"
                   value={formData.teacherPhone}
                   onChange={handleChange}
                   className={`${simInput} !pl-4 !placeholder-gray-600`}
@@ -279,7 +279,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
             <input
               id="phone"
               name="phone"
-              type="tel"
+              type="number"
               value={formData.phone}
               onChange={handleChange}
               className={`${simInput} !pl-4 !placeholder-gray-600`}
@@ -292,14 +292,14 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
 
           {user?.role === 'direktor' && (
             <>
-              <SimFormField label="Viloyat" required className="md:col-start-1">
+              <SimFormField label="Yashash manzilining tanlang" required className="md:col-start-1">
                 <select
                   value={selectedRegionId || ''}
                   onChange={handleRegionChange}
                   className={`${simSelect} !pl-4`}
                   required
                 >
-                  <option value="">Viloyatni tanlang</option>
+                  <option value="">Yashash manzilingizni tanlang</option>
                   {regions.map(region => (
                     <option key={region.id} value={region.id}>{region.name}</option>
                   ))}
@@ -316,7 +316,7 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
                   disabled={!selectedRegionId}
                 >
                   <option value="">
-                    {selectedRegionId ? 'Tuman/Shaharni tanlang' : 'Avval viloyatni tanlang'}
+                    {selectedRegionId ? 'Tuman/Shaharni tanlang' : 'yashash manzilining tanlangni tanlang'}
                   </option>
                   {availableDistricts.map((district, i) => (
                     <option key={`${district}-${i}`} value={district}>{district}</option>

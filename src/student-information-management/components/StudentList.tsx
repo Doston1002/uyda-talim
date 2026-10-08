@@ -151,7 +151,7 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
         'F.I.Sh': student.fullName,
         'Tug\'ilgan sana': student.birthDate,
         'Sinf': student.class,
-        'Ta\'lim turi': student.educationType === 'inklyuziv' ? 'Inklyuziv' : 'Uyda',
+        'Ta\'lim turi': student.educationType === 'inklyuziv' ? 'Uyda' : 'Inklyuziv',
         'O\'quv yili': student.academicYear,
         'Telefon': student.phone,
         "O'qituvchi": student.teacherName || '',
@@ -165,13 +165,13 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
       }
 
       if (user?.role === 'admin') {
-        base['Viloyat'] = student.region || '';
+        base['Yashash manzilining tanlang'] = student.region || '';
         base['Tuman/Shahar'] = student.districtOrCity || '';
       }
 
       // include medical fields for both roles
       base['Kasallik turi'] = student.illnessType ? getIllnessLabel(student.illnessType) : '';
-      base['Xulosa sanasi'] = student.educationType === 'uyda' ? '' : (student.conclusionDate || '');
+      base['Xulosa sanasi'] = student.educationType === 'inklyuziv' ? '' : (student.conclusionDate || '');
       base['Amal qilish muddati'] = getIllnessEndDisplay(student);
 
       return base;
@@ -363,7 +363,7 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
             {isAdmin && (
               <>
                 <div>
-                  <label className={simLabelSm}>Viloyat</label>
+                  <label className={simLabelSm}>Yashash manzilining tanlang</label>
                   <select
                     value={regionFilter}
                     onChange={e => { setRegionFilter(e.target.value); setDistrictFilter('all'); }}
@@ -462,7 +462,7 @@ export function StudentList({ students, onViewStudent, onDeleteStudent, onUpdate
                             : 'bg-gradient-to-r from-green-100 to-emerald-100 text-green-700'
                         }`}
                       >
-                        {student.educationType === 'inklyuziv' ? 'Inklyuziv' : 'Uyda'}
+                        {student.educationType === 'inklyuziv' ? 'Uyda' : 'inklyuziv'}
                       </span>
                     </td>
                     <td className="py-4 px-6 text-gray-700 text-base">{student.academicYear}</td>
