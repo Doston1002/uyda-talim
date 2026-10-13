@@ -113,7 +113,7 @@ export function SimEducationMedicalFields({
           <input
             id="validityPeriod"
             name="validityPeriod"
-            type="text"
+            type="date"
             value={validityPeriod}
             onChange={onChange}
             className={`${simInput} !pl-4 !placeholder-gray-600`}
