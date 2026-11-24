@@ -1,7 +1,7 @@
 export interface Direktor {
   id: string;
   email: string;
-  password: string;
+  password?: string;
   fullName: string;
   schoolName: string;
   phone: string;

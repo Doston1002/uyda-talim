@@ -4,7 +4,7 @@ import { useSimAuth } from '../contexts/SimAuthContext';
 import { getSimRoleTheme } from '../theme';
 import { SimPageHeader } from './SimPageHeader';
 import { SimFormField } from './SimFormField';
-import { getSimApiUrl } from '../api';
+import { getSimApiUrl, getSimAuthHeaders } from '../api';
 import { simInput, simSelect, simBtnPrimary } from '../sim-ui';
 import { UserPlus, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
@@ -85,13 +85,11 @@ export function AddStudent({ onAddStudent }: AddStudentProps) {
     }
     if (formData.conclusionFile) fd.append('file', formData.conclusionFile);
 
-    // include createdBy so backend can infer direktor
-    fd.append('createdBy', user?.email || '');
-
     // send to API directly
     const API_URL = getSimApiUrl();
     fetch(`${API_URL}/students/upload`, {
       method: 'POST',
+      headers: getSimAuthHeaders(user?.accessToken),
       body: fd,
     })
       .then(async (res) => {

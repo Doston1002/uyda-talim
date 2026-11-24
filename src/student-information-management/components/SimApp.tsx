@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Toaster, toast } from 'sonner';
 import { Loader2 } from 'lucide-react';
 import { useSimAuth } from '../contexts/SimAuthContext';
-import { getSimApiUrl } from '../api';
+import { getSimApiUrl, getSimAuthHeaders } from '../api';
 import { getSimRoleTheme } from '../theme';
 import { Layout } from './Layout';
 import { Dashboard } from './Dashboard';
@@ -33,12 +33,7 @@ export function SimApp() {
     }
 
     setIsLoading(true);
-    const role = user.role;
-    const createdBy = user.email;
-
-    fetch(
-      `${API_URL}/students?createdBy=${encodeURIComponent(createdBy)}&role=${encodeURIComponent(role)}`
-    )
+    fetch(`${API_URL}/students`, { headers: getSimAuthHeaders(user.accessToken) })
       .then(async r => {
         if (!r.ok) {
           const err = await r.json().catch(() => ({}));
@@ -71,7 +66,10 @@ export function SimApp() {
 
   const handleDeleteStudent = async (id: string) => {
     try {
-      const res = await fetch(`${API_URL}/students/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_URL}/students/${id}`, {
+        method: 'DELETE',
+        headers: getSimAuthHeaders(user?.accessToken),
+      });
       if (!res.ok) {
         const err = await res.json().catch(() => ({ message: 'Server error' }));
         toast.error(err.message || "O'chirishda xatolik yuz berdi");

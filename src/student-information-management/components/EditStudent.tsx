@@ -4,7 +4,7 @@ import { useSimAuth } from '../contexts/SimAuthContext';
 import { getSimRoleTheme } from '../theme';
 import { SimModal } from './SimModal';
 import { SimFormField } from './SimFormField';
-import { getSimApiUrl } from '../api';
+import { getSimApiUrl, getSimAuthHeaders } from '../api';
 import { simInput, simSelect, simBtnPrimary, simBtnSecondary } from '../sim-ui';
 import { Save } from 'lucide-react';
 import { toast } from 'sonner';
@@ -138,6 +138,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
 
         const res = await fetch(`${API_URL}/students/${student.id}/upload`, {
           method: 'PUT',
+          headers: getSimAuthHeaders(user?.accessToken),
           body: fd,
         });
         if (!res.ok) {
@@ -149,7 +150,7 @@ export function EditStudent({ student, onClose, onUpdateStudent }: EditStudentPr
       } else {
         const res = await fetch(`${API_URL}/students/${student.id}`, {
           method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', ...getSimAuthHeaders(user?.accessToken) },
           body: JSON.stringify(payload),
         });
         if (!res.ok) {
