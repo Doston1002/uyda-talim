@@ -1,14 +1,13 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { toast } from 'sonner';
 import { Direktor } from '../types/direktor';
-import { getSimApiUrl, getSimAuthHeaders } from '../api';
+import { getSimApiUrl } from '../api';
 
 export type SimUserRole = 'admin' | 'direktor';
 
 export interface SimUser {
   email: string;
   role: SimUserRole;
-  accessToken: string;
   schoolName?: string;
   region?: string;
   districtOrCity?: string;
@@ -33,13 +32,7 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
     if (typeof window === 'undefined') return null;
     try {
       const raw = localStorage.getItem('sim_user');
-      const saved = raw ? (JSON.parse(raw) as Partial<SimUser>) : null;
-      if (!saved?.accessToken || (saved.role !== 'admin' && saved.role !== 'direktor')) {
-        localStorage.removeItem('sim_user');
-        localStorage.removeItem('sim_access_token');
-        return null;
-      }
-      return saved as SimUser;
+      return raw ? (JSON.parse(raw) as SimUser) : null;
     } catch {
       return null;
     }
@@ -49,7 +42,7 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (user && user.role === 'admin') {
-      fetch(`${API_URL}/direktors`, { headers: getSimAuthHeaders(user.accessToken) })
+      fetch(`${API_URL}/direktors?role=admin`)
         .then(async r => {
           if (!r.ok) {
             const err = await r.json().catch(() => ({}));
@@ -84,11 +77,9 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
 
       if (!res.ok) return 'invalid';
       const data = await res.json();
-      if (!data.accessToken || (data.role !== 'admin' && data.role !== 'direktor')) return 'invalid';
       setUser(data);
       try {
         localStorage.setItem('sim_user', JSON.stringify(data));
-        localStorage.setItem('sim_access_token', data.accessToken);
       } catch {
         /* localStorage unavailable */
       }
@@ -102,7 +93,6 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     try {
       localStorage.removeItem('sim_user');
-      localStorage.removeItem('sim_access_token');
     } catch {
       /* localStorage unavailable */
     }
@@ -114,7 +104,7 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
       delete (payload as { id?: string }).id;
       const res = await fetch(`${API_URL}/direktors`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...getSimAuthHeaders(user?.accessToken) },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
       if (!res.ok) {
@@ -139,7 +129,7 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
       delete (payload as { id?: string }).id;
       const res = await fetch(`${API_URL}/direktors/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', ...getSimAuthHeaders(user?.accessToken) },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
       if (!res.ok) {
@@ -160,10 +150,7 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
 
   const deleteDirektor = async (id: string) => {
     try {
-      const res = await fetch(`${API_URL}/direktors/${id}`, {
-        method: 'DELETE',
-        headers: getSimAuthHeaders(user?.accessToken),
-      });
+      const res = await fetch(`${API_URL}/direktors/${id}`, { method: 'DELETE' });
       if (!res.ok) {
         const err = await res.json().catch(() => ({ message: 'Server error' }));
         console.error('Failed to delete direktor', err);

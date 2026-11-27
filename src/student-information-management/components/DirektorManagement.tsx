@@ -108,7 +108,7 @@ export function DirektorManagement() {
     setFormData({
       fullName: direktor.fullName,
       email: direktor.email,
-      password: '',
+      password: direktor.password,
       schoolName: direktor.schoolName,
       phone: direktor.phone,
       region: direktor.region,
@@ -154,6 +154,7 @@ export function DirektorManagement() {
       'Maktab raqami': direktor.schoolName,
       'F.I.Sh': direktor.fullName,
       'Email': direktor.email,
+      'Parol': direktor.password,
     }));
 
     const ws = XLSX.utils.json_to_sheet(data);
@@ -305,12 +306,8 @@ export function DirektorManagement() {
 
               <SimFormField
                 label="Parol"
-                required={!editingId}
-                hint={
-                  editingId
-                    ? "Yangi parol kiritsangiz, joriy parol yangilanadi"
-                    : "Avtomatik yaratilgan parol"
-                }
+                required
+                hint={!editingId ? "Avtomatik yaratilgan parol" : undefined}
               >
                 <div className="relative">
                   <input
@@ -320,7 +317,7 @@ export function DirektorManagement() {
                     onChange={handleChange}
                     className={`${simBaseInputClass} !pl-4 !text-gray-600 !placeholder-gray-600 pr-12 ${!editingId ? 'bg-gray-50 text-gray-600' : ''}`}
                     readOnly={!editingId}
-                    required={!editingId}
+                    required
                   />
                   <button
                     type="button"

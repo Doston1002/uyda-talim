@@ -19,8 +19,6 @@ import { getSimApiUrl } from '../api';
 import { getDisplayFileName } from '../utils';
 import { getIllnessLabel } from '../data/illness-types';
 import { calculateIllnessPeriod } from '../utils/illness-duration';
-import { getSimAuthHeaders } from '../api';
-import { toast } from 'sonner';
 
 interface StudentDetailProps {
   student: Student;
@@ -62,31 +60,6 @@ function SectionTitle({ children }: { children: ReactNode }) {
 export function StudentDetail({ student, onClose }: StudentDetailProps) {
   const { user } = useSimAuth();
   const theme = getSimRoleTheme(user?.role);
-  const downloadFile = async (filename: string) => {
-    const popup = window.open('about:blank', '_blank');
-    if (popup) popup.opener = null;
-    try {
-      const response = await fetch(
-        `${getSimApiUrl()}/students/download/${encodeURIComponent(filename)}`,
-        { headers: getSimAuthHeaders(user?.accessToken) },
-      );
-      if (!response.ok) throw new Error('Faylni yuklashga ruxsat yo‘q yoki fayl topilmadi');
-      const objectUrl = URL.createObjectURL(await response.blob());
-      if (popup) {
-        popup.location.href = objectUrl;
-        window.setTimeout(() => URL.revokeObjectURL(objectUrl), 60000);
-      } else {
-        const link = document.createElement('a');
-        link.href = objectUrl;
-        link.download = filename;
-        link.click();
-        window.setTimeout(() => URL.revokeObjectURL(objectUrl), 60000);
-      }
-    } catch (error) {
-      popup?.close();
-      toast.error(error instanceof Error ? error.message : 'Faylni yuklashda xatolik');
-    }
-  };
 
   const illnessEndDisplay = (() => {
     if (student.illnessEndDate && student.illnessEndDateMax) {
@@ -204,10 +177,11 @@ export function StudentDetail({ student, onClose }: StudentDetailProps) {
                 <div className="space-y-2">
                   <p className="text-xs font-medium text-gray-400">Xulosalar / Fayllar</p>
                   {student.uploadedFiles.map((f, idx) => (
-                    <button
+                    <a
                       key={idx}
-                      type="button"
-                      onClick={() => void downloadFile(f.filename)}
+                      href={`${getSimApiUrl()}/students/download/${encodeURIComponent(f.filename)}`}
+                      target="_blank"
+                      rel="noreferrer"
                       className="flex items-center gap-3 p-3 rounded-xl border border-indigo-100 bg-indigo-50 hover:bg-indigo-100 transition-colors group"
                     >
                       <FileText className="w-5 h-5 text-indigo-500 shrink-0" />
@@ -215,7 +189,7 @@ export function StudentDetail({ student, onClose }: StudentDetailProps) {
                         {getDisplayFileName(f.originalname, f.filename)}
                       </span>
                       <Download className="w-4 h-4 text-indigo-400 group-hover:text-indigo-600 shrink-0" />
-                    </button>
+                    </a>
                   ))}
                 </div>
               )}
