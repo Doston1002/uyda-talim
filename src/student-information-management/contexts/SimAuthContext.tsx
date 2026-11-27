@@ -8,6 +8,7 @@ export type SimUserRole = 'admin' | 'direktor';
 export interface SimUser {
   email: string;
   role: SimUserRole;
+  accessToken?: string;
   schoolName?: string;
   region?: string;
   districtOrCity?: string;
@@ -16,7 +17,7 @@ export interface SimUser {
 interface SimAuthContextType {
   user: SimUser | null;
   direktorlar: Direktor[];
-  login: (email: string, password: string) => Promise<'ok' | 'invalid' | 'network'>;
+  login: (email: string, password: string) => Promise<'ok' | 'invalid' | 'network' | 'token'>;
   logout: () => void;
   addDirektor: (direktor: Direktor) => Promise<void>;
   updateDirektor: (id: string, direktor: Direktor) => Promise<void>;
@@ -32,7 +33,15 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
     if (typeof window === 'undefined') return null;
     try {
       const raw = localStorage.getItem('sim_user');
-      return raw ? (JSON.parse(raw) as SimUser) : null;
+      if (!raw) return null;
+
+      const savedUser = JSON.parse(raw) as SimUser;
+      if (typeof savedUser.accessToken !== 'string' || !savedUser.accessToken) {
+        localStorage.removeItem('sim_user');
+        return null;
+      }
+
+      return savedUser;
     } catch {
       return null;
     }
@@ -40,9 +49,14 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
 
   const [direktorlar, setDirektorlar] = useState<Direktor[]>([]);
 
+  const authorizationHeaders = (): Record<string, string> =>
+    user?.accessToken ? { Authorization: `Bearer ${user.accessToken}` } : {};
+
   useEffect(() => {
     if (user && user.role === 'admin') {
-      fetch(`${API_URL}/direktors?role=admin`)
+      fetch(`${API_URL}/direktors`, {
+        headers: authorizationHeaders(),
+      })
         .then(async r => {
           if (!r.ok) {
             const err = await r.json().catch(() => ({}));
@@ -67,7 +81,10 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
     }
   }, [user, API_URL]);
 
-  const login = async (email: string, password: string): Promise<'ok' | 'invalid' | 'network'> => {
+  const login = async (
+    email: string,
+    password: string,
+  ): Promise<'ok' | 'invalid' | 'network' | 'token'> => {
     try {
       const res = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
@@ -77,6 +94,9 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
 
       if (!res.ok) return 'invalid';
       const data = await res.json();
+      if (typeof data.accessToken !== 'string' || !data.accessToken) {
+        return 'token';
+      }
       setUser(data);
       try {
         localStorage.setItem('sim_user', JSON.stringify(data));
@@ -104,7 +124,7 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
       delete (payload as { id?: string }).id;
       const res = await fetch(`${API_URL}/direktors`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authorizationHeaders() },
         body: JSON.stringify(payload),
       });
       if (!res.ok) {
@@ -129,7 +149,7 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
       delete (payload as { id?: string }).id;
       const res = await fetch(`${API_URL}/direktors/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...authorizationHeaders() },
         body: JSON.stringify(payload),
       });
       if (!res.ok) {
@@ -150,7 +170,10 @@ export function SimAuthProvider({ children }: { children: ReactNode }) {
 
   const deleteDirektor = async (id: string) => {
     try {
-      const res = await fetch(`${API_URL}/direktors/${id}`, { method: 'DELETE' });
+      const res = await fetch(`${API_URL}/direktors/${id}`, {
+        method: 'DELETE',
+        headers: authorizationHeaders(),
+      });
       if (!res.ok) {
         const err = await res.json().catch(() => ({ message: 'Server error' }));
         console.error('Failed to delete direktor', err);

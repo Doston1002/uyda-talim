@@ -33,11 +33,11 @@ export function SimApp() {
     }
 
     setIsLoading(true);
-    const role = user.role;
-    const createdBy = user.email;
-
     fetch(
-      `${API_URL}/students?createdBy=${encodeURIComponent(createdBy)}&role=${encodeURIComponent(role)}`
+      `${API_URL}/students`,
+      {
+        headers: user.accessToken ? { Authorization: `Bearer ${user.accessToken}` } : {},
+      }
     )
       .then(async r => {
         if (!r.ok) {

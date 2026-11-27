@@ -53,6 +53,10 @@ export function SimLogin({ variant = 'standalone' }: SimLoginProps) {
 				setError("Email yoki parol noto'g'ri");
 				return;
 			}
+			if (result === 'token') {
+				setError("Server xavfsiz kirish tokenini qaytarmadi. Backendni build qilib qayta ishga tushiring.");
+				return;
+			}
 			router.push('/student-information-management');
 		} catch (err) {
 			setError('Kirishda xatolik yuz berdi');
